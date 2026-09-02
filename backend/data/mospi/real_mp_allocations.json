@@ -1,0 +1,482 @@
+[
+  {
+    "STATE_NAME": "Bihar",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "SUDAMA PRASAD",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "ARRAH",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Bihar",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "ABHAY KUMAR SINHA",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AURANGABAD_BR",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Bihar",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "SUDHAKAR SINGH",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BUXAR",
+    "ALLOCATED_AMT": 185211956.54,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 185211956.54
+  },
+  {
+    "STATE_NAME": "Bihar",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "JITAN RAM MANJHI",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "GAYA (SC)",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Delhi",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "Manoj Tiwari",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "NORTH EAST DELHI",
+    "ALLOCATED_AMT": 225843858,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 225843858
+  },
+  {
+    "STATE_NAME": "Delhi",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "Yogendra Chandoliya",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "NORTH WEST DELHI(SC)",
+    "ALLOCATED_AMT": 147876307,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147876307
+  },
+  {
+    "STATE_NAME": "Delhi",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "Praveen Khandelwal",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "CHANDINI CHOWK",
+    "ALLOCATED_AMT": 147470276,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147470276
+  },
+  {
+    "STATE_NAME": "Delhi",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "Kamaljeet Sehrawat",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "WEST DELHI",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Gujarat",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "Shri Amit Shah",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "GANDHINAGAR",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Gujarat",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "DINESHBHAI MAKWANA",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AHMEDABAD WEST(SC)",
+    "ALLOCATED_AMT": 160434965.11,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 160434965.11
+  },
+  {
+    "STATE_NAME": "Gujarat",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "HARIBHAI PATEL",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "MAHESANA",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Gujarat",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "RAJPALSINH MAHENDRASINH JADAV",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "PANCHMAHAL",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Karnataka",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "DR C N MANJUNATH",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BANGALORE RURAL",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Karnataka",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "JAGADISH SHETTAR",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BELGAUM",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Karnataka",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "E. TUKARAM",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BELLARY(ST)",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Karnataka",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "SAGAR ESHWAR KHANDRE",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BIDAR",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Maharashtra",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "NILESH DNYANDEV LANKE",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AHMEDNAGAR",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Maharashtra",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "ANUP SANJAY DHOTRE",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AKOLA",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Maharashtra",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "BALWANT BASWANT WANKHADE",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AMRAVATI(SC)",
+    "ALLOCATED_AMT": 198293678,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 198293678
+  },
+  {
+    "STATE_NAME": "Maharashtra",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "BHUMARE SANDIPANRAO ASARAM",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AURANGABAD_MH",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Rajasthan",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "BHUPENDER YADAV",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "ALWAR",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Rajasthan",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "UMMEDA RAM BENIWAL",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BARMER",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Rajasthan",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "SANJNA JATAV",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BHARATPUR(SC)",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Rajasthan",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "DAMODAR AGARWAL",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "BHILWARA",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Tamil Nadu",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "THANGA TAMILSELVAN",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "THENI",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Tamil Nadu",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "THARANIVENTHAN M S",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "ARANI",
+    "ALLOCATED_AMT": 168337124.35,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 168337124.35
+  },
+  {
+    "STATE_NAME": "Tamil Nadu",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "GANAPATHY RAJKUMAR P",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "COIMBATORE",
+    "ALLOCATED_AMT": 147370490.11,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147370490.11
+  },
+  {
+    "STATE_NAME": "Tamil Nadu",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "MANI. A.",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "DHARAMAPURI",
+    "ALLOCATED_AMT": 164515071.11,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 164515071.11
+  },
+  {
+    "STATE_NAME": "Uttar Pradesh",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "SHASHANK MANI",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "DEORIA",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Uttar Pradesh",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "UJJWAL RAMAN SINGH",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "ALLAHABAD",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Uttar Pradesh",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "LALJI VERMA",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AMBEDKAR NAGAR",
+    "ALLOCATED_AMT": 147000000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 147000000
+  },
+  {
+    "STATE_NAME": "Uttar Pradesh",
+    "HOUSE_OF_PARLIAMENT": "2",
+    "TENURE": "18th Lok Sabha",
+    "Sno": 1,
+    "MP_NAME": "KISHORI LAL",
+    "HOUSE_NAME": "Lok Sabha",
+    "CONSTITUENCY": "AMETHI",
+    "ALLOCATED_AMT": 171500000,
+    "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+    "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM"
+  },
+  {
+    "Total_Amt": 171500000
+  }
+]

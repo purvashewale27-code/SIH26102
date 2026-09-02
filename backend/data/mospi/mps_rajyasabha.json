@@ -1,0 +1,1654 @@
+[
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3017196,
+    "mp_name": "Shri S Niranjan Reddy (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3019255,
+    "mp_name": "Shri V. Vijayendra Prasad (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3043037,
+    "mp_name": "Shri Golla Baburao (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3043337,
+    "mp_name": "Shri Meda Raghunadha Reddy (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3044299,
+    "mp_name": "Shri Yerram Venkata Subba Reddy (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3050536,
+    "mp_name": "Shri Ryaga Krishnaiah (2024-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3050537,
+    "mp_name": "Shri Masthan Rao Yadav Beedha (2024-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3056236,
+    "mp_name": "Shri Paka Venkata Satyanarayana (2025-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3066164,
+    "mp_name": "Shri Lingamaneni Ramesh (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3066214,
+    "mp_name": "Shri Bhashyam Rama Krishna (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3066270,
+    "mp_name": "Shri Vijay Chintakayala (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 2,
+    "state_name": "Andhra Pradesh",
+    "mp_id": 3050535,
+    "mp_name": "Shri Sana Sathish Babu (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 3,
+    "state_name": "Arunachal Pradesh",
+    "mp_id": 3066421,
+    "mp_name": "Shri Tai Tagak (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3017222,
+    "mp_name": "Shri Pabitra Margherita (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3019246,
+    "mp_name": "Shri Rwngwra Narzary (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3056512,
+    "mp_name": "Shri Kanad Purkayastha (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3017224,
+    "mp_name": "Shri Birendra Prasad Baishya (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3065277,
+    "mp_name": "Shri Jogen Mohan (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3065299,
+    "mp_name": "Shri Terash Gowalla (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 5,
+    "state_name": "Assam",
+    "mp_id": 3066097,
+    "mp_name": "Shri Pramod Boro (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3017167,
+    "mp_name": "Shri Shambhu Sharan Patel (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3017197,
+    "mp_name": "Dr. Faiyaz Ahmad (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3017208,
+    "mp_name": "Shri Satish Chandra Dubey (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3017209,
+    "mp_name": "Shri Khiru Mahto (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3042570,
+    "mp_name": "Dr. Bhim Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3017198,
+    "mp_name": "Prof. Manoj Kumar Jha (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3043338,
+    "mp_name": "Dr. Dharmshila Gupta (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3017200,
+    "mp_name": "Shri Akhilesh Prasad Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3043454,
+    "mp_name": "Shri Sanjay Kumar Jha (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3043455,
+    "mp_name": "Shri Sanjay Yadav (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3046284,
+    "mp_name": "Shri Manan Kumar Mishra (2024-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3046285,
+    "mp_name": "Shri Upendra Kushwaha (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3064962,
+    "mp_name": "Shri Shivesh Kumar (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3065300,
+    "mp_name": "Shri Ram Nath Thakur (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 6,
+    "state_name": "Bihar",
+    "mp_id": 3065569,
+    "mp_name": "Shri Nitin Nabin (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 7,
+    "state_name": "Chandigarh",
+    "mp_id": 3044092,
+    "mp_name": "Shri Satnam Singh Sandhu (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 8,
+    "state_name": "Chhattisgarh",
+    "mp_id": 3017318,
+    "mp_name": "Shri Rajeev Shukla (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 8,
+    "state_name": "Chhattisgarh",
+    "mp_id": 3017501,
+    "mp_name": "Smt. Ranjeet Ranjan (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 8,
+    "state_name": "Chhattisgarh",
+    "mp_id": 3043409,
+    "mp_name": "Shri Devendra Pratap Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 8,
+    "state_name": "Chhattisgarh",
+    "mp_id": 3017500,
+    "mp_name": "Smt. Phulo Devi Netam (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 8,
+    "state_name": "Chhattisgarh",
+    "mp_id": 3065578,
+    "mp_name": "Smt. Laxmi Verma (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 11,
+    "state_name": "Delhi",
+    "mp_id": 3045897,
+    "mp_name": "Ms. Swati Maliwal (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 11,
+    "state_name": "Delhi",
+    "mp_id": 3020006,
+    "mp_name": "Shri Narain Dass Gupta (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 11,
+    "state_name": "Delhi",
+    "mp_id": 3020005,
+    "mp_name": "Shri Sanjay Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 11,
+    "state_name": "Delhi",
+    "mp_id": 3061061,
+    "mp_name": "Dr. Meenakshi Jain (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 12,
+    "state_name": "Goa",
+    "mp_id": 3022960,
+    "mp_name": "Shri Sadanand Mhalu Shet Tanavade (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3025895,
+    "mp_name": "Shri Babubhai Jesangbhai Desai (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3026513,
+    "mp_name": "Shri Kesridevsinh Jhala (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3027305,
+    "mp_name": "Shri S. Jaishankar (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3042558,
+    "mp_name": "Dr. Parmar Jashvantsinh Salamsinh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3042561,
+    "mp_name": "Shri Govindbhai Laljibhai Dholakia (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3045962,
+    "mp_name": "Shri Mayankkumar Nayak (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3046565,
+    "mp_name": "Shri Jagat Prakash Nadda (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3066440,
+    "mp_name": "Dr. Mukeshbhai J. Rathwa (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3066468,
+    "mp_name": "Shri Jitendra Meghjibhai Kanzariya (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 27,
+    "state_name": "Gujarat",
+    "mp_id": 3066616,
+    "mp_name": "Shri Rajesh Parmanand Shukla (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 14,
+    "state_name": "Haryana",
+    "mp_id": 3017503,
+    "mp_name": "Shri Kartikeya Sharma (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 14,
+    "state_name": "Haryana",
+    "mp_id": 3045909,
+    "mp_name": "Shri Subhash Barala (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 14,
+    "state_name": "Haryana",
+    "mp_id": 3049850,
+    "mp_name": "Smt. Rekha Sharma (2024-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 14,
+    "state_name": "Haryana",
+    "mp_id": 3064657,
+    "mp_name": "Shri Sanjay Bhatia (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 14,
+    "state_name": "Haryana",
+    "mp_id": 3064963,
+    "mp_name": "Shri Karamvir Singh Singh Boudh (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 15,
+    "state_name": "Himachal Pradesh",
+    "mp_id": 3017229,
+    "mp_name": "Dr. Sikander Kumar (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 15,
+    "state_name": "Himachal Pradesh",
+    "mp_id": 3042922,
+    "mp_name": "Shri Harsh Mahajan (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 15,
+    "state_name": "Himachal Pradesh",
+    "mp_id": 3064835,
+    "mp_name": "Shri Anurag Sharma (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 16,
+    "state_name": "Jammu And Kashmir",
+    "mp_id": 3019254,
+    "mp_name": "Shri Gulam Ali (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 16,
+    "state_name": "Jammu And Kashmir",
+    "mp_id": 3026800,
+    "mp_name": "Dummy Rajya Sabha MP",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 16,
+    "state_name": "Jammu And Kashmir",
+    "mp_id": 3060561,
+    "mp_name": "Shri Sat Paul Sharma (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 16,
+    "state_name": "Jammu And Kashmir",
+    "mp_id": 3061955,
+    "mp_name": "Shri Gurwinder Singh Oberoi (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 16,
+    "state_name": "Jammu And Kashmir",
+    "mp_id": 3063548,
+    "mp_name": "Shri Sajjad Ahmad Kichloo (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 16,
+    "state_name": "Jammu And Kashmir",
+    "mp_id": 3063547,
+    "mp_name": "Shri Chowdry Mohammad Ramzan (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 17,
+    "state_name": "Jharkhand",
+    "mp_id": 3017184,
+    "mp_name": "Smt. Mahua Maji (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 17,
+    "state_name": "Jharkhand",
+    "mp_id": 3017232,
+    "mp_name": "Shri Aditya Prasad (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 17,
+    "state_name": "Jharkhand",
+    "mp_id": 3043536,
+    "mp_name": "Shri Pradip Kumar Varma (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 17,
+    "state_name": "Jharkhand",
+    "mp_id": 3045173,
+    "mp_name": "Dr. Sarfraz Ahmad (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 17,
+    "state_name": "Jharkhand",
+    "mp_id": 3066614,
+    "mp_name": "Shri Baidyanath Ram (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3017235,
+    "mp_name": "Shri Jaggesh (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3017243,
+    "mp_name": "Smt. Nirmala Sitharaman (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3019253,
+    "mp_name": "Dr. Dharmasthala Veerendra Heggade (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3019248,
+    "mp_name": "Shri Jairam Ramesh (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3019249,
+    "mp_name": "Shri Lahar Singh Siroya (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3042566,
+    "mp_name": "Dr. Syed Naseer Hussain (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3044066,
+    "mp_name": "Shri Narayanasa K. Bhandage (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3044073,
+    "mp_name": "Smt. Sudha Murty (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3017237,
+    "mp_name": "Shri G.C. Chandrashekhar (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3047757,
+    "mp_name": "Shri Ajay Makan (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3065897,
+    "mp_name": "Shri Mansoor Ali Khan (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3066166,
+    "mp_name": "Shri M. Nagaraja (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3017242,
+    "mp_name": "Shri Mallikarjun Kharge (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 18,
+    "state_name": "Karnataka",
+    "mp_id": 3066550,
+    "mp_name": "Shri Pawan Khera (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017245,
+    "mp_name": "Dr. V. Sivadasan (2021-27)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017246,
+    "mp_name": "Shri A. A. Rahim (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017247,
+    "mp_name": "Shri Abdul Wahab (2021-27)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017250,
+    "mp_name": "Dr. John Brittas (2021-27)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017252,
+    "mp_name": "Shri Sandosh Kumar P (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017253,
+    "mp_name": "Smt. Jebi Mather Hisham (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3019257,
+    "mp_name": "Smt. P. T. Usha (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3043324,
+    "mp_name": "Shri Haris Beeran (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3017251,
+    "mp_name": "Shri Jose K. Mani (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3046257,
+    "mp_name": "Shri P. P. Suneer (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 36,
+    "state_name": "Kerala",
+    "mp_id": 3056873,
+    "mp_name": "Shri C. Sadanandan Master (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3017254,
+    "mp_name": "Dr. Kavita Patidar (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3017257,
+    "mp_name": "Shri Vivek K. Tankha (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3017258,
+    "mp_name": "Smt. Sumitra Balmik (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3042554,
+    "mp_name": "Shri Ashok Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3042567,
+    "mp_name": "Shri Balyogi Umeshnath (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3043035,
+    "mp_name": "Smt. Maya Naroliya (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3043966,
+    "mp_name": "Shri Banshilal Gurjar (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3017255,
+    "mp_name": "Dr. L. Murugan (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3065971,
+    "mp_name": "Shri Rajneesh Kumar Agrawal (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3066552,
+    "mp_name": "Shri Mahesh Kewat (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 20,
+    "state_name": "Madhya Pradesh",
+    "mp_id": 3066667,
+    "mp_name": "Shri Tarun Chugh (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3017259,
+    "mp_name": "Dr. Anil Sukhdeorao Bonde (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3017263,
+    "mp_name": "Shri Dhananjay Bhimrao Mahadik (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3017264,
+    "mp_name": "Shri Imran Pratapgarhi (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3017267,
+    "mp_name": "Shri Sanjay Raut (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3042556,
+    "mp_name": "Dr. Medha Vishram Kulkarni (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3042557,
+    "mp_name": "Shri Ashokrao Shankarrao Chavan (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3042559,
+    "mp_name": "Shri Milind Murli Deora (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3042560,
+    "mp_name": "Shri Chandrakant Damodar Handore (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3042562,
+    "mp_name": "Dr. Ajeet Madhavrao Gopchade (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3042564,
+    "mp_name": "Shri Praful Patel (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3048864,
+    "mp_name": "Shri Nitin Laxmanrao Jadhav Patil (2024-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3061108,
+    "mp_name": "Shri Ujjwal Deorao Nikam (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3064688,
+    "mp_name": "Shri Ramrao Sakharam Wadkute (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3064779,
+    "mp_name": "Shri Vinod Shridhar Tawde (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3017272,
+    "mp_name": "Shri Ramdas Bandu Athawale (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3065436,
+    "mp_name": "Smt. Maya Chintaman Ivnate (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3066268,
+    "mp_name": "Dr. Jyoti Nagnath Waghmare (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 21,
+    "state_name": "Maharashtra",
+    "mp_id": 3066664,
+    "mp_name": "Shri Parth Ajit Pawar (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 22,
+    "state_name": "Manipur",
+    "mp_id": 3065973,
+    "mp_name": "Smt. Adhikarimayum Sharda Devi (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 23,
+    "state_name": "Meghalaya",
+    "mp_id": 3065972,
+    "mp_name": "Shri James Pangsang Kongkal Sangma (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 13,
+    "state_name": "Mizoram",
+    "mp_id": 3066422,
+    "mp_name": "Shri Khiangte Laltluangkima (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 24,
+    "state_name": "Nagaland",
+    "mp_id": 3017509,
+    "mp_name": "Smt. S. Phangnon Konyak (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3017365,
+    "mp_name": "Dr. Sasmit Patra (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3017366,
+    "mp_name": "Shri Manas Ranjan Mangaraj (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3017372,
+    "mp_name": "Smt. Sulata Deo (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3042553,
+    "mp_name": "Shri Subhasish Khuntia (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3017368,
+    "mp_name": "Shri Ashwini Vaishnaw (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3064658,
+    "mp_name": "Shri Dilip Kumar Ray (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3049783,
+    "mp_name": "Shri Sujeet Kumar (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3064961,
+    "mp_name": "Dr. Santrupt Misra (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3066023,
+    "mp_name": "Shri Debashish Samantaray (2026-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 25,
+    "state_name": "Odisha",
+    "mp_id": 3066499,
+    "mp_name": "Shri Manmohan Samal (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 26,
+    "state_name": "Puducherry",
+    "mp_id": 3017281,
+    "mp_name": "Shri S. Selvaganabathy (2021-27)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3017282,
+    "mp_name": "Shri Sant Balbir Singh (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3017283,
+    "mp_name": "Shri Harbhajan Singh (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3017510,
+    "mp_name": "Shri Raghav Chadha (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3017511,
+    "mp_name": "Dr. Sandeep Kumar Pathak (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3019259,
+    "mp_name": "Dr. Vikramjit Singh Sahney (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3019258,
+    "mp_name": "Dr. Ashok Kumar Mittal (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 1,
+    "state_name": "Punjab",
+    "mp_id": 3060764,
+    "mp_name": "Shri Rajinder Gupta (2025-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3017287,
+    "mp_name": "Shri Ghanshyam Tiwari (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3017288,
+    "mp_name": "Shri Mukul Wasnik (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3017289,
+    "mp_name": "Shri Pramod Tiwari (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3017290,
+    "mp_name": "Shri Randeep Singh Surjewala (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3042555,
+    "mp_name": "Shri Chunnilal Garasiya (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3042565,
+    "mp_name": "Smt. Sonia Gandhi (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3042568,
+    "mp_name": "Shri Madan Rathore (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3066167,
+    "mp_name": "Dr. Alka Singh (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3066186,
+    "mp_name": "Dr. Satish Poonia (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 28,
+    "state_name": "Rajasthan",
+    "mp_id": 3066187,
+    "mp_name": "Shri Neeraj Dangi (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 29,
+    "state_name": "Sikkim",
+    "mp_id": 3042552,
+    "mp_name": "Shri Dorjee Tshering Lepcha (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017168,
+    "mp_name": "Shri Ilaiyaraaja (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017170,
+    "mp_name": "Shri R. Dharmar (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017304,
+    "mp_name": "Shri S. Kalyanasundaram (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017305,
+    "mp_name": "Shri R. Girirajan (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017307,
+    "mp_name": "Shri P. Chidambaram (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017308,
+    "mp_name": "Shri K.R.N. Rajeshkumar (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3056872,
+    "mp_name": "Smt. Rajathi (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3058540,
+    "mp_name": "Shri Kamal Haasan (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3059270,
+    "mp_name": "Shri S.R. Sivalingam (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3059272,
+    "mp_name": "Shri I.S. Inbadurai (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3059498,
+    "mp_name": "Dr. M. Dhanapal (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3061320,
+    "mp_name": "Shri P. Wilson (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017301,
+    "mp_name": "Shri Tiruchi Siva (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3017300,
+    "mp_name": "Dr. M. Thambi Durai (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3065276,
+    "mp_name": "Shri L. K. Sudhish (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3065298,
+    "mp_name": "Shri Constandine Ravindran (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3065417,
+    "mp_name": "Shri Christopher Manickam (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3066269,
+    "mp_name": "Shri Praveen Chakravarthy (2026-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 30,
+    "state_name": "Tamil Nadu",
+    "mp_id": 3066551,
+    "mp_name": "Dr. Anbumani Ramadoss (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 129,
+    "state_name": "Telangana",
+    "mp_id": 3017310,
+    "mp_name": "Shri B. Parthasaradhi Reddy (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 129,
+    "state_name": "Telangana",
+    "mp_id": 3019261,
+    "mp_name": "Shri Damodar Rao Divakonda (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 129,
+    "state_name": "Telangana",
+    "mp_id": 3044300,
+    "mp_name": "Shri Anil Kumar Yadav Mandadi (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 129,
+    "state_name": "Telangana",
+    "mp_id": 3044741,
+    "mp_name": "Smt. Renuka Chowdhury (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 129,
+    "state_name": "Telangana",
+    "mp_id": 3017313,
+    "mp_name": "Shri Ravi Chandra Vaddiraju (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 129,
+    "state_name": "Telangana",
+    "mp_id": 3047083,
+    "mp_name": "Dr. Abhishek Manu Singhvi (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 31,
+    "state_name": "Tripura",
+    "mp_id": 3046918,
+    "mp_name": "Shri Rajib Bhattacharjee (2024-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017171,
+    "mp_name": "Shri Hardeep Singh Puri (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017322,
+    "mp_name": "Dr. K. Laxman (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017323,
+    "mp_name": "Dr. Laxmikant Bajpayee (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017324,
+    "mp_name": "Dr. Radha Mohan Das Agrawal (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017325,
+    "mp_name": "Prof. Ram Gopal Yadav (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017328,
+    "mp_name": "Shri Arun Singh (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017329,
+    "mp_name": "Shri Javed Ali Khan (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017330,
+    "mp_name": "Shri Jayant Chaudhary (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017331,
+    "mp_name": "Shri Kapil Sibal (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017332,
+    "mp_name": "Shri Mithlesh Kumar (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017334,
+    "mp_name": "Shri Surendra Singh Nagar (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017337,
+    "mp_name": "Shri B.L. Verma (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017338,
+    "mp_name": "Shri Brij Lal (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017339,
+    "mp_name": "Shri Neeraj Shekhar (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017340,
+    "mp_name": "Shri Ramji (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017343,
+    "mp_name": "Smt. Sangeeta Yadav (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017344,
+    "mp_name": "Smt. Seema Dwivedi (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017345,
+    "mp_name": "Smt. Darshana Singh (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3019262,
+    "mp_name": "Shri Baburam Nishad (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3023700,
+    "mp_name": "Dr. Dinesh Sharma (2023-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3019264,
+    "mp_name": "Smt. Geeta alias Chandraprabha (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3042551,
+    "mp_name": "Shri Ramji Lal Suman (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3042920,
+    "mp_name": "Shri Sanjay Seth (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3042921,
+    "mp_name": "Shri Amar Pal Maurya (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017341,
+    "mp_name": "Dr. Sudhanshu Trivedi (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3043036,
+    "mp_name": "Dr. Sangeeta Balwant (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3043325,
+    "mp_name": "Shri Tejveer Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3017342,
+    "mp_name": "Smt. Jaya Amitabh Bachchan (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3043534,
+    "mp_name": "Shri Naveen Jain (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3044168,
+    "mp_name": "Smt. Sadhna Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 33,
+    "state_name": "Uttar Pradesh",
+    "mp_id": 3045224,
+    "mp_name": "Shri Ratanjit Pratap Narain Singh (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 32,
+    "state_name": "Uttarakhand",
+    "mp_id": 3017346,
+    "mp_name": "Dr. Kalpana Saini (2022-28)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 32,
+    "state_name": "Uttarakhand",
+    "mp_id": 3019265,
+    "mp_name": "Shri Naresh Bansal (2020-26)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 32,
+    "state_name": "Uttarakhand",
+    "mp_id": 3043339,
+    "mp_name": "Shri Mahendra Bhatt (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3023812,
+    "mp_name": "Shri Nagendra Ray (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3032002,
+    "mp_name": "Shri Samirul Islam (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3042569,
+    "mp_name": "Smt. Sagarika Ghose (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3017362,
+    "mp_name": "Shri Derek O' Brien (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3017360,
+    "mp_name": "Ms. Dola Sen (2023-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3044811,
+    "mp_name": "Smt. Mamata Thakur (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3044812,
+    "mp_name": "Shri Samik Bhattacharya (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3017359,
+    "mp_name": "Shri Mohammed Nadimul Haque (2024-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3056687,
+    "mp_name": "Shri Harsh Vardhan Shringla (2025-31)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3065548,
+    "mp_name": "Shri Rajeev Kumar (2026-32)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3066259,
+    "mp_name": "Shri Prakash Chik Baraik (2026-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3066271,
+    "mp_name": "Shri Sukhendu Sekhar Ray (2026-29)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3066666,
+    "mp_name": "Ms. Sushmita Dev (2026-30)",
+    "house": "Rajya Sabha"
+  },
+  {
+    "state_id": 34,
+    "state_name": "West Bengal",
+    "mp_id": 3066935,
+    "mp_name": "Shri Biswajit Sinha (Rahul Sinha) (2026-32)",
+    "house": "Rajya Sabha"
+  }
+]

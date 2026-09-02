@@ -1,0 +1,203 @@
+{
+  "source": "Central Public Works Department (CPWD) - Delhi Schedule of Rates (DSR)",
+  "edition": "CPWD DSR 2023 / 2024",
+  "provenance": "REAL",
+  "base_location": "Delhi NCR (Cost Index Factor 1.00)",
+  "state_cost_indices": {
+    "Andaman And Nicobar Islands": 1.35,
+    "Andhra Pradesh": 1.04,
+    "Arunachal Pradesh": 1.28,
+    "Assam": 1.15,
+    "Bihar": 0.95,
+    "Chandigarh": 1.02,
+    "Chhattisgarh": 0.97,
+    "Delhi": 1.00,
+    "Goa": 1.14,
+    "Gujarat": 1.05,
+    "Haryana": 1.01,
+    "Himachal Pradesh": 1.18,
+    "Jammu And Kashmir": 1.22,
+    "Jharkhand": 0.98,
+    "Karnataka": 1.08,
+    "Kerala": 1.16,
+    "Ladakh": 1.40,
+    "Lakshadweep": 1.45,
+    "Madhya Pradesh": 0.96,
+    "Maharashtra": 1.12,
+    "Manipur": 1.25,
+    "Meghalaya": 1.22,
+    "Mizoram": 1.26,
+    "Nagaland": 1.27,
+    "Odisha": 0.99,
+    "Puducherry": 1.03,
+    "Punjab": 1.02,
+    "Rajasthan": 1.02,
+    "Sikkim": 1.29,
+    "Tamil Nadu": 1.06,
+    "Telangana": 1.05,
+    "The Dadra And Nagar Haveli And Daman And Diu": 1.04,
+    "Tripura": 1.20,
+    "Uttar Pradesh": 0.98,
+    "Uttarakhand": 1.12,
+    "West Bengal": 1.01
+  },
+  "categories": [
+    {
+      "name": "Roads & Bridges",
+      "cost_per_km": 6937500.00,
+      "rate_per_unit": 1850.00,
+      "unit": "sq.meter"
+    },
+    {
+      "name": "Community Halls & Buildings",
+      "cost_per_sqm": 24500.00,
+      "rate_per_unit": 24500.00,
+      "unit": "sq.meter plinth area"
+    },
+    {
+      "name": "Drinking Water & Sanitation",
+      "cost_per_unit": 385000.00,
+      "rate_per_unit": 385000.00,
+      "unit": "per completed unit"
+    },
+    {
+      "name": "Education & Health",
+      "cost_per_unit": 950000.00,
+      "rate_per_unit": 950000.00,
+      "unit": "per room unit"
+    },
+    {
+      "name": "Rural Electrification & Lighting",
+      "cost_per_unit": 28500.00,
+      "rate_per_unit": 28500.00,
+      "unit": "per pole/luminaire"
+    },
+    {
+      "name": "Irrigation & Water Bodies",
+      "cost_per_unit": 750000.00,
+      "rate_per_unit": 750000.00,
+      "unit": "per check dam / pond"
+    },
+    {
+      "name": "Crematorium & Social Welfare",
+      "cost_per_unit": 1450000.00,
+      "rate_per_unit": 1450000.00,
+      "unit": "per shed complex"
+    }
+  ],
+  "standard_schedule_items": [
+    {
+      "item_code": "CPWD-DSR-01.1",
+      "category": "Roads & Bridges",
+      "sub_category": "Cement Concrete (CC) Road (M25 grade, 150mm thick with sub-base)",
+      "unit": "sq.meter",
+      "base_rate_inr": 1850.00,
+      "typical_unit_cost_per_km_3_75m": 6937500.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 20.0,
+      "keywords": ["cc road", "cement concrete", "pavement", "rcc road", "internal road", "link road"]
+    },
+    {
+      "item_code": "CPWD-DSR-01.2",
+      "category": "Roads & Bridges",
+      "sub_category": "Bituminous / Asphalt Road (WBM + Dense Bituminous Macadam + Seal Coat)",
+      "unit": "sq.meter",
+      "base_rate_inr": 1420.00,
+      "typical_unit_cost_per_km_3_75m": 5325000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 20.0,
+      "keywords": ["tar road", "bituminous", "asphalt", "black top", "road repair"]
+    },
+    {
+      "item_code": "CPWD-DSR-02.1",
+      "category": "Community Halls & Buildings",
+      "sub_category": "Community Center / Samaj Mandir / Barat Ghar (RCC Framed Structure, Ground Floor)",
+      "unit": "sq.meter plinth area",
+      "base_rate_inr": 24500.00,
+      "typical_unit_cost_150_sqm": 3675000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 25.0,
+      "keywords": ["community hall", "samaj mandir", "cultural hall", "barat ghar", "multipurpose hall", "sabha bhavan"]
+    },
+    {
+      "item_code": "CPWD-DSR-03.1",
+      "category": "Drinking Water & Sanitation",
+      "sub_category": "Deep Tube Well (150mm dia, 100m depth) with Submersible Pump & Structure",
+      "unit": "per completed unit",
+      "base_rate_inr": 385000.00,
+      "tolerance_pct_low": -20.0,
+      "tolerance_pct_high": 25.0,
+      "keywords": ["borewell", "tube well", "submersible pump", "drinking water bore"]
+    },
+    {
+      "item_code": "CPWD-DSR-03.2",
+      "category": "Drinking Water & Sanitation",
+      "sub_category": "Overhead Water Tank (RCC 25,000 Litre Capacity with 12m Staging)",
+      "unit": "per completed unit",
+      "base_rate_inr": 1250000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 20.0,
+      "keywords": ["overhead tank", "oht", "water reservoir", "tank staging"]
+    },
+    {
+      "item_code": "CPWD-DSR-03.3",
+      "category": "Drinking Water & Sanitation",
+      "sub_category": "RO Water Purification Plant (1000 LPH with Shed and Dispenser)",
+      "unit": "per completed unit",
+      "base_rate_inr": 650000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 25.0,
+      "keywords": ["ro plant", "water purifier", "reverse osmosis", "water filter kiosk"]
+    },
+    {
+      "item_code": "CPWD-DSR-03.4",
+      "category": "Drinking Water & Sanitation",
+      "sub_category": "Community Sanitary Complex (4-Seat Toilet with Septic Tank & Wash Facility)",
+      "unit": "per completed unit",
+      "base_rate_inr": 480000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 25.0,
+      "keywords": ["public toilet", "sanitary complex", "urinal", "sulabh", "lavatory"]
+    },
+    {
+      "item_code": "CPWD-DSR-04.1",
+      "category": "Education & Health",
+      "sub_category": "Additional Classroom for Govt / Aided School (RCC Plinth Area ~45 sqm)",
+      "unit": "per room unit",
+      "base_rate_inr": 950000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 20.0,
+      "keywords": ["classroom", "school room", "education room", "anganwadi building"]
+    },
+    {
+      "item_code": "CPWD-DSR-05.1",
+      "category": "Rural Electrification & Lighting",
+      "sub_category": "Solar Street Light (12W-15W LED with Lithium LiFePO4 battery & Pole)",
+      "unit": "per pole unit",
+      "base_rate_inr": 28500.00,
+      "tolerance_pct_low": -20.0,
+      "tolerance_pct_high": 25.0,
+      "keywords": ["solar light", "street light", "led light", "solar street lamp"]
+    },
+    {
+      "item_code": "CPWD-DSR-05.2",
+      "category": "Rural Electrification & Lighting",
+      "sub_category": "High Mast Light Tower (12m - 16m with 4x100W/150W LED Floodlights)",
+      "unit": "per completed tower",
+      "base_rate_inr": 420000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 20.0,
+      "keywords": ["high mast", "mast light", "flood light tower", "chowk lighting"]
+    },
+    {
+      "item_code": "CPWD-DSR-06.1",
+      "category": "Crematorium & Social Welfare",
+      "sub_category": "Crematorium Shed with Raised Platform and Approach Path",
+      "unit": "per shed unit",
+      "base_rate_inr": 1450000.00,
+      "tolerance_pct_low": -15.0,
+      "tolerance_pct_high": 25.0,
+      "keywords": ["crematorium", "smashan", "shamsan ghat", "antyeshti", "cremation shed", "kabristan shed"]
+    }
+  ]
+}
