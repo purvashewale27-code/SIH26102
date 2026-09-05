@@ -121,6 +121,81 @@ body {
   padding: 0 24px;
 }
 
+/* FEATURE MODE SWITCHER */
+.feature-mode-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .feature-mode-switcher {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mode-tab {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.mode-tab:hover {
+  border-color: #93c5fd;
+  transform: translateY(-2px);
+}
+
+.mode-tab.active {
+  border-color: #1e3a8a;
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
+}
+
+.mode-tab.active[data-mode="vidhi-kavach"] {
+  border-color: #dc2626;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.12);
+}
+
+.mode-tab.active[data-mode="punar-drishti"] {
+  border-color: #7c3aed;
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.12);
+}
+
+.mode-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.pill-red { background: #fee2e2; color: #b91c1c; }
+.pill-purple { background: #ede9fe; color: #6d28d9; }
+.pill-blue { background: #dbeafe; color: #1e40af; }
+
+.mode-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.mode-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
 /* KPI CARDS ROW (4 Columns) */
 .kpi-row {
   display: grid;

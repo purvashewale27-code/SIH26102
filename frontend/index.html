@@ -27,7 +27,7 @@
       <div class="step-indicator">
         <span class="step-pill done">✓ Step 1: Core Foundation</span>
         <span class="step-pill done">✓ Step 2: VIDHI-KAVACH</span>
-        <span class="step-pill active">🔍 Step 3: PUNAR-DRISHTI (पुनर्दृष्टि)</span>
+        <span class="step-pill active">✓ Step 3: PUNAR-DRISHTI</span>
         <span class="step-pill">Step 4: ARTHA-DARPAN</span>
       </div>
     </div>
@@ -36,30 +36,51 @@
   <!-- Main Content Container -->
   <main class="page-container">
 
-    <!-- Top 4 Summary KPI Cards -->
-    <section class="kpi-row">
-      <div class="kpi-card">
-        <div class="kpi-label">Total Real Government Works</div>
-        <div class="kpi-number" id="stat-works">Loading...</div>
-        <div class="kpi-desc">100% Nationwide MoSPI eSAKSHI Data</div>
+    <!-- Dedicated Feature Selector Tabs (Complete Separation of Features) -->
+    <section class="feature-mode-switcher">
+      <button class="mode-tab active" data-mode="vidhi-kavach" id="tab-vidhi-kavach">
+        <div class="mode-pill pill-red">FEATURE 1</div>
+        <div class="mode-title">🛡️ VIDHI-KAVACH (Statutory Shield)</div>
+        <div class="mode-desc">Negative List (Places of Worship / Commercial) & March Rush</div>
+      </button>
+
+      <button class="mode-tab" data-mode="punar-drishti" id="tab-punar-drishti">
+        <div class="mode-pill pill-purple">FEATURE 2</div>
+        <div class="mode-title">🔍 PUNAR-DRISHTI (NLP Duplicate Sentry)</div>
+        <div class="mode-desc">TF-IDF Clone Works & Double-Billing Detection</div>
+      </button>
+
+      <button class="mode-tab" data-mode="all-works" id="tab-all-works">
+        <div class="mode-pill pill-blue">ALL-INDIA REPOSITORY</div>
+        <div class="mode-title">🇮🇳 Master Project Explorer</div>
+        <div class="mode-desc">176,925 Projects across 36 States & UTs</div>
+      </button>
+    </section>
+
+    <!-- Dynamic 4 Summary KPI Cards (Changes based on selected Feature) -->
+    <section class="kpi-row" id="kpi-container">
+      <div class="kpi-card" id="kpi-c1">
+        <div class="kpi-label" id="kpi-c1-label">Total Real Government Works</div>
+        <div class="kpi-number" id="kpi-c1-val">Loading...</div>
+        <div class="kpi-desc" id="kpi-c1-desc">100% Nationwide MoSPI eSAKSHI Data</div>
       </div>
 
-      <div class="kpi-card">
-        <div class="kpi-label">Total Sanctioned Value</div>
-        <div class="kpi-number text-blue" id="stat-cost">Loading...</div>
-        <div class="kpi-desc">Grassroots public development budget</div>
+      <div class="kpi-card" id="kpi-c2">
+        <div class="kpi-label" id="kpi-c2-label">100% Compliant Works</div>
+        <div class="kpi-number text-green" id="kpi-c2-val">Loading...</div>
+        <div class="kpi-desc" id="kpi-c2-desc">Zero statutory violations detected</div>
       </div>
 
-      <div class="kpi-card">
-        <div class="kpi-label">States & Union Territories</div>
-        <div class="kpi-number text-green" id="stat-states">Loading...</div>
-        <div class="kpi-desc">100% Nationwide All-India coverage</div>
+      <div class="kpi-card kpi-card-danger" id="kpi-c3">
+        <div class="kpi-label" id="kpi-c3-label">Negative List Violations</div>
+        <div class="kpi-number text-red" id="kpi-c3-val">Loading...</div>
+        <div class="kpi-desc" id="kpi-c3-desc">Prohibited places of worship & commercial trusts</div>
       </div>
 
-      <div class="kpi-card kpi-card-danger" id="card-violations">
-        <div class="kpi-label">VIDHI-KAVACH Red Flags</div>
-        <div class="kpi-number text-red" id="stat-violations">Loading...</div>
-        <div class="kpi-desc" id="stat-violations-desc">Negative List & Guidelines Breaches</div>
+      <div class="kpi-card" id="kpi-c4" style="background:#fffbeb;border-color:#fde68a;">
+        <div class="kpi-label" id="kpi-c4-label">March Rush Violations</div>
+        <div class="kpi-number" id="kpi-c4-val" style="color:#d97706;">Loading...</div>
+        <div class="kpi-desc" id="kpi-c4-desc">Sanctioned in final 10 days of March (GFR 62)</div>
       </div>
     </section>
 
@@ -67,9 +88,9 @@
     <section class="table-section">
       <div class="table-header-bar">
         <div>
-          <div class="feature-tag">🛡️ Feature 1: VIDHI-KAVACH + 🔍 Feature 2: PUNAR-DRISHTI (NLP Clones)</div>
-          <h2>Government Works Forensic Audit Explorer</h2>
-          <p class="section-desc">Auditing real projects against Statutory Guidelines & NLP Duplicate Work Claims</p>
+          <div class="feature-tag" id="view-feature-tag">🛡️ Feature 1: VIDHI-KAVACH (Statutory Policy Shield)</div>
+          <h2 id="view-heading">Statutory Rule Compliance & Negative List Sentry</h2>
+          <p class="section-desc" id="view-subheading">Auditing every project against MPLADS Guidelines 2023 Annexure-I and GFR Rules</p>
         </div>
         
         <!-- Controls: State Dropdown + Search Input -->
@@ -83,19 +104,15 @@
           <div class="search-box-wrapper">
             <label for="search-input" class="control-mini-label">Quick Search:</label>
             <div class="search-box">
-              <input type="text" id="search-input" placeholder="🔍 Search title, MP name, district, keyword (e.g. temple)...">
+              <input type="text" id="search-input" placeholder="🔍 Search title, MP name, district, keyword...">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Quick Filter Tabs -->
-      <div class="filter-tab-bar">
-        <button class="filter-tab active" data-filter="all">All Works (176,925)</button>
-        <button class="filter-tab purple-tab" data-filter="duplicates">🔍 Duplicate Claims — PUNAR-DRISHTI (<span id="pill-duplicates">...</span>)</button>
-        <button class="filter-tab danger-tab" data-filter="violations">🚨 Statutory Red Flags (<span id="pill-violations">...</span>)</button>
-        <button class="filter-tab warning-tab" data-filter="negative-list">⚠️ Negative List (<span id="pill-neglist">...</span>)</button>
-        <button class="filter-tab success-tab" data-filter="compliant">✅ Compliant Works</button>
+      <!-- Quick Filter Tabs (Dynamic for current feature) -->
+      <div class="filter-tab-bar" id="filter-tab-bar">
+        <!-- Will be populated dynamically by current feature mode -->
       </div>
 
       <!-- Real Data Table -->
@@ -108,7 +125,7 @@
               <th style="width: 14%;">State & District</th>
               <th style="width: 14%;">Hon'ble MP</th>
               <th style="width: 10%;">Sanction Cost</th>
-              <th style="width: 18%;">Audit Findings</th>
+              <th style="width: 18%;" id="th-audit-col">Statutory Audit Findings</th>
             </tr>
           </thead>
           <tbody id="projects-tbody">
@@ -130,8 +147,8 @@
     <!-- Bottom Feature Roadmap Callout -->
     <section class="roadmap-callout">
       <div class="roadmap-content">
-        <h3>🛡️ VIDHI-KAVACH (विधि-कवच) Live in Action</h3>
-        <p>You can now test real keyword breaches directly from official MoSPI records! Click the <b>"🚨 All Statutory Red Flags"</b> tab above to see projects flagged for violating <b>Annexure-I Negative List</b> (e.g. places of worship, commercial trusts) or <b>March Rush GFR Rule 62</b>. Click any row to inspect the full statutory citation.</p>
+        <h3 id="roadmap-title">🛡️ VIDHI-KAVACH (विधि-कवच) Live in Action</h3>
+        <p id="roadmap-desc">You can now test real keyword breaches directly from official MoSPI records! Click the <b>"🚨 All Statutory Red Flags"</b> tab above to see projects flagged for violating <b>Annexure-I Negative List</b> (e.g. places of worship, commercial trusts) or <b>March Rush GFR Rule 62</b>. Click any row to inspect the full statutory citation.</p>
       </div>
     </section>
 

@@ -18,6 +18,7 @@ let totalViolationsCount = 0;
 let totalNegativeListCount = 0;
 let totalMarchRushCount = 0;
 let totalDuplicateClaimsCount = 0;
+let totalExactClonesCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
@@ -82,12 +83,15 @@ if (fs.existsSync(DATA_FILE)) {
   }
 
   // 2. Run PUNAR-DRISHTI (Vaibhav's TF-IDF Duplicate Detector)
-  const duplicateMap = punarDrishti.analyzeDuplicates(allProjects, 0.82);
+  const duplicateMap = punarDrishti.analyzeDuplicates(allProjects, 0.85);
   allProjects.forEach(p => {
     const dupe = duplicateMap.get(p.id);
     if (dupe) {
       p.duplicate = dupe;
       totalDuplicateClaimsCount++;
+      if (dupe.similarityScore === 100) {
+        totalExactClonesCount++;
+      }
       p.audit.violations.push({
         ruleId: dupe.ruleId,
         ruleName: dupe.ruleName,
@@ -107,7 +111,7 @@ if (fs.existsSync(DATA_FILE)) {
 
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
   console.log(`🛡️ VIDHI-KAVACH flagged ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)!`);
-  console.log(`🔍 PUNAR-DRISHTI flagged ${totalDuplicateClaimsCount} duplicate works!`);
+  console.log(`🔍 PUNAR-DRISHTI flagged ${totalDuplicateClaimsCount} duplicate works (${totalExactClonesCount} exact 100% clones)!`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -135,7 +139,9 @@ const server = http.createServer((req, res) => {
       totalViolations: totalViolationsCount,
       negativeListCount: totalNegativeListCount,
       marchRushCount: totalMarchRushCount,
-      duplicateClaimsCount: totalDuplicateClaimsCount
+      duplicateClaimsCount: totalDuplicateClaimsCount,
+      exactClonesCount: totalExactClonesCount,
+      compliantCount: allProjects.length - totalViolationsCount
     });
   }
 
@@ -152,25 +158,43 @@ const server = http.createServer((req, res) => {
     const search = (reqUrl.searchParams.get('search') || '').toLowerCase();
     const filter = (reqUrl.searchParams.get('filter') || 'all').toLowerCase();
     const stateFilter = (reqUrl.searchParams.get('state') || 'all').toLowerCase();
+    const mode = (reqUrl.searchParams.get('mode') || 'all').toLowerCase();
     const page = parseInt(reqUrl.searchParams.get('page') || '1', 10);
     const limit = parseInt(reqUrl.searchParams.get('limit') || '20', 10);
 
     let filtered = allProjects;
+
+    // Feature Mode Separation defaults
+    if (mode === 'punar-drishti') {
+      if (!filter || filter === 'duplicates') {
+        filtered = filtered.filter(p => p.duplicate && p.duplicate.isDuplicate);
+      }
+    } else if (mode === 'vidhi-kavach') {
+      if (!filter || filter === 'violations') {
+        filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH'));
+      }
+    }
 
     // Apply State Filter
     if (stateFilter && stateFilter !== 'all') {
       filtered = filtered.filter(p => p.state.toLowerCase() === stateFilter);
     }
 
-    // Apply Filter Tab
+    // Apply Specific Filter Tabs
     if (filter === 'violations') {
-      filtered = filtered.filter(p => !p.audit.isCompliant);
+      filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH'));
     } else if (filter === 'compliant') {
       filtered = filtered.filter(p => p.audit.isCompliant);
     } else if (filter === 'negative-list') {
       filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId.startsWith('NEG-LIST')));
+    } else if (filter === 'march-rush') {
+      filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId === 'MARCH-RUSH'));
     } else if (filter === 'duplicates') {
       filtered = filtered.filter(p => p.duplicate && p.duplicate.isDuplicate);
+    } else if (filter === 'exact-clones') {
+      filtered = filtered.filter(p => p.duplicate && p.duplicate.similarityScore === 100);
+    } else if (filter === 'near-clones') {
+      filtered = filtered.filter(p => p.duplicate && p.duplicate.similarityScore >= 80 && p.duplicate.similarityScore < 100);
     }
 
     // Apply Search
@@ -181,10 +205,14 @@ const server = http.createServer((req, res) => {
         p.district.toLowerCase().includes(search) ||
         p.mpName.toLowerCase().includes(search) ||
         p.id.toLowerCase().includes(search) ||
+        (p.duplicate && (
+          p.duplicate.matchedId.toLowerCase().includes(search) ||
+          p.duplicate.matchedTitle.toLowerCase().includes(search)
+        )) ||
         (p.audit.violations && p.audit.violations.some(v => 
           v.ruleId.toLowerCase().includes(search) || 
           v.ruleName.toLowerCase().includes(search) ||
-          v.matchedKeyword.toLowerCase().includes(search)
+          (v.matchedKeyword && v.matchedKeyword.toLowerCase().includes(search))
         ))
       );
     }
