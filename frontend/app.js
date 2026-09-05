@@ -7,10 +7,12 @@ let currentPage = 1;
 const limit = 20;
 let currentSearch = '';
 let currentFilter = 'all';
+let currentState = 'all';
 let currentLoadedProjects = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   loadStats();
+  loadStates();
   loadProjects();
   setupEvents();
 });
@@ -97,7 +99,32 @@ async function loadStats() {
   }
 }
 
-// 2. Fetch Paginated Project Works
+// 2. Fetch States for Dropdown
+async function loadStates() {
+  try {
+    const res = await fetch('/api/states');
+    if (!res.ok) return;
+    const states = await res.json();
+    const select = document.getElementById('state-select');
+    select.innerHTML = '<option value="all">🇮🇳 All 36 States & UTs (All-India)</option>';
+    states.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.name;
+      opt.innerText = `${s.name} (${s.count.toLocaleString('en-IN')} works)`;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener('change', (e) => {
+      currentState = e.target.value;
+      currentPage = 1;
+      loadProjects();
+    });
+  } catch (err) {
+    console.error('Failed to load states list:', err);
+  }
+}
+
+// 3. Fetch Paginated Project Works
 async function loadProjects() {
   const tbody = document.getElementById('projects-tbody');
   tbody.innerHTML = '<tr><td colspan="6" class="loading-cell">Auditing government projects with VIDHI-KAVACH...</td></tr>';
@@ -107,7 +134,8 @@ async function loadProjects() {
       page: currentPage,
       limit: limit,
       search: currentSearch,
-      filter: currentFilter
+      filter: currentFilter,
+      state: currentState
     });
 
     const res = await fetch(`/api/projects?${query.toString()}`);

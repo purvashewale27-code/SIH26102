@@ -218,9 +218,52 @@ body {
   margin-top: 2px;
 }
 
-/* SEARCH INPUT */
+/* CONTROLS: STATE SELECTOR + SEARCH INPUT */
+.header-controls {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.control-mini-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.state-select-wrapper {
+  min-width: 250px;
+}
+
+.state-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.state-select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.search-box-wrapper {
+  min-width: 320px;
+}
+
 .search-box {
-  min-width: 380px;
+  width: 100%;
 }
 
 .search-box input {

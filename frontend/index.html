@@ -72,9 +72,20 @@
           <p class="section-desc">Auditing real projects against MPLADS 2023 Guidelines Annexure-I and GFR Rules</p>
         </div>
         
-        <!-- Search Input -->
-        <div class="search-box">
-          <input type="text" id="search-input" placeholder="🔍 Search work title, MP name, district, or keyword (e.g. temple)...">
+        <!-- Controls: State Dropdown + Search Input -->
+        <div class="header-controls">
+          <div class="state-select-wrapper">
+            <label for="state-select" class="control-mini-label">Select State / UT:</label>
+            <select id="state-select" class="state-select">
+              <option value="all">🇮🇳 All 36 States & UTs (All-India)</option>
+            </select>
+          </div>
+          <div class="search-box-wrapper">
+            <label for="search-input" class="control-mini-label">Quick Search:</label>
+            <div class="search-box">
+              <input type="text" id="search-input" placeholder="🔍 Search title, MP name, district, keyword (e.g. temple)...">
+            </div>
+          </div>
         </div>
       </div>
 
