@@ -6,16 +6,20 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const vidhiKavach = require('./rules/vidhi_kavach');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
 
 let allProjects = [];
 let totalSanctionedINR = 0;
+let totalViolationsCount = 0;
+let totalNegativeListCount = 0;
+let totalMarchRushCount = 0;
 const statesSet = new Set();
 
-// 1. Load the real government projects simply
-console.log('Loading real projects data...');
+// 1. Load the real government projects & run VIDHI-KAVACH on them
+console.log('Loading real projects data & running VIDHI-KAVACH audit...');
 if (fs.existsSync(DATA_FILE)) {
   const rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
   allProjects = rawData.map((w, index) => {
@@ -23,9 +27,11 @@ if (fs.existsSync(DATA_FILE)) {
     totalSanctionedINR += cost;
     if (w.STATE_NAME) statesSet.add(w.STATE_NAME.trim());
 
-    return {
-      id: `MPLADS-${String(index + 1).padStart(6, '0')}`,
+    const proj = {
+      id: `MPLADS-${String(w.WORK_RECOMMENDATION_DTL_ID || index + 1).padStart(6, '0')}`,
+      workDtlId: w.WORK_RECOMMENDATION_DTL_ID || index + 1,
       title: w.WORK_DESCRIPTION || w.ACTIVITY_NAME || 'Public Development Work',
+      category: w.WORK_CATEGORY || '',
       state: w.STATE_NAME || 'Unknown State',
       district: w.IDA_NAME || w.CONSTITUENCY || 'Unknown District',
       constituency: w.CONSTITUENCY || 'Unknown',
@@ -35,8 +41,25 @@ if (fs.existsSync(DATA_FILE)) {
       status: w.WORK_STAGE || (w.RECOMMENDED_AMOUNT ? 'In Progress' : 'Completed'),
       date: w.SANCTION_DATE || w.RECOMMENDATION_DATE || '2024-06-01'
     };
+
+    // Run VIDHI-KAVACH Statutory Engine
+    const audit = vidhiKavach.auditProject(proj);
+    proj.audit = audit;
+
+    if (!audit.isCompliant) {
+      totalViolationsCount++;
+      if (audit.violations.some(v => v.ruleId.startsWith('NEG-LIST'))) {
+        totalNegativeListCount++;
+      }
+      if (audit.violations.some(v => v.ruleId === 'MARCH-RUSH')) {
+        totalMarchRushCount++;
+      }
+    }
+
+    return proj;
   });
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
+  console.log(`🛡️ VIDHI-KAVACH flagged ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)!`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -60,24 +83,44 @@ const server = http.createServer((req, res) => {
     return sendJson({
       totalProjects: allProjects.length,
       totalSanctionedCrore: +(totalSanctionedINR / 1e7).toFixed(2),
-      totalStates: statesSet.size
+      totalStates: statesSet.size,
+      totalViolations: totalViolationsCount,
+      negativeListCount: totalNegativeListCount,
+      marchRushCount: totalMarchRushCount
     });
   }
 
   // API 2: Filterable / Paginated Projects List
   if (pathname === '/api/projects') {
     const search = (reqUrl.searchParams.get('search') || '').toLowerCase();
+    const filter = (reqUrl.searchParams.get('filter') || 'all').toLowerCase();
     const page = parseInt(reqUrl.searchParams.get('page') || '1', 10);
     const limit = parseInt(reqUrl.searchParams.get('limit') || '20', 10);
 
     let filtered = allProjects;
+
+    // Apply Filter Tab
+    if (filter === 'violations') {
+      filtered = filtered.filter(p => !p.audit.isCompliant);
+    } else if (filter === 'compliant') {
+      filtered = filtered.filter(p => p.audit.isCompliant);
+    } else if (filter === 'negative-list') {
+      filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId.startsWith('NEG-LIST')));
+    }
+
+    // Apply Search
     if (search) {
-      filtered = allProjects.filter(p => 
+      filtered = filtered.filter(p => 
         p.title.toLowerCase().includes(search) ||
         p.state.toLowerCase().includes(search) ||
         p.district.toLowerCase().includes(search) ||
         p.mpName.toLowerCase().includes(search) ||
-        p.id.toLowerCase().includes(search)
+        p.id.toLowerCase().includes(search) ||
+        (p.audit.violations && p.audit.violations.some(v => 
+          v.ruleId.toLowerCase().includes(search) || 
+          v.ruleName.toLowerCase().includes(search) ||
+          v.matchedKeyword.toLowerCase().includes(search)
+        ))
       );
     }
 
