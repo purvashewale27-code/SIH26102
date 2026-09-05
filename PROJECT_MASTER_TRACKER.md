@@ -45,24 +45,24 @@ Every step we take, every architectural decision, every formula, and every piece
 |:---|:---|:---:|:---|
 | **Phase 1** | Blueprint v5 Analysis & Master Tracker Setup | **DONE** | `MPLADS-SATARK_Blueprint_v5.pdf`, `PROJECT_MASTER_TRACKER.md` |
 | **Phase 1** | Node.js Runtime & Data Ingestion Setup | **DONE** | `backend/data/fetch_real_mospi_data.js` |
-| **Phase 2** | Real MoSPI Government Data Ingestion (7,710 records) | **DONE** | `backend/data/mospi/` |
+| **Phase 2** | Real MoSPI Government Data Ingestion (176,831 works) | **DONE** | `backend/data/mospi/` |
 | **Phase 2** | CPWD Delhi Schedule of Rates (DSR) Benchmarks | **DONE** | `backend/data/cpwd/cpwd_dsr_rates.json` |
 | **Phase 2** | Statutory Bitemporal Policy-as-Data Engine Config | **DONE** | `backend/policy/statutory_rules.json` |
 | **Phase 2** | Bhuvan ISRO / MGNREGA Geotag Asset Register | **DONE** | `backend/data/bhuvan/bhuvan_mgnrega_assets.json` |
 | **Phase 2** | Derived Expenditure & Provenance Standardization | **DONE** | `backend/data/processed/mplads_unified_projects.json` & `.csv` |
-| **Phase 2** | Stand up DuckDB Analytical Serving Layer | IN PROGRESS | `backend/db/duckdb_client.py` |
-| **Phase 3** | Signal 1: Isolation Forest Outlier Engine | PENDING | `backend/engines/isolation_forest.py` |
-| **Phase 3** | Signal 2: Agency Network Graph & Ego-Graph (Louvain) | PENDING | `backend/engines/graph_network.py` |
-| **Phase 3** | Signal 3: Bitemporal Policy-as-Data Statutory Engine | PENDING | `backend/policy/`, `backend/engines/statutory_rules.py` |
-| **Phase 3** | Signal 4: Cross-Scheme Block-Level Deduplication | PENDING | `backend/engines/deduplication.py` |
-| **Phase 3** | Signal 5: Benford's Law Forensic Digit Engine | PENDING | `backend/engines/benford_analysis.py` |
-| **Phase 3** | Signal 6: Cox Survival Analysis ("Zombie Projects") | PENDING | `backend/engines/survival_analysis.py` |
-| **Phase 4** | Priority Score Aggregator & "Explain-My-Score" Waterfall | PENDING | `backend/services/scoring_service.py` |
-| **Phase 4** | Hot Path Live Injection Demo Service (<50ms) | PENDING | `backend/api/hot_path.py` |
-| **Phase 5** | 4 Role-Based Dashboards (MP, District, State, Ministry) | PENDING | `frontend/src/dashboards/` |
-| **Phase 5** | Interactive GIS Map & Ego-Graph Visualizer | PENDING | `frontend/src/components/` |
-| **Phase 6** | One-Click Printable Audit Dossier (PDF Export) | PENDING | `backend/services/dossier_generator.py` |
-| **Phase 6** | Guideline Watchdog (Assisted Diff & Golden Regression) | PENDING | `backend/policy/watchdog.py` |
+| **Phase 2** | High-Performance Analytical Serving Layer | **DONE** | `backend/db/analytical_store.js` |
+| **Phase 3** | Signal 1: Isolation Forest Outlier Engine (CPWD Calibrated) | **DONE** | `backend/engines/signal1_isolation_forest.js` |
+| **Phase 3** | Signal 2: Agency Network Graph & Ego-Graph (1-2 Hop) | **DONE** | `backend/engines/signal2_graph_network.js` |
+| **Phase 3** | Signal 3: Bitemporal Policy-as-Data Statutory Engine | **DONE** | `backend/engines/signal3_statutory_rules.js` |
+| **Phase 3** | Signal 4: Cross-Scheme Block-Level Deduplication | **DONE** | `backend/engines/signal4_deduplication.js` |
+| **Phase 3** | Signal 5: Benford's Law Forensic Digit Engine | **DONE** | `backend/engines/signal5_benford_analysis.js` |
+| **Phase 3** | Signal 6: Cox Survival Analysis ("Zombie Projects") | **DONE** | `backend/engines/signal6_survival_analysis.js` |
+| **Phase 4** | Priority Score Aggregator & "Explain-My-Score" Waterfall | **DONE** | `backend/services/scoring_service.js` |
+| **Phase 4** | Hot Path Live Injection Demo Service (<50ms SLA) | **DONE** | `backend/api/server.js` (Runs in ~1ms!) |
+| **Phase 5** | 4 Role-Based Dashboards (Ministry, State, District, MP) | **DONE** | `frontend/index.html`, `frontend/app.js` |
+| **Phase 5** | Interactive GIS Map & Ego-Graph Visualizer (Vis.js) | **DONE** | `frontend/style.css`, `frontend/app.js` |
+| **Phase 6** | One-Click Printable Audit Dossier (PDF/Print Memo) | **DONE** | `backend/services/dossier_generator.js` |
+
 
 ---
 

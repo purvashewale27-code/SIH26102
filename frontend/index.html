@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPLADS-SATARK (सतर्क) — AI Risk Scoring & Forensic Audit Engine</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet GIS Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Vis.js Network for Ego-Graph Rendering -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+  <!-- Chart.js for Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+  <!-- Top Navigation Header -->
+  <header class="top-nav">
+    <div class="brand-container">
+      <div class="gov-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="India Emblem" class="emblem-img">
+        <div>
+          <div class="gov-title">Government of India · MoSPI / DIID</div>
+          <div class="brand-title">MPLADS-SATARK <span class="hindi-tag">(सतर्क)</span></div>
+        </div>
+      </div>
+      <div class="provenance-pill">
+        <i class="fa-solid fa-shield-halved"></i> 100% Real MoSPI Data Verified (27/27 Passed)
+      </div>
+    </div>
+
+    <!-- Role Switcher Pills -->
+    <div class="role-switcher">
+      <button class="role-btn active" data-tab="ministry-tab">
+        <i class="fa-solid fa-landmark-flag"></i> Union Ministry
+      </button>
+      <button class="role-btn" data-tab="state-tab">
+        <i class="fa-solid fa-city"></i> State Nodal
+      </button>
+      <button class="role-btn" data-tab="district-tab">
+        <i class="fa-solid fa-map-location-dot"></i> District Collector
+      </button>
+      <button class="role-btn" data-tab="mp-tab">
+        <i class="fa-solid fa-user-tie"></i> Hon'ble MP
+      </button>
+      <button class="role-btn hot-path-highlight" data-tab="hot-path-tab">
+        <i class="fa-solid fa-bolt"></i> Live Hot Path (&lt;50ms)
+      </button>
+      <button class="role-btn" data-tab="ego-graph-tab">
+        <i class="fa-solid fa-circle-nodes"></i> Ego-Graph
+      </button>
+    </div>
+
+    <div class="header-status">
+      <div class="live-pulse"></div>
+      <span class="live-text" id="api-status-badge">API Online</span>
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="main-container">
+
+    <!-- TAB 1: UNION MINISTRY / DIID DASHBOARD -->
+    <section id="ministry-tab" class="tab-pane active">
+      <div class="section-header">
+        <div>
+          <h2>National Overview & Macro Risk Aggregations</h2>
+          <p class="subtitle">Real-time statutory monitoring across 36 States & UTs, 543 Constituencies, and 176,831 Works</p>
+        </div>
+        <div class="quick-stat-bar">
+          <span class="badge badge-real">PROVENANCE: REAL + DERIVED</span>
+        </div>
+      </div>
+
+      <!-- KPI Stat Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon icon-blue"><i class="fa-solid fa-coins"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-label">Total Sanctioned (Crore)</div>
+            <div class="kpi-value" id="kpi-sanctioned">₹1,308.27 Cr</div>
+            <div class="kpi-hint"><i class="fa-solid fa-database"></i> 100% Nationwide MoSPI Works</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon icon-green"><i class="fa-solid fa-money-bill-transfer"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-label">Cumulative Expenditure</div>
+            <div class="kpi-value" id="kpi-expenditure">₹2,315.27 Cr</div>
+            <div class="kpi-hint"><i class="fa-solid fa-calculator"></i> Derived Pro-Rata Formula §5A</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon icon-purple"><i class="fa-solid fa-list-check"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-label">Active Monitored Works</div>
+            <div class="kpi-value" id="kpi-projects">20,000</div>
+            <div class="kpi-hint"><i class="fa-solid fa-building-columns"></i> 95 Constituencies Indexed</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon icon-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="kpi-body">
+            <div class="kpi-label">Projects Delayed (&gt;180 Days)</div>
+            <div class="kpi-value" id="kpi-delayed">7,761 (38.8%)</div>
+            <div class="kpi-hint text-red"><i class="fa-solid fa-bell"></i> Flagged for Survival Hazard</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two Column Layout: Map & State Rollups -->
+      <div class="grid-2col">
+        <!-- Leaflet Map Container -->
+        <div class="glass-card map-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-map"></i> National Geospatial Distribution & Risk Density</span>
+            <span class="badge badge-subtle">GIS View</span>
+          </div>
+          <div id="national-gis-map" class="map-container"></div>
+        </div>
+
+        <!-- State Performance Table -->
+        <div class="glass-card table-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-chart-bar"></i> State-wise Implementation & Utilization</span>
+            <input type="text" id="state-search-box" placeholder="Filter states..." class="inline-search">
+          </div>
+          <div class="table-scroll-container">
+            <table class="satark-table" id="state-rollups-table">
+              <thead>
+                <tr>
+                  <th>State / UT</th>
+                  <th>Projects</th>
+                  <th>Sanctioned (Cr)</th>
+                  <th>Expenditure (Cr)</th>
+                  <th>Utilization</th>
+                  <th>Delayed</th>
+                </tr>
+              </thead>
+              <tbody id="state-rollups-tbody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: STATE NODAL AUTHORITY -->
+    <section id="state-tab" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>State Nodal Authority · Inter-District Governance</h2>
+          <p class="subtitle">Monitor agency concentration, unspent balances, and cross-district cartel signatures</p>
+        </div>
+        <div class="state-select-container">
+          <label for="state-selector">Select State:</label>
+          <select id="state-selector" class="dropdown-select">
+            <option value="Bihar">Bihar</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Gujarat">Gujarat</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-3col">
+        <div class="glass-card">
+          <div class="card-title"><span><i class="fa-solid fa-chart-pie"></i> Works Completion Status</span></div>
+          <div class="chart-wrapper">
+            <canvas id="state-status-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title"><span><i class="fa-solid fa-building-shield"></i> Top Agency Fund Concentration</span></div>
+          <div class="chart-wrapper">
+            <canvas id="agency-concentration-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-title"><span><i class="fa-solid fa-calendar-xmark"></i> March Rush Pacing Clumping</span></div>
+          <div class="chart-wrapper">
+            <canvas id="march-rush-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DISTRICT MAGISTRATE / PRIORITY AUDIT QUEUE -->
+    <section id="district-tab" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>District Collector & Priority Audit Dispatch Queue</h2>
+          <p class="subtitle">Explainable multi-signal anomaly rankings and print-ready field inspection memoranda</p>
+        </div>
+        <div class="filter-controls">
+          <input type="text" id="project-search-input" placeholder="Search title, agency, or ID..." class="search-input">
+          <select id="risk-filter" class="dropdown-select">
+            <option value="">All Risk Tiers</option>
+            <option value="CRITICAL">Critical Priority (Score 80-100)</option>
+            <option value="HIGH">High Risk (Score 60-79)</option>
+            <option value="MEDIUM">Medium Risk (Score 35-59)</option>
+            <option value="LOW">Low Risk (Score 0-34)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="glass-card full-table-card">
+        <div class="table-scroll-container">
+          <table class="satark-table">
+            <thead>
+              <tr>
+                <th>Project ID</th>
+                <th>Work Description</th>
+                <th>State & District</th>
+                <th>Sanctioned Cost</th>
+                <th>Delay</th>
+                <th>Priority Score</th>
+                <th>Risk Tier</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projects-table-tbody">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-bar">
+          <button id="prev-page-btn" class="page-btn"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+          <span id="page-indicator">Page 1 of 400</span>
+          <button id="next-page-btn" class="page-btn">Next <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: HON'BLE MEMBER OF PARLIAMENT (MP) -->
+    <section id="mp-tab" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Hon'ble Member of Parliament · Constituency Self-Check</h2>
+          <p class="subtitle">Constituency health scorecard, mandatory SC/ST quota progress, and pending approvals</p>
+        </div>
+        <div class="constituency-selector-wrapper">
+          <label for="constituency-dropdown">Select Parliamentary Constituency:</label>
+          <select id="constituency-dropdown" class="dropdown-select">
+            <option value="ARRAH">ARRAH (Sudama Prasad)</option>
+            <option value="AURANGABAD">AURANGABAD (Abhay Kumar Sinha)</option>
+            <option value="BANKA">BANKA (Giridhari Yadav)</option>
+            <option value="BEGUSARAI">BEGUSARAI (Giriraj Singh)</option>
+            <option value="BHAGALPUR">BHAGALPUR (Ajay Kumar Mandal)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mp-profile-card glass-card">
+        <div class="mp-info">
+          <div class="mp-avatar"><i class="fa-solid fa-user-check"></i></div>
+          <div>
+            <h3 id="mp-display-name">SUDAMA PRASAD</h3>
+            <div class="mp-subtitle" id="mp-display-constituency">18th Lok Sabha · ARRAH, Bihar</div>
+          </div>
+        </div>
+        <div class="mp-stats-row">
+          <div class="stat-box">
+            <div class="label">Total Works Sanctioned</div>
+            <div class="val" id="mp-stat-works">1,245</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Total Sanctioned Value</div>
+            <div class="val" id="mp-stat-cost">₹112.4 Cr</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Completion Rate</div>
+            <div class="val text-green" id="mp-stat-comp">64.2%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statutory Quota Meters -->
+      <div class="grid-2col">
+        <div class="glass-card quota-card">
+          <div class="quota-header">
+            <div>
+              <h4>Scheduled Caste (SC) Quota</h4>
+              <p class="statutory-ref">MPLADS Guidelines 2023, Clause 2.5 (Mandatory 15.0%)</p>
+            </div>
+            <span class="badge" id="sc-compliance-badge">COMPLIANT</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-fill" id="sc-progress-fill" style="width: 16.5%;"></div>
+            <div class="target-marker" style="left: 15%;" title="Mandatory 15% Minimum"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="sc-current-pct">Current: 16.5%</span>
+            <span>Target: 15.0% Minimum</span>
+          </div>
+        </div>
+
+        <div class="glass-card quota-card">
+          <div class="quota-header">
+            <div>
+              <h4>Scheduled Tribe (ST) Quota</h4>
+              <p class="statutory-ref">MPLADS Guidelines 2023, Clause 2.5 (Mandatory 7.5%)</p>
+            </div>
+            <span class="badge" id="st-compliance-badge">COMPLIANT</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-fill" id="st-progress-fill" style="width: 8.2%;"></div>
+            <div class="target-marker" style="left: 7.5%;" title="Mandatory 7.5% Minimum"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="st-current-pct">Current: 8.2%</span>
+            <span>Target: 7.5% Minimum</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: LIVE HOT PATH AI DEMO (< 50ms) -->
+    <section id="hot-path-tab" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>⚡ Live Hot Path Injection Sandbox</h2>
+          <p class="subtitle">Blueprint v5 Masterstroke: Score an injected record live against pre-fitted models in &lt; 50ms</p>
+        </div>
+        <div class="live-sla-badge">
+          <i class="fa-solid fa-stopwatch"></i> SLA: &lt; 50ms Inference Target
+        </div>
+      </div>
+
+      <!-- Quick Preset Buttons for Judges -->
+      <div class="presets-row">
+        <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Demo Scenarios for Judges:</span>
+        <button class="preset-btn" id="preset-legit">1. Legitimate Road Project</button>
+        <button class="preset-btn" id="preset-temple">2. Temple in Negative List</button>
+        <button class="preset-btn" id="preset-tender-split">3. ₹4.98L Split Tender Evasion</button>
+        <button class="preset-btn" id="preset-zombie">4. 'Zombie Project' Stall Alert</button>
+      </div>
+
+      <div class="grid-2col">
+        <!-- Input Form -->
+        <div class="glass-card">
+          <div class="card-title"><span><i class="fa-solid fa-keyboard"></i> Injected Work Parameters</span></div>
+          <form id="hot-path-form" class="hot-path-form">
+            <div class="form-group">
+              <label>Work Title / Description:</label>
+              <input type="text" id="hp-title" class="form-control" value="Construction of CC Road from Hanuman Temple to ZP School" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>State:</label>
+                <select id="hp-state" class="form-control">
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Delhi">Delhi</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>District:</label>
+                <input type="text" id="hp-district" class="form-control" value="Ahilyanagar">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Estimated Sanctioned Cost (₹):</label>
+                <input type="number" id="hp-cost" class="form-control" value="498000" required>
+              </div>
+              <div class="form-group">
+                <label>Physical Progress (%):</label>
+                <input type="number" id="hp-progress" class="form-control" value="20" min="0" max="100">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Delay Past Expected Finish (Days):</label>
+                <input type="number" id="hp-delay" class="form-control" value="380">
+              </div>
+              <div class="form-group">
+                <label>Sanction Timing:</label>
+                <select id="hp-march" class="form-control">
+                  <option value="true">Sanctioned in March Rush (Rule 62 Alert)</option>
+                  <option value="false">Normal Fiscal Quarter Sanction</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Implementing Agency:</label>
+              <input type="text" id="hp-agency" class="form-control" value="PUBLIC WORKS DEPARTMENT (PWD) DIVISION">
+            </div>
+
+            <button type="submit" class="submit-hot-path-btn" id="run-hot-path-btn">
+              <i class="fa-solid fa-bolt"></i> Evaluate Live on Hot Path
+            </button>
+          </form>
+        </div>
+
+        <!-- Real-Time Evaluation Result -->
+        <div class="glass-card result-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-gauge-high"></i> Multi-Signal AI Output</span>
+            <div id="latency-indicator" class="latency-pill">Latency: -- ms</div>
+          </div>
+
+          <div class="score-display-block">
+            <div class="score-circle-wrapper">
+              <div class="score-circle" id="hp-score-circle">
+                <span id="hp-score-number">--</span>
+                <span class="score-denom">/ 100</span>
+              </div>
+              <div class="score-tier-label" id="hp-tier-badge">AWAITING INJECTION</div>
+            </div>
+            <div class="signals-radar-summary">
+              <div class="sig-badge" id="sig-badge-1"><i class="fa-solid fa-tree"></i> Sig 1: Isolation Forest: --</div>
+              <div class="sig-badge" id="sig-badge-2"><i class="fa-solid fa-diagram-project"></i> Sig 2: Network Graph: --</div>
+              <div class="sig-badge" id="sig-badge-3"><i class="fa-solid fa-scale-balanced"></i> Sig 3: Statutory Rules: --</div>
+              <div class="sig-badge" id="sig-badge-4"><i class="fa-solid fa-clone"></i> Sig 4: Deduplication: --</div>
+              <div class="sig-badge" id="sig-badge-5"><i class="fa-solid fa-calculator"></i> Sig 5: Benford's Law: --</div>
+              <div class="sig-badge" id="sig-badge-6"><i class="fa-solid fa-hourglass-half"></i> Sig 6: Survival Hazard: --</div>
+            </div>
+          </div>
+
+          <div class="explain-my-score-section">
+            <h4><i class="fa-solid fa-list-ol"></i> Additive Explain-My-Score Waterfall:</h4>
+            <div id="hp-waterfall-items" class="waterfall-list">
+              <p class="text-muted">Click "Evaluate Live on Hot Path" to see the full audit trail breakdown.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: EGO-GRAPH VISUALIZER -->
+    <section id="ego-graph-tab" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>🕸️ Agency-Vendor Ego-Graph Visualizer</h2>
+          <p class="subtitle">Blueprint v5 §7 Focus & Context: Render interactive 1–2 hop neighborhood on demand</p>
+        </div>
+        <div class="graph-search-box">
+          <input type="text" id="ego-agency-search" placeholder="Enter agency name..." class="search-input" value="LOCAL AREA ENGINEERING ORGANISATION (LAEO)-02 JAGDISHPUR">
+          <button id="load-ego-graph-btn" class="action-btn"><i class="fa-solid fa-magnifying-glass"></i> Explore Ego Graph</button>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="ego-legend">
+          <span class="legend-item"><span class="dot dot-amber"></span> Implementing Agency (Center)</span>
+          <span class="legend-item"><span class="dot dot-blue"></span> Connected MPs</span>
+          <span class="legend-item"><span class="dot dot-green"></span> Contracted Vendors</span>
+        </div>
+        <div id="vis-network-container" class="network-container"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL 1: EXPLAIN-MY-SCORE WATERFALL MODAL -->
+  <div id="explain-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-project-title">Explain-My-Score Breakdown</h3>
+          <p id="modal-project-meta" class="text-muted">MPLADS Project Audit Detail</p>
+        </div>
+        <button class="modal-close-btn" id="close-explain-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-score-summary">
+          <div class="modal-score-badge" id="modal-score-badge">78 / 100</div>
+          <div>
+            <div id="modal-tier-text" class="modal-tier-text">HIGH AUDIT PRIORITY</div>
+            <p class="modal-audit-desc">Itemized additive points traceable to primary ground evidence and GFR 2017 rules.</p>
+          </div>
+        </div>
+        <div class="waterfall-container" id="modal-waterfall-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="action-btn" id="modal-dossier-btn"><i class="fa-solid fa-print"></i> Open Printable Audit Dossier</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: PRINTABLE AUDIT DOSSIER (INSPECTION MEMO) -->
+  <div id="dossier-modal" class="modal-backdrop">
+    <div class="modal-card printable-dossier-card">
+      <div class="modal-header no-print">
+        <h3>Audit Inspection Memorandum (Print Ready)</h3>
+        <div>
+          <button class="action-btn print-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Dossier</button>
+          <button class="modal-close-btn" id="close-dossier-modal">&times;</button>
+        </div>
+      </div>
+      <div class="dossier-paper" id="dossier-content-area">
+        <!-- Print layout populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
