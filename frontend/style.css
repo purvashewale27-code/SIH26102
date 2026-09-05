@@ -124,12 +124,18 @@ body {
 /* FEATURE MODE SWITCHER */
 .feature-mode-switcher {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
   margin-bottom: 24px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+  .feature-mode-switcher {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
   .feature-mode-switcher {
     grid-template-columns: 1fr;
   }
@@ -139,7 +145,7 @@ body {
   background: var(--surface);
   border: 2px solid var(--border);
   border-radius: 10px;
-  padding: 16px 18px;
+  padding: 14px 14px;
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -167,6 +173,16 @@ body {
   box-shadow: 0 6px 16px rgba(124, 58, 237, 0.12);
 }
 
+.mode-tab.active[data-mode="artha-darpan"] {
+  border-color: #d97706;
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.15);
+}
+
+.mode-tab.active[data-mode="chakra-vyuh"] {
+  border-color: #e11d48;
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.15);
+}
+
 .mode-pill {
   display: inline-block;
   font-size: 10px;
@@ -180,6 +196,8 @@ body {
 
 .pill-red { background: #fee2e2; color: #b91c1c; }
 .pill-purple { background: #ede9fe; color: #6d28d9; }
+.pill-amber { background: #fef3c7; color: #b45309; }
+.pill-crimson { background: #ffe4e6; color: #be123c; }
 .pill-blue { background: #dbeafe; color: #1e40af; }
 
 .mode-title {
@@ -504,6 +522,43 @@ body {
   background: #f5f3ff;
   border: 1px solid #ddd6fe;
   color: #6d28d9;
+}
+
+.audit-badge-cost {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #b45309;
+}
+
+.audit-badge-cartel {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+}
+
+/* NETWORK EGO-GRAPH BOX */
+.network-graph-card {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.graph-canvas-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  height: 260px;
+  position: relative;
+  overflow: hidden;
 }
 
 .duplicate-compare-box {

@@ -2,13 +2,15 @@
  * MPLADS-SATARK (सतर्क)
  * Master Client Controller
  * Complete UI & Feature Separation:
- *  - Mode 1: VIDHI-KAVACH (Statutory Shield)
+ *  - Mode 1: VIDHI-KAVACH (Statutory Policy Shield)
  *  - Mode 2: PUNAR-DRISHTI (NLP Duplicate Sentry)
- *  - Mode 3: ALL-INDIA REPOSITORY (Master Explorer)
+ *  - Mode 3: ARTHA-DARPAN (AI Cost Benchmark & Overpricing Sentry)
+ *  - Mode 4: CHAKRA-VYUH (Contractor Cartel & Vendor Nexus Graph)
+ *  - Mode 5: ALL-INDIA REPOSITORY (Master MoSPI Explorer)
  */
 
 let currentMode = 'vidhi-kavach'; // Default to Feature 1
-let currentFilter = 'violations';  // Default filter for Feature 1
+let currentFilter = 'violations';
 let currentState = 'all';
 let currentSearch = '';
 let currentPage = 1;
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModeSwitcher();
   setupEventListeners();
   loadStats().then(() => {
-    switchMode('vidhi-kavach'); // Initialize Feature 1 cleanly
+    switchMode('vidhi-kavach'); // Default to Feature 1
     loadStates();
   });
 });
@@ -36,6 +38,14 @@ function setupModeSwitcher() {
       }
     });
   });
+
+  // Cartel MP Dropdown change listener
+  const cartelSelect = document.getElementById('cartel-mp-select');
+  if (cartelSelect) {
+    cartelSelect.addEventListener('change', (e) => {
+      loadCartelGraph(e.target.value);
+    });
+  }
 }
 
 // 2. Switch Mode - Completely isolates UI, KPIs, Filters, Table and Modals
@@ -45,35 +55,37 @@ function switchMode(newMode) {
   currentSearch = '';
   document.getElementById('search-input').value = '';
 
-  // Update active tab buttons
+  // Toggle active tab buttons
   document.querySelectorAll('.mode-tab').forEach(t => {
     t.classList.toggle('active', t.getAttribute('data-mode') === currentMode);
   });
 
-  // Mode Specific UI Configurations
+  // Graph section visibility (only visible in chakra-vyuh mode)
+  const graphSec = document.getElementById('chakra-graph-section');
+  if (graphSec) {
+    graphSec.style.display = currentMode === 'chakra-vyuh' ? 'block' : 'none';
+  }
+
+  // ==========================================
+  // MODE 1: VIDHI-KAVACH (Statutory Shield)
+  // ==========================================
   if (currentMode === 'vidhi-kavach') {
-    // Feature 1: VIDHI-KAVACH
     currentFilter = 'violations';
 
-    // Headers
-    document.getElementById('view-feature-tag').className = 'feature-tag';
-    document.getElementById('view-feature-tag').style.background = '#fef2f2';
-    document.getElementById('view-feature-tag').style.color = '#b91c1c';
-    document.getElementById('view-feature-tag').style.borderColor = '#fecaca';
-    document.getElementById('view-feature-tag').innerHTML = '🛡️ FEATURE 1: VIDHI-KAVACH (विधि-कवच — Statutory Policy Shield)';
-    
-    document.getElementById('view-heading').innerText = 'Annexure-I Negative List & GFR 62 March Rush Sentry';
-    document.getElementById('view-subheading').innerText = 'Auditing 176,925 works strictly against MoSPI MPLADS Guidelines 2023 Statutory Rules';
+    setFeatureHeader(
+      '🛡️ FEATURE 1: VIDHI-KAVACH (विधि-कवच — Statutory Policy Shield)',
+      'Annexure-I Negative List & GFR 62 March Rush Sentry',
+      'Auditing 176,925 works strictly against MoSPI MPLADS Guidelines 2023 Statutory Rules',
+      '#fef2f2', '#b91c1c', '#fecaca'
+    );
 
-    // KPIs (Feature 1 Focus)
     renderKPIs({
-      c1: { label: 'Total Works Audited', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: '100% Nationwide MoSPI eSAKSHI Data', color: '' },
+      c1: { label: 'Total Works Audited', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: '100% Nationwide MoSPI eSAKSHI Data' },
       c2: { label: 'Statutorily Compliant', val: statsData ? statsData.compliantCount.toLocaleString('en-IN') : '158,074', desc: 'Zero statutory breaches detected', color: 'text-green' },
       c3: { label: 'Negative List Breaches', val: statsData ? statsData.negativeListCount.toLocaleString('en-IN') : '15,953', desc: 'Places of worship & commercial trusts', color: 'text-red', isDanger: true },
-      c4: { label: 'March Rush Violations', val: statsData ? statsData.marchRushCount.toLocaleString('en-IN') : '3,204', desc: 'Sanctioned in final 10 days of March (GFR 62)', color: '', isWarning: true }
+      c4: { label: 'March Rush Violations', val: statsData ? statsData.marchRushCount.toLocaleString('en-IN') : '3,204', desc: 'Sanctioned in final 10 days of March (GFR 62)', isWarning: true }
     });
 
-    // Filter Tabs for Feature 1
     renderFilterTabs([
       { id: 'violations', label: '🚨 All Statutory Red Flags', count: statsData ? statsData.totalViolations : 18851, cls: 'danger-tab active' },
       { id: 'negative-list', label: '🛑 Negative List Breaches', count: statsData ? statsData.negativeListCount : 15953, cls: 'danger-tab' },
@@ -82,40 +94,36 @@ function switchMode(newMode) {
       { id: 'all', label: '📋 All 176,925 Works', count: statsData ? statsData.totalProjects : 176925, cls: '' }
     ]);
 
-    // Table Column Header
     document.getElementById('th-audit-col').innerText = 'Statutory Audit Verdict (VIDHI-KAVACH)';
+    setRoadmap(
+      '🛡️ Feature 1: VIDHI-KAVACH (विधि-कवच) Live in Action',
+      'VIDHI-KAVACH audits every project against the official <b>MPLADS 2023 Negative List (Annexure-I)</b> (prohibiting works on places of worship, commercial trusts, clubs) and <b>GFR Rule 62</b> (preventing fiscal year-end March rush). Click any red flag row to inspect the full statutory clause and penalty citation.'
+    );
 
-    // Roadmap Explanation
-    document.getElementById('roadmap-title').innerHTML = '🛡️ Feature 1: VIDHI-KAVACH (विधि-कवच) Live in Action';
-    document.getElementById('roadmap-desc').innerHTML = 'VIDHI-KAVACH audits every project against the official <b>MPLADS 2023 Negative List (Annexure-I)</b> (prohibiting works on places of worship, commercial trusts, clubs) and <b>GFR Rule 62</b> (preventing fiscal year-end March rush). Click any red flag row to inspect the full statutory clause and penalty citation.';
-
+  // ==========================================
+  // MODE 2: PUNAR-DRISHTI (NLP Duplicate Sentry)
+  // ==========================================
   } else if (currentMode === 'punar-drishti') {
-    // Feature 2: PUNAR-DRISHTI
     currentFilter = 'duplicates';
 
-    // Headers
-    document.getElementById('view-feature-tag').className = 'feature-tag';
-    document.getElementById('view-feature-tag').style.background = '#f5f3ff';
-    document.getElementById('view-feature-tag').style.color = '#6d28d9';
-    document.getElementById('view-feature-tag').style.borderColor = '#ddd6fe';
-    document.getElementById('view-feature-tag').innerHTML = '🔍 FEATURE 2: PUNAR-DRISHTI (पुनर्दृष्टि — NLP Duplicate Sentry)';
-    
-    document.getElementById('view-heading').innerText = 'Cross-Work Lexical NLP Twin Work & Double-Billing Sentry';
-    document.getElementById('view-subheading').innerText = "Vaibhav's TF-IDF & Cosine Similarity Engine detecting duplicate project claims across India";
+    setFeatureHeader(
+      '🔍 FEATURE 2: PUNAR-DRISHTI (पुनर्दृष्टि — NLP Duplicate Sentry)',
+      'Cross-Work Lexical NLP Twin Work & Double-Billing Sentry',
+      "Vaibhav's TF-IDF & Cosine Similarity Engine detecting duplicate project claims across India",
+      '#f5f3ff', '#6d28d9', '#ddd6fe'
+    );
 
-    // KPIs (Feature 2 Focus)
     const dupeTotal = statsData ? statsData.duplicateClaimsCount : 10204;
     const exactTotal = statsData ? statsData.exactClonesCount : 6965;
     const nearTotal = dupeTotal - exactTotal;
 
     renderKPIs({
-      c1: { label: 'Total Works Scanned', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: 'Across all 36 States & UTs', color: '' },
-      c2: { label: 'Duplicate Claims Flagged', val: dupeTotal.toLocaleString('en-IN'), desc: 'Cross-work twin assets in same district', color: '', isPurple: true },
+      c1: { label: 'Total Works Scanned', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: 'Across all 36 States & UTs' },
+      c2: { label: 'Duplicate Claims Flagged', val: dupeTotal.toLocaleString('en-IN'), desc: 'Cross-work twin assets in district', isPurple: true },
       c3: { label: '100% Exact Clones', val: exactTotal.toLocaleString('en-IN'), desc: 'Identical work descriptions in district', color: 'text-red', isDanger: true },
-      c4: { label: 'Near-Clones (85%–99%)', val: nearTotal.toLocaleString('en-IN'), desc: 'Slight variations in title phrasing', color: '', isWarning: true }
+      c4: { label: 'Near-Clones (85%–99%)', val: nearTotal.toLocaleString('en-IN'), desc: 'Slight variations in title phrasing', isWarning: true }
     });
 
-    // Filter Tabs for Feature 2
     renderFilterTabs([
       { id: 'duplicates', label: '🔍 All Duplicate Claims', count: dupeTotal, cls: 'purple-tab active' },
       { id: 'exact-clones', label: '⚠️ 100% Exact Title Clones', count: exactTotal, cls: 'purple-tab' },
@@ -123,62 +131,155 @@ function switchMode(newMode) {
       { id: 'all', label: '📋 All 176,925 Scanned Works', count: statsData ? statsData.totalProjects : 176925, cls: '' }
     ]);
 
-    // Table Column Header
     document.getElementById('th-audit-col').innerText = 'Duplicate Sentry Analysis (PUNAR-DRISHTI)';
+    setRoadmap(
+      '🔍 Feature 2: PUNAR-DRISHTI (पुनर्दृष्टि) Live in Action',
+      "PUNAR-DRISHTI applies <b>Vaibhav's TF-IDF tokenization and Cosine Similarity</b> to compare project descriptions within each district. It flags identical work titles (100% exact clones) and rephrased works (85–99% near clones) to prevent double-billing on the same physical asset. Click any duplicate row to inspect both claims side-by-side."
+    );
 
-    // Roadmap Explanation
-    document.getElementById('roadmap-title').innerHTML = '🔍 Feature 2: PUNAR-DRISHTI (पुनर्दृष्टि) Live in Action';
-    document.getElementById('roadmap-desc').innerHTML = "PUNAR-DRISHTI applies <b>Vaibhav's TF-IDF tokenization and Cosine Similarity</b> to compare project descriptions within each district. It flags identical work titles (100% exact clones) and rephrased works (85–99% near clones) to prevent double-billing on the same physical asset. Click any duplicate row to inspect both claims side-by-side.";
+  // ==========================================
+  // MODE 3: ARTHA-DARPAN (Cost Inflation Sentry)
+  // ==========================================
+  } else if (currentMode === 'artha-darpan') {
+    currentFilter = 'inflated';
 
-  } else {
-    // Mode 3: ALL-INDIA REPOSITORY
-    currentFilter = 'all';
+    setFeatureHeader(
+      '💰 FEATURE 3: ARTHA-DARPAN (अर्थ-दर्पण — AI Cost Benchmark & Overpricing Sentry)',
+      'CPWD Schedule of Rates (DSR) & Statistical Peer-Group Benchmark Analyzer',
+      'Auditing project budgets against State DSR Multipliers and category peer medians to prevent treasury overbilling',
+      '#fffbeb', '#b45309', '#fde68a'
+    );
 
-    // Headers
-    document.getElementById('view-feature-tag').className = 'feature-tag';
-    document.getElementById('view-feature-tag').style.background = '#eff6ff';
-    document.getElementById('view-feature-tag').style.color = '#1d4ed8';
-    document.getElementById('view-feature-tag').style.borderColor = '#bfdbfe';
-    document.getElementById('view-feature-tag').innerHTML = '🇮🇳 ALL-INDIA REPOSITORY (Master MoSPI Explorer)';
-    
-    document.getElementById('view-heading').innerText = 'Master MoSPI eSAKSHI Project Explorer';
-    document.getElementById('view-subheading').innerText = '176,925 Real Government Projects across 36 States and Union Territories';
+    const inflatedTotal = statsData ? statsData.inflatedCostCount : 69170;
+    const critTotal = statsData ? statsData.criticalInflationCount : 27978;
+    const modTotal = statsData ? statsData.moderateInflationCount : 12858;
+    const excessCr = statsData ? statsData.totalExcessCrore : 3639.86;
 
-    // KPIs (Combined View)
     renderKPIs({
-      c1: { label: 'Total Government Works', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: '100% Real MoSPI Data', color: '' },
-      c2: { label: 'Total Sanctioned Amount', val: statsData ? `₹${statsData.totalSanctionedCrore.toLocaleString('en-IN')} Cr` : '₹14,976.4 Cr', desc: 'Approved central allocations', color: 'text-blue' },
-      c3: { label: 'States & UTs Covered', val: statsData ? `${statsData.totalStates} States / UTs` : '36 States / UTs', desc: 'Complete national coverage', color: 'text-green' },
-      c4: { label: 'Total Red Flags (Combined)', val: statsData ? (statsData.totalViolations + statsData.duplicateClaimsCount).toLocaleString('en-IN') : '29,055', desc: 'VIDHI-KAVACH + PUNAR-DRISHTI', color: 'text-red', isDanger: true }
+      c1: { label: 'Total Works Evaluated', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: 'Calibrated against CPWD Rates' },
+      c2: { label: 'Cost Anomalies Flagged', val: inflatedTotal.toLocaleString('en-IN'), desc: 'Deviating from peer benchmarks', isWarning: true },
+      c3: { label: 'Critical Inflation (+100%+)', val: critTotal.toLocaleString('en-IN'), desc: 'Sanctioned at ≥ 2x peer median', color: 'text-red', isDanger: true },
+      c4: { label: 'Total Excess Cost Risk', val: `₹${excessCr.toLocaleString('en-IN')} Cr`, desc: 'Cumulative price-padding risk flagged', isDanger: true }
     });
 
-    // Filter Tabs for Master View
+    renderFilterTabs([
+      { id: 'inflated', label: '💰 All Cost Anomalies', count: inflatedTotal, cls: 'warning-tab active' },
+      { id: 'critical-inflation', label: '🚨 Critical Inflation (+100% to +400%)', count: critTotal, cls: 'danger-tab' },
+      { id: 'moderate-inflation', label: '⚠️ Moderate Inflation (+50% to +100%)', count: modTotal, cls: 'warning-tab' },
+      { id: 'underquoted', label: '📉 Unviable Under-Bids (<-40%)', count: 28334, cls: 'warning-tab' },
+      { id: 'fair-estimate', label: '✅ Fair Market Pricing', count: 107755, cls: 'success-tab' }
+    ]);
+
+    document.getElementById('th-audit-col').innerText = 'Cost Benchmark Verdict (ARTHA-DARPAN)';
+    setRoadmap(
+      '💰 Feature 3: ARTHA-DARPAN (अर्थ-दर्पण) Live in Action',
+      'ARTHA-DARPAN unifies <b>Vaibhav’s peer-group distribution algorithm</b> with <b>official Central Public Works Department (CPWD) Delhi Schedule of Rates (DSR)</b>. It calculates the median cost for every work category in each State and flags projects sanctioned at 2x to 4x standard rates. Click any row to view the cost deviation breakdown.'
+    );
+
+  // ==========================================
+  // MODE 4: CHAKRA-VYUH (Contractor Cartel Graph)
+  // ==========================================
+  } else if (currentMode === 'chakra-vyuh') {
+    currentFilter = 'cartels';
+
+    setFeatureHeader(
+      '🕸️ FEATURE 4: CHAKRA-VYUH (चक्रव्यूह — Contractor Cartel & Vendor Nexus Graph)',
+      'Herfindahl-Hirschman Index (HHI) Monopoly Sentry & Interactive Ego-Network',
+      'Forensic analysis of 109,475 payment vouchers across 27,234 registered contractors and 7,231 implementing agencies',
+      '#fff1f2', '#be123c', '#fecdd3'
+    );
+
+    const cartelTotal = statsData ? statsData.cartelRiskCount : 47302;
+    const monopolyTotal = statsData ? statsData.monopolyCount : 23920;
+    const vendorTotal = statsData ? statsData.totalVendorsCount : 27234;
+
+    renderKPIs({
+      c1: { label: 'Registered Contractors', val: vendorTotal.toLocaleString('en-IN'), desc: 'From official MoSPI payment ledgers' },
+      c2: { label: 'Cartel / Monopoly Risks', val: cartelTotal.toLocaleString('en-IN'), desc: 'Works linked to dominant syndicates', isDanger: true },
+      c3: { label: 'Single-Vendor Monopolies', val: monopolyTotal.toLocaleString('en-IN'), desc: '1 vendor taking ≥ 60% MP funds', color: 'text-red', isDanger: true },
+      c4: { label: 'Payment Vouchers Analyzed', val: '109,521', desc: 'Real transaction vouchers mapped', color: 'text-blue' }
+    });
+
+    renderFilterTabs([
+      { id: 'cartels', label: '🕸️ All Cartel & Monopoly Risks', count: cartelTotal, cls: 'danger-tab active' },
+      { id: 'monopoly', label: '🚨 Single-Vendor Monopolies (≥60% Funds)', count: monopolyTotal, cls: 'danger-tab' },
+      { id: 'elevated', label: '⚠️ Elevated Concentration (HHI > 2200)', count: cartelTotal - monopolyTotal, cls: 'warning-tab' },
+      { id: 'competitive', label: '✅ Competitive Bidding Allocation', count: 129623, cls: 'success-tab' }
+    ]);
+
+    document.getElementById('th-audit-col').innerText = 'Vendor Nexus Verdict (CHAKRA-VYUH)';
+    setRoadmap(
+      '🕸️ Feature 4: CHAKRA-VYUH (चक्रव्यूह) Live in Action',
+      'CHAKRA-VYUH uses graph theory and the <b>Herfindahl-Hirschman Index (HHI)</b> to detect vendor cartels and procurement monopolies. It reveals when a single contractor company corners the vast majority of an MP’s recommendations. Select any high-concentration constituency above to interact with the live ego-network graph.'
+    );
+
+    loadCartelGraph(document.getElementById('cartel-mp-select').value);
+
+  // ==========================================
+  // MODE 5: ALL-INDIA REPOSITORY (Master Explorer)
+  // ==========================================
+  } else {
+    currentFilter = 'all';
+
+    setFeatureHeader(
+      '🇮🇳 ALL-INDIA REPOSITORY (Master MoSPI Explorer)',
+      'Nationwide MoSPI eSAKSHI Project Repository',
+      '176,925 Real Government Projects across 36 States and Union Territories',
+      '#eff6ff', '#1d4ed8', '#bfdbfe'
+    );
+
+    renderKPIs({
+      c1: { label: 'Total Government Works', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: '100% Real MoSPI Data' },
+      c2: { label: 'Total Sanctioned Amount', val: statsData ? `₹${statsData.totalSanctionedCrore.toLocaleString('en-IN')} Cr` : '₹7,908.5 Cr', desc: 'Approved central allocations', color: 'text-blue' },
+      c3: { label: 'States & UTs Covered', val: statsData ? `${statsData.totalStates} States / UTs` : '37 States / UTs', desc: 'Complete national coverage', color: 'text-green' },
+      c4: { label: 'Total Multi-Engine Red Flags', val: statsData ? (statsData.totalViolations + statsData.duplicateClaimsCount).toLocaleString('en-IN') : '29,055', desc: 'Combined intelligence findings', color: 'text-red', isDanger: true }
+    });
+
     renderFilterTabs([
       { id: 'all', label: '🌐 All 176,925 Works', count: statsData ? statsData.totalProjects : 176925, cls: 'active' },
       { id: 'violations', label: '🛡️ Feature 1 Violations', count: statsData ? statsData.totalViolations : 18851, cls: 'danger-tab' },
       { id: 'duplicates', label: '🔍 Feature 2 Duplicates', count: statsData ? statsData.duplicateClaimsCount : 10204, cls: 'purple-tab' },
-      { id: 'compliant', label: '✅ Fully Clean Works', count: statsData ? statsData.compliantCount : 158074, cls: 'success-tab' }
+      { id: 'inflated', label: '💰 Feature 3 Cost Anomalies', count: statsData ? statsData.inflatedCostCount : 69170, cls: 'warning-tab' },
+      { id: 'cartels', label: '🕸️ Feature 4 Cartel Risks', count: statsData ? statsData.cartelRiskCount : 47302, cls: 'danger-tab' },
+      { id: 'compliant', label: '✅ Fully Compliant Works', count: statsData ? statsData.compliantCount : 158074, cls: 'success-tab' }
     ]);
 
-    // Table Column Header
-    document.getElementById('th-audit-col').innerText = 'SATARK Health & Audit Findings';
-
-    // Roadmap Explanation
-    document.getElementById('roadmap-title').innerHTML = '🇮🇳 Master All-India Project Repository';
-    document.getElementById('roadmap-desc').innerHTML = 'Explore any project from Kashmir to Kanyakumari. Select any State/UT from the dropdown above or enter keywords to inspect central allocations, MPs, and multi-engine forensic audits.';
+    document.getElementById('th-audit-col').innerText = 'SATARK Combined Health';
+    setRoadmap(
+      '🇮🇳 SATARK Unified All-India Multi-Engine Sentry',
+      'Explore any project from Kashmir to Kanyakumari. Select any State/UT from the dropdown above or enter keywords to inspect central allocations, MPs, and multi-engine forensic audits.'
+    );
   }
 
   loadProjects();
 }
 
-// 3. Render KPI Row
+// Helper: Set Feature Header Titles & Colors
+function setFeatureHeader(tagHtml, title, subtitle, bg, color, border) {
+  const tag = document.getElementById('view-feature-tag');
+  tag.className = 'feature-tag';
+  tag.style.background = bg;
+  tag.style.color = color;
+  tag.style.borderColor = border;
+  tag.innerHTML = tagHtml;
+
+  document.getElementById('view-heading').innerText = title;
+  document.getElementById('view-subheading').innerText = subtitle;
+}
+
+// Helper: Set Bottom Roadmap Callout
+function setRoadmap(titleHtml, descHtml) {
+  document.getElementById('roadmap-title').innerHTML = titleHtml;
+  document.getElementById('roadmap-desc').innerHTML = descHtml;
+}
+
+// 3. Render Dynamic KPI Row
 function renderKPIs(kpis) {
   const c1 = document.getElementById('kpi-c1');
   const c2 = document.getElementById('kpi-c2');
   const c3 = document.getElementById('kpi-c3');
   const c4 = document.getElementById('kpi-c4');
 
-  // Reset custom styles
   [c1, c2, c3, c4].forEach(c => {
     c.className = 'kpi-card';
     c.style.background = '';
@@ -200,6 +301,12 @@ function renderKPIs(kpis) {
     c2.style.background = '#faf5ff';
     c2.style.borderColor = '#ddd6fe';
     document.getElementById('kpi-c2-val').style.color = '#7c3aed';
+  } else if (kpis.c2.isWarning) {
+    c2.style.background = '#fffbeb';
+    c2.style.borderColor = '#fde68a';
+    document.getElementById('kpi-c2-val').style.color = '#d97706';
+  } else if (kpis.c2.isDanger) {
+    c2.classList.add('kpi-card-danger');
   }
 
   // Card 3
@@ -250,7 +357,6 @@ function renderFilterTabs(tabs) {
 
 // 5. Setup General Event Listeners
 function setupEventListeners() {
-  // Search Input with Debouncing
   const searchInput = document.getElementById('search-input');
   let debounceTimer;
   searchInput.addEventListener('input', (e) => {
@@ -262,7 +368,6 @@ function setupEventListeners() {
     }, 300);
   });
 
-  // Pagination Buttons
   document.getElementById('prev-btn').addEventListener('click', () => {
     if (currentPage > 1) {
       currentPage--;
@@ -275,7 +380,6 @@ function setupEventListeners() {
     loadProjects();
   });
 
-  // Modal Close Events
   document.getElementById('modal-close-btn').addEventListener('click', closeModal);
   document.getElementById('modal-dismiss-btn').addEventListener('click', closeModal);
   document.getElementById('audit-modal').addEventListener('click', (e) => {
@@ -325,11 +429,15 @@ async function loadStates() {
 // 8. Fetch Paginated Project Works
 async function loadProjects() {
   const tbody = document.getElementById('projects-tbody');
-  const loadingMsg = currentMode === 'punar-drishti' 
-    ? 'Scanning works with PUNAR-DRISHTI NLP Duplicate Sentry...'
-    : (currentMode === 'vidhi-kavach' ? 'Auditing works with VIDHI-KAVACH Statutory Policy Shield...' : 'Loading MoSPI works...');
+  const modeLabels = {
+    'vidhi-kavach': 'Auditing works with VIDHI-KAVACH Statutory Shield...',
+    'punar-drishti': 'Scanning works with PUNAR-DRISHTI NLP Duplicate Sentry...',
+    'artha-darpan': 'Evaluating project budgets with ARTHA-DARPAN CPWD Rate Sentry...',
+    'chakra-vyuh': 'Tracing vendor contracts with CHAKRA-VYUH Cartel Sentry...',
+    'all-works': 'Loading nationwide MoSPI records...'
+  };
 
-  tbody.innerHTML = `<tr><td colspan="6" class="loading-cell">${loadingMsg}</td></tr>`;
+  tbody.innerHTML = `<tr><td colspan="6" class="loading-cell">${modeLabels[currentMode] || 'Loading...'}</td></tr>`;
 
   try {
     const query = new URLSearchParams({
@@ -361,18 +469,22 @@ async function loadProjects() {
 
       const audit = p.audit || { isCompliant: true, status: 'COMPLIANT', violations: [] };
       const dupe = p.duplicate;
+      const artha = p.artha;
+      const chakra = p.chakra;
       let badgeHtml = '';
 
-      // Clean Separation in Table Column 6:
+      // ==========================================
+      // CLEAN SEPARATION IN TABLE COLUMN 6
+      // ==========================================
       if (currentMode === 'vidhi-kavach') {
-        // ONLY SHOW FEATURE 1 (VIDHI-KAVACH) BADGES - NEVER DUPLICATE BADGES!
+        // ONLY FEATURE 1 (VIDHI-KAVACH) BADGES
         const firstViol = audit.violations.find(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
         if (firstViol) {
           const isNegList = firstViol.ruleId.startsWith('NEG-LIST');
           const badgeClass = isNegList ? 'audit-badge-danger' : 'audit-badge-warning';
           const kwHtml = firstViol.matchedKeyword ? `<span class="badge-kw">"${firstViol.matchedKeyword}"</span>` : '';
           badgeHtml = `
-            <div class="audit-badge ${badgeClass}" title="Click to view statutory citation">
+            <div class="audit-badge ${badgeClass}">
               <span class="badge-tag">🚨 ${firstViol.ruleId} (+${firstViol.penalty} pts)</span>
               <span class="badge-desc">${firstViol.ruleName} ${kwHtml}</span>
             </div>
@@ -387,11 +499,11 @@ async function loadProjects() {
         }
 
       } else if (currentMode === 'punar-drishti') {
-        // ONLY SHOW FEATURE 2 (PUNAR-DRISHTI) BADGES - NEVER STATUTORY BADGES!
+        // ONLY FEATURE 2 (PUNAR-DRISHTI) BADGES
         if (dupe && dupe.isDuplicate) {
           const isExact = dupe.similarityScore === 100;
           badgeHtml = `
-            <div class="audit-badge audit-badge-purple" title="Click to compare twin project in district">
+            <div class="audit-badge audit-badge-purple">
               <span class="badge-tag">${isExact ? '🔍 100% EXACT CLONE' : `⚡ ${dupe.similarityScore}% NEAR-CLONE`}</span>
               <span class="badge-desc">Twin: ${dupe.matchedId} (${dupe.matchedCost})</span>
             </div>
@@ -410,30 +522,73 @@ async function loadProjects() {
           `;
         }
 
-      } else {
-        // Master Explorer: Show both if flagged
-        if (dupe && dupe.isDuplicate) {
-          badgeHtml += `
-            <div class="audit-badge audit-badge-purple" style="margin-bottom: 4px;">
-              <span class="badge-tag">🔍 PUNAR-DRISHTI: ${dupe.similarityScore}% CLONE</span>
+      } else if (currentMode === 'artha-darpan') {
+        // ONLY FEATURE 3 (ARTHA-DARPAN) BADGES
+        if (artha && artha.isAnomaly) {
+          const isCrit = artha.status === 'CRITICAL_INFLATION';
+          const isUnder = artha.status === 'UNVIABLE_UNDERQUOTING';
+          const badgeCls = isCrit ? 'audit-badge-danger' : (isUnder ? 'audit-badge-warning' : 'audit-badge-cost');
+          badgeHtml = `
+            <div class="audit-badge ${badgeCls}">
+              <span class="badge-tag">${isCrit ? '🚨 CRITICAL INFLATION' : (isUnder ? '📉 UNVIABLE BID' : '⚠️ PRICE PADDING')} (+${artha.costDeviationPct}%)</span>
+              <span class="badge-desc">Peer: ${artha.peerMedianFormatted} · Excess: ${artha.excessCostFormatted}</span>
+            </div>
+            <div style="margin-top:4px;">
+              <span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;color:#b45309;background:#fef3c7;border-radius:4px;">
+                📊 View CPWD Rate Audit
+              </span>
             </div>
           `;
+        } else {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-success">
+              <span class="badge-tag">✅ FAIR PRICING</span>
+              <span class="badge-desc">Conforms to CPWD Benchmark</span>
+            </div>
+          `;
+        }
+
+      } else if (currentMode === 'chakra-vyuh') {
+        // ONLY FEATURE 4 (CHAKRA-VYUH) BADGES
+        if (chakra && chakra.hasCartelRisk) {
+          const isMonopoly = chakra.status === 'MONOPOLY_CARTEL_RISK';
+          badgeHtml = `
+            <div class="audit-badge audit-badge-cartel">
+              <span class="badge-tag">${isMonopoly ? '🚨 VENDOR MONOPOLY' : '⚠️ HIGH CONCENTRATION'} (${chakra.topVendorShare}%)</span>
+              <span class="badge-desc">Vendor: ${chakra.vendorName} · HHI: ${chakra.hhiIndex}</span>
+            </div>
+            <div style="margin-top:4px;">
+              <span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;color:#be123c;background:#ffe4e6;border-radius:4px;">
+                🕸️ Trace Cartel Network
+              </span>
+            </div>
+          `;
+        } else {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-success">
+              <span class="badge-tag">✅ OPEN PROCUREMENT</span>
+              <span class="badge-desc">Competitive Vendor Distribution</span>
+            </div>
+          `;
+        }
+
+      } else {
+        // MASTER EXPLORER (Combined)
+        if (dupe && dupe.isDuplicate) {
+          badgeHtml += `<div class="audit-badge audit-badge-purple" style="margin-bottom:2px;"><span class="badge-tag">🔍 DUPLICATE CLONE</span></div>`;
+        }
+        if (artha && artha.status === 'CRITICAL_INFLATION') {
+          badgeHtml += `<div class="audit-badge audit-badge-danger" style="margin-bottom:2px;"><span class="badge-tag">💰 INFLATED (+${artha.costDeviationPct}%)</span></div>`;
+        }
+        if (chakra && chakra.status === 'MONOPOLY_CARTEL_RISK') {
+          badgeHtml += `<div class="audit-badge audit-badge-cartel" style="margin-bottom:2px;"><span class="badge-tag">🕸️ MONOPOLY (${chakra.topVendorShare}%)</span></div>`;
         }
         const firstViol = audit.violations.find(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
         if (firstViol) {
-          const badgeClass = firstViol.ruleId.startsWith('NEG-LIST') ? 'audit-badge-danger' : 'audit-badge-warning';
-          badgeHtml += `
-            <div class="audit-badge ${badgeClass}">
-              <span class="badge-tag">🚨 ${firstViol.ruleId}</span>
-            </div>
-          `;
+          badgeHtml += `<div class="audit-badge audit-badge-danger"><span class="badge-tag">🚨 ${firstViol.ruleId}</span></div>`;
         }
         if (!badgeHtml) {
-          badgeHtml = `
-            <div class="audit-badge audit-badge-success">
-              <span class="badge-tag">✅ COMPLIANT</span>
-            </div>
-          `;
+          badgeHtml = `<div class="audit-badge audit-badge-success"><span class="badge-tag">✅ ALL CLEAR</span></div>`;
         }
       }
 
@@ -463,7 +618,6 @@ async function loadProjects() {
       tbody.appendChild(tr);
     });
 
-    // Update Pagination UI
     document.getElementById('page-info').innerText = `Page ${result.page} of ${result.totalPages || 1} (${result.total.toLocaleString('en-IN')} records)`;
     document.getElementById('prev-btn').disabled = result.page <= 1;
     document.getElementById('next-btn').disabled = result.page >= result.totalPages;
@@ -474,11 +628,105 @@ async function loadProjects() {
   }
 }
 
-// 9. Open Detailed Inspection Modal (Feature-Specific)
+// 9. Interactive SVG Network Ego-Graph for CHAKRA-VYUH
+async function loadCartelGraph(mpName) {
+  try {
+    const res = await fetch(`/api/cartel-graph?mp=${encodeURIComponent(mpName)}`);
+    if (!res.ok) return;
+    const graphData = await res.json();
+
+    const svg = document.getElementById('network-svg');
+    const width = svg.clientWidth || 800;
+    const height = 260;
+    svg.innerHTML = ''; // Clear previous
+
+    const hhiBadge = document.getElementById('graph-hhi-badge');
+    if (hhiBadge) {
+      hhiBadge.innerText = `HHI Concentration: ${graphData.hhi} · Top Vendor: ${graphData.topVendorShare}% · Disbursed: ₹${graphData.totalDisbursedCrore} Cr`;
+    }
+
+    const cx = width / 2;
+    const cy = height / 2;
+
+    // Node Positions
+    const nodePositions = new Map();
+    nodePositions.set(graphData.mpName, { x: cx, y: cy });
+
+    // Inner Ring: Agencies
+    const agencies = graphData.nodes.filter(n => n.type === 'agency');
+    agencies.forEach((a, idx) => {
+      const angle = (idx / Math.max(1, agencies.length)) * 2 * Math.PI - Math.PI / 2;
+      const r = 65;
+      nodePositions.set(a.id, { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) });
+    });
+
+    // Outer Ring: Vendors
+    const vendors = graphData.nodes.filter(n => n.type === 'vendor');
+    vendors.forEach((v, idx) => {
+      const angle = (idx / Math.max(1, vendors.length)) * 2 * Math.PI - Math.PI / 2;
+      const r = 110;
+      nodePositions.set(v.id, { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) });
+    });
+
+    // Render Links
+    graphData.links.forEach(l => {
+      const p1 = nodePositions.get(l.source);
+      const p2 = nodePositions.get(l.target);
+      if (p1 && p2) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', p1.x);
+        line.setAttribute('y1', p1.y);
+        line.setAttribute('x2', p2.x);
+        line.setAttribute('y2', p2.y);
+        line.setAttribute('stroke', l.color || '#cbd5e1');
+        line.setAttribute('stroke-width', l.color === '#ef4444' ? '3' : '1.5');
+        line.setAttribute('stroke-dasharray', l.color === '#ef4444' ? 'none' : '4,2');
+        svg.appendChild(line);
+      }
+    });
+
+    // Render Nodes
+    graphData.nodes.forEach(n => {
+      const pos = nodePositions.get(n.id);
+      if (!pos) return;
+
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.style.cursor = 'pointer';
+
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', pos.x);
+      circle.setAttribute('cy', pos.y);
+      circle.setAttribute('r', n.size || 16);
+      circle.setAttribute('fill', n.color);
+      circle.setAttribute('stroke', '#ffffff');
+      circle.setAttribute('stroke-width', '2');
+      g.appendChild(circle);
+
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', pos.x);
+      text.setAttribute('y', pos.y + (n.size || 16) + 12);
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('font-size', '10px');
+      text.setAttribute('font-weight', '700');
+      text.setAttribute('fill', '#1e293b');
+      text.textContent = n.label;
+      g.appendChild(text);
+
+      svg.appendChild(g);
+    });
+
+  } catch (err) {
+    console.error('Failed to load cartel graph:', err);
+  }
+}
+
+// 10. Open Detailed Inspection Modal (Feature-Specific)
 function openModal(project) {
   const modal = document.getElementById('audit-modal');
   const audit = project.audit || { isCompliant: true, violations: [] };
   const dupe = project.duplicate;
+  const artha = project.artha;
+  const chakra = project.chakra;
 
   document.getElementById('modal-project-id').innerText = `${project.id} (Work #${project.workDtlId})`;
   document.getElementById('modal-desc').innerText = project.title;
@@ -490,8 +738,42 @@ function openModal(project) {
   const findingsContainer = document.getElementById('modal-findings-container');
   findingsContainer.innerHTML = '';
 
-  if (currentMode === 'punar-drishti') {
-    // FEATURE 2 MODAL: Dedicated Twin Work Comparison
+  // ==========================================
+  // FEATURE 1 MODAL: VIDHI-KAVACH
+  // ==========================================
+  if (currentMode === 'vidhi-kavach') {
+    document.getElementById('modal-badge').innerText = 'VIDHI-KAVACH STATUTORY VERDICT';
+    document.getElementById('modal-badge').style.background = '#fef2f2';
+    document.getElementById('modal-badge').style.color = '#b91c1c';
+    document.getElementById('modal-badge').style.borderColor = '#fecaca';
+
+    const statutoryViols = audit.violations.filter(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
+    if (statutoryViols.length === 0) {
+      findingsContainer.innerHTML = `
+        <div class="violation-card compliant">
+          <div class="violation-title">✅ 100% STATUTORILY COMPLIANT</div>
+          <div class="violation-clause">MPLADS Guidelines 2023 & General Financial Rules (GFR 2017)</div>
+          <div class="violation-desc">No negative list keywords (places of worship, commercial trusts) or fiscal year-end rush detected. Admissible under central guidelines.</div>
+        </div>
+      `;
+    } else {
+      statutoryViols.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'violation-card';
+        card.innerHTML = `
+          <div class="violation-title">🚨 ${v.ruleId}: ${v.ruleName} [Severity: ${v.severity}, Penalty: +${v.penalty} pts]</div>
+          <div class="violation-clause">📜 Legal Citation: <b>${v.clause}</b></div>
+          <div class="violation-desc">${v.explanation}</div>
+          ${v.matchedKeyword ? `<div style="margin-top: 6px;"><span class="violation-match">Matched Prohibited Term: "${v.matchedKeyword}"</span></div>` : ''}
+        `;
+        findingsContainer.appendChild(card);
+      });
+    }
+
+  // ==========================================
+  // FEATURE 2 MODAL: PUNAR-DRISHTI
+  // ==========================================
+  } else if (currentMode === 'punar-drishti') {
     document.getElementById('modal-badge').innerText = 'PUNAR-DRISHTI DUPLICATE SENTRY AUDIT';
     document.getElementById('modal-badge').style.background = '#f5f3ff';
     document.getElementById('modal-badge').style.color = '#7c3aed';
@@ -537,77 +819,111 @@ function openModal(project) {
       `;
     }
 
-  } else if (currentMode === 'vidhi-kavach') {
-    // FEATURE 1 MODAL: Dedicated Statutory Policy Citations
-    document.getElementById('modal-badge').innerText = 'VIDHI-KAVACH STATUTORY VERDICT';
-    document.getElementById('modal-badge').style.background = '#fef2f2';
-    document.getElementById('modal-badge').style.color = '#b91c1c';
-    document.getElementById('modal-badge').style.borderColor = '#fecaca';
+  // ==========================================
+  // FEATURE 3 MODAL: ARTHA-DARPAN
+  // ==========================================
+  } else if (currentMode === 'artha-darpan') {
+    document.getElementById('modal-badge').innerText = 'ARTHA-DARPAN COST BENCHMARK AUDIT';
+    document.getElementById('modal-badge').style.background = '#fffbeb';
+    document.getElementById('modal-badge').style.color = '#b45309';
+    document.getElementById('modal-badge').style.borderColor = '#fde68a';
 
-    const statutoryViols = audit.violations.filter(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
+    const card = document.createElement('div');
+    card.className = 'duplicate-compare-box';
+    card.style.borderColor = '#fde68a';
+    card.style.borderLeftColor = '#d97706';
+    card.style.background = '#fffdf7';
 
-    if (statutoryViols.length === 0) {
-      findingsContainer.innerHTML = `
-        <div class="violation-card compliant">
-          <div class="violation-title">✅ 100% STATUTORILY COMPLIANT</div>
-          <div class="violation-clause">MPLADS Guidelines 2023 & General Financial Rules (GFR 2017)</div>
-          <div class="violation-desc">No negative list keywords (places of worship, commercial trusts) or fiscal year-end rush detected. Admissible under central guidelines.</div>
+    card.innerHTML = `
+      <div class="duplicate-compare-title" style="color:#b45309;">
+        💰 CPWD DSR Rate & Peer-Group Cost Comparison [Deviation: ${artha.costDeviationPct > 0 ? '+' : ''}${artha.costDeviationPct}%]
+      </div>
+      <div class="duplicate-grid" style="border-color:#fef3c7;">
+        <div>
+          <div class="dupe-item-label" style="color:#d97706;">Sanctioned Cost:</div>
+          <div style="font-size:16px; font-weight:800; color:#0f172a;">${project.costFormatted}</div>
+          <div style="font-size:11px; color:#64748b; margin-top:4px;">Work Category: <b>${project.category || 'General Work'}</b></div>
         </div>
-      `;
-    } else {
-      statutoryViols.forEach(v => {
-        const card = document.createElement('div');
-        card.className = 'violation-card';
-        card.innerHTML = `
-          <div class="violation-title">🚨 ${v.ruleId}: ${v.ruleName} [Severity: ${v.severity}, Penalty: +${v.penalty} pts]</div>
-          <div class="violation-clause">📜 Legal Citation: <b>${v.clause}</b></div>
-          <div class="violation-desc">${v.explanation}</div>
-          ${v.matchedKeyword ? `<div style="margin-top: 6px;"><span class="violation-match">Matched Prohibited Term: "${v.matchedKeyword}"</span></div>` : ''}
-        `;
-        findingsContainer.appendChild(card);
-      });
-    }
+        <div>
+          <div class="dupe-item-label" style="color:#d97706;">State Peer Median (Benchmark):</div>
+          <div style="font-size:16px; font-weight:800; color:#047857;">${artha.peerMedianFormatted}</div>
+          <div style="font-size:11px; color:#64748b; margin-top:4px;">CPWD State Index: <b>${artha.stateMultiplier}x (${project.state})</b></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:#ffffff;border-radius:6px;border:1px solid #fde68a;">
+        <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:2px;">
+          ${artha.isAnomaly ? `🚨 Excess Cost at Risk: ${artha.excessCostFormatted}` : '✅ Fair Value Assessment'}
+        </div>
+        <div style="font-size:12px;color:#475569;line-height:1.4;">
+          ${artha.explanation}
+        </div>
+      </div>
+    `;
+    findingsContainer.appendChild(card);
 
+  // ==========================================
+  // FEATURE 4 MODAL: CHAKRA-VYUH
+  // ==========================================
+  } else if (currentMode === 'chakra-vyuh') {
+    document.getElementById('modal-badge').innerText = 'CHAKRA-VYUH CONTRACTOR NEXUS AUDIT';
+    document.getElementById('modal-badge').style.background = '#fff1f2';
+    document.getElementById('modal-badge').style.color = '#be123c';
+    document.getElementById('modal-badge').style.borderColor = '#fecdd3';
+
+    const card = document.createElement('div');
+    card.className = 'duplicate-compare-box';
+    card.style.borderColor = '#fecdd3';
+    card.style.borderLeftColor = '#e11d48';
+    card.style.background = '#fff5f6';
+
+    card.innerHTML = `
+      <div class="duplicate-compare-title" style="color:#be123c;">
+        🕸️ Contractor Allocation & Market Concentration (HHI Index: ${chakra.hhiIndex})
+      </div>
+      <div class="duplicate-grid" style="border-color:#ffe4e6;">
+        <div>
+          <div class="dupe-item-label" style="color:#e11d48;">Contractor / Payee:</div>
+          <div style="font-size:13px; font-weight:700; color:#0f172a;">${chakra.vendorName}</div>
+          <div style="font-size:11px; color:#64748b; margin-top:4px;">Implementing Agency: <b>${chakra.agencyName}</b></div>
+        </div>
+        <div>
+          <div class="dupe-item-label" style="color:#e11d48;">Top Contractor Share:</div>
+          <div style="font-size:16px; font-weight:800; color:${chakra.topVendorShare >= 60 ? '#dc2626' : '#047857'};">${chakra.topVendorShare}% of Funds</div>
+          <div style="font-size:11px; color:#64748b; margin-top:4px;">Dominant Entity: <b>${chakra.topVendor}</b></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px;background:#ffffff;border-radius:6px;border:1px solid #fecdd3;">
+        <div style="font-size:11px;font-weight:700;color:#be123c;margin-bottom:2px;">
+          ${chakra.hasCartelRisk ? '🚨 Cartel Concentration Directive (CVC Guidelines)' : '✅ Competitive Procurement Clearance'}
+        </div>
+        <div style="font-size:12px;color:#475569;line-height:1.4;">
+          ${chakra.explanation}
+        </div>
+      </div>
+    `;
+    findingsContainer.appendChild(card);
+
+  // ==========================================
+  // MASTER EXPLORER MODAL
+  // ==========================================
   } else {
-    // MASTER VIEW MODAL: Combined findings
     document.getElementById('modal-badge').innerText = 'SATARK COMPOSITE AUDIT VERDICT';
     document.getElementById('modal-badge').style.background = '#eff6ff';
     document.getElementById('modal-badge').style.color = '#1d4ed8';
     document.getElementById('modal-badge').style.borderColor = '#bfdbfe';
 
-    if (dupe && dupe.isDuplicate) {
-      const dupeBox = document.createElement('div');
-      dupeBox.className = 'duplicate-compare-box';
-      dupeBox.innerHTML = `
-        <div class="duplicate-compare-title">🔍 PUNAR-DRISHTI: Lexical NLP Twin Work Detected (${dupe.similarityScore}% Similarity)</div>
-        <div class="duplicate-grid">
-          <div><b>Current:</b> ${project.title} (${project.costFormatted})</div>
-          <div><b>Twin:</b> ${dupe.matchedTitle} (${dupe.matchedCost})</div>
-        </div>
-      `;
-      findingsContainer.appendChild(dupeBox);
-    }
-
-    const statutoryViols = audit.violations.filter(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
-    if (statutoryViols.length === 0 && !dupe) {
-      findingsContainer.innerHTML = `
-        <div class="violation-card compliant">
-          <div class="violation-title">✅ FULLY CLEAR IN ALL AUDIT ENGINES</div>
-          <div class="violation-desc">Statutorily compliant and zero duplicate work claims detected.</div>
-        </div>
-      `;
-    } else {
-      statutoryViols.forEach(v => {
-        const card = document.createElement('div');
-        card.className = 'violation-card';
-        card.innerHTML = `
-          <div class="violation-title">🚨 ${v.ruleId}: ${v.ruleName}</div>
-          <div class="violation-clause">📜 Legal Citation: <b>${v.clause}</b></div>
-          <div class="violation-desc">${v.explanation}</div>
-        `;
-        findingsContainer.appendChild(card);
-      });
-    }
+    const card = document.createElement('div');
+    card.className = 'violation-card';
+    card.innerHTML = `
+      <div class="violation-title">🇮🇳 Multi-Engine Intelligence Snapshot</div>
+      <div style="font-size:12px; color:#334155; margin-top:8px; line-height:1.6;">
+        • <b>Statutory Status:</b> ${audit.isCompliant ? '✅ Compliant' : '🚨 ' + audit.violations.length + ' Violations Flagged'}<br>
+        • <b>Duplicate Status:</b> ${dupe && dupe.isDuplicate ? `🔍 ${dupe.similarityScore}% Clone with ${dupe.matchedId}` : '✅ Unique Asset'}<br>
+        • <b>Cost Benchmark:</b> ${artha && artha.isAnomaly ? `💰 ${artha.status} (+${artha.costDeviationPct}%)` : '✅ Fair Market Price'}<br>
+        • <b>Vendor Concentration:</b> ${chakra && chakra.hasCartelRisk ? `🕸️ ${chakra.status} (${chakra.topVendorShare}%)` : '✅ Competitive Bidding'}
+      </div>
+    `;
+    findingsContainer.appendChild(card);
   }
 
   modal.style.display = 'flex';

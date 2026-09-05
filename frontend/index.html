@@ -27,8 +27,9 @@
       <div class="step-indicator">
         <span class="step-pill done">✓ Step 1: Core Foundation</span>
         <span class="step-pill done">✓ Step 2: VIDHI-KAVACH</span>
-        <span class="step-pill active">✓ Step 3: PUNAR-DRISHTI</span>
-        <span class="step-pill">Step 4: ARTHA-DARPAN</span>
+        <span class="step-pill done">✓ Step 3: PUNAR-DRISHTI</span>
+        <span class="step-pill done">✓ Step 4: ARTHA-DARPAN</span>
+        <span class="step-pill active">✓ Step 5: CHAKRA-VYUH</span>
       </div>
     </div>
   </header>
@@ -36,23 +37,35 @@
   <!-- Main Content Container -->
   <main class="page-container">
 
-    <!-- Dedicated Feature Selector Tabs (Complete Separation of Features) -->
+    <!-- Dedicated Feature Selector Tabs (Complete Separation of All 4 Features) -->
     <section class="feature-mode-switcher">
       <button class="mode-tab active" data-mode="vidhi-kavach" id="tab-vidhi-kavach">
         <div class="mode-pill pill-red">FEATURE 1</div>
-        <div class="mode-title">🛡️ VIDHI-KAVACH (Statutory Shield)</div>
-        <div class="mode-desc">Negative List (Places of Worship / Commercial) & March Rush</div>
+        <div class="mode-title">🛡️ VIDHI-KAVACH</div>
+        <div class="mode-desc">Negative List & March Rush Policy Shield</div>
       </button>
 
       <button class="mode-tab" data-mode="punar-drishti" id="tab-punar-drishti">
         <div class="mode-pill pill-purple">FEATURE 2</div>
-        <div class="mode-title">🔍 PUNAR-DRISHTI (NLP Duplicate Sentry)</div>
-        <div class="mode-desc">TF-IDF Clone Works & Double-Billing Detection</div>
+        <div class="mode-title">🔍 PUNAR-DRISHTI</div>
+        <div class="mode-desc">NLP Twin Work & Double-Billing Sentry</div>
+      </button>
+
+      <button class="mode-tab" data-mode="artha-darpan" id="tab-artha-darpan">
+        <div class="mode-pill pill-amber">FEATURE 3</div>
+        <div class="mode-title">💰 ARTHA-DARPAN</div>
+        <div class="mode-desc">CPWD Rates & Cost Inflation Sentry</div>
+      </button>
+
+      <button class="mode-tab" data-mode="chakra-vyuh" id="tab-chakra-vyuh">
+        <div class="mode-pill pill-crimson">FEATURE 4</div>
+        <div class="mode-title">🕸️ CHAKRA-VYUH</div>
+        <div class="mode-desc">Contractor Cartel & Vendor Nexus Graph</div>
       </button>
 
       <button class="mode-tab" data-mode="all-works" id="tab-all-works">
-        <div class="mode-pill pill-blue">ALL-INDIA REPOSITORY</div>
-        <div class="mode-title">🇮🇳 Master Project Explorer</div>
+        <div class="mode-pill pill-blue">MASTER EXPLORER</div>
+        <div class="mode-title">🇮🇳 All-India Repository</div>
         <div class="mode-desc">176,925 Projects across 36 States & UTs</div>
       </button>
     </section>
@@ -113,6 +126,34 @@
       <!-- Quick Filter Tabs (Dynamic for current feature) -->
       <div class="filter-tab-bar" id="filter-tab-bar">
         <!-- Will be populated dynamically by current feature mode -->
+      </div>
+
+      <!-- Feature 4 Dedicated Interactive Network Ego-Graph (Visible only in CHAKRA-VYUH mode) -->
+      <div id="chakra-graph-section" class="network-graph-card" style="display: none;">
+        <div class="graph-header">
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: #be123c; text-transform: uppercase;">🕸️ CHAKRA-VYUH Interactive Vendor Nexus Graph</div>
+            <div style="font-size: 14px; font-weight: 700; color: #0f172a;" id="graph-title">Constituency Cartel & Ego-Network Visualizer</div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <label style="font-size: 11px; font-weight: 600; color: #64748b;">Select High-Concentration Constituency:</label>
+            <select id="cartel-mp-select" style="padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 12px; font-weight: 600;">
+              <option value="Adv Adoor Prakash">Attingal (Adv Adoor Prakash — 97% Single-Vendor)</option>
+              <option value="Mr Gopal Jee Thakur">Darbhanga (Mr Gopal Jee Thakur — 95% Single-Vendor)</option>
+              <option value="Pankaj Chowdhary">Maharajganj UP (Pankaj Chowdhary — 94% Single-Vendor)</option>
+              <option value="Asaduddin Owaisi">Hyderabad (Asaduddin Owaisi — 92% Single-Vendor)</option>
+              <option value="VIJAYLAKSHMI DEVI">Siwan (Vijaylakshmi Devi — 84% to Alam Brothers)</option>
+              <option value="SUDAMA PRASAD">Arrah (Sudama Prasad — LAEO-02 Agency Network)</option>
+            </select>
+          </div>
+        </div>
+        <div class="graph-canvas-box" id="graph-canvas-box">
+          <svg id="network-svg" width="100%" height="260" style="background:#f8fafc; border-radius:6px;"></svg>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: #64748b;" id="graph-meta">
+          <span>🔵 Blue: MP Center &nbsp;|&nbsp; 🟡 Amber: Implementing Agency &nbsp;|&nbsp; 🔴 Red: Dominant Vendor (≥40% Funds) &nbsp;|&nbsp; 🟢 Green: Competitive Vendor</span>
+          <span id="graph-hhi-badge" style="font-weight: 700; color: #be123c;">HHI Index: Calculating...</span>
+        </div>
       </div>
 
       <!-- Real Data Table -->

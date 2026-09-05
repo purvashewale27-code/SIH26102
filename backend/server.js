@@ -8,6 +8,8 @@ const fs = require('fs');
 const path = require('path');
 const vidhiKavach = require('./rules/vidhi_kavach');
 const punarDrishti = require('./ml/punar_drishti');
+const arthaDarpan = require('./ml/artha_darpan');
+const chakraVyuh = require('./ml/chakra_vyuh');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
@@ -19,6 +21,12 @@ let totalNegativeListCount = 0;
 let totalMarchRushCount = 0;
 let totalDuplicateClaimsCount = 0;
 let totalExactClonesCount = 0;
+let totalInflatedCostCount = 0;
+let totalCriticalInflationCount = 0;
+let totalModerateInflationCount = 0;
+let totalExcessINR = 0;
+let totalCartelRiskCount = 0;
+let totalMonopolyCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
@@ -109,9 +117,33 @@ if (fs.existsSync(DATA_FILE)) {
     }
   });
 
+  // 3. Run ARTHA-DARPAN (Feature 3: AI Cost Benchmark & Overpricing Sentry)
+  arthaDarpan.train(allProjects);
+  allProjects.forEach(p => {
+    p.artha = arthaDarpan.evaluateProject(p);
+    if (p.artha.isAnomaly) {
+      totalInflatedCostCount++;
+      if (p.artha.status === 'CRITICAL_INFLATION') totalCriticalInflationCount++;
+      if (p.artha.status === 'MODERATE_INFLATION') totalModerateInflationCount++;
+      totalExcessINR += p.artha.excessCost;
+    }
+  });
+
+  // 4. Run CHAKRA-VYUH (Feature 4: Contractor Cartel & Vendor Nexus Sentry)
+  chakraVyuh.buildFromVouchers();
+  allProjects.forEach(p => {
+    p.chakra = chakraVyuh.evaluateProject(p);
+    if (p.chakra.hasCartelRisk) {
+      totalCartelRiskCount++;
+      if (p.chakra.status === 'MONOPOLY_CARTEL_RISK') totalMonopolyCount++;
+    }
+  });
+
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
-  console.log(`🛡️ VIDHI-KAVACH flagged ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)!`);
-  console.log(`🔍 PUNAR-DRISHTI flagged ${totalDuplicateClaimsCount} duplicate works (${totalExactClonesCount} exact 100% clones)!`);
+  console.log(`🛡️ VIDHI-KAVACH: ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)`);
+  console.log(`🔍 PUNAR-DRISHTI: ${totalDuplicateClaimsCount} duplicate works (${totalExactClonesCount} exact 100% clones)`);
+  console.log(`💰 ARTHA-DARPAN: ${totalInflatedCostCount} cost anomalies (₹${(totalExcessINR / 1e7).toFixed(1)} Cr excess risk flagged)`);
+  console.log(`🕸️ CHAKRA-VYUH: ${totalCartelRiskCount} contractor cartel risks across ${chakraVyuh.vendorStats.size} vendors`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -141,7 +173,17 @@ const server = http.createServer((req, res) => {
       marchRushCount: totalMarchRushCount,
       duplicateClaimsCount: totalDuplicateClaimsCount,
       exactClonesCount: totalExactClonesCount,
-      compliantCount: allProjects.length - totalViolationsCount
+      compliantCount: allProjects.length - totalViolationsCount,
+      // Feature 3: ARTHA-DARPAN
+      inflatedCostCount: totalInflatedCostCount,
+      criticalInflationCount: totalCriticalInflationCount,
+      moderateInflationCount: totalModerateInflationCount,
+      totalExcessCrore: +(totalExcessINR / 1e7).toFixed(2),
+      // Feature 4: CHAKRA-VYUH
+      totalVendorsCount: chakraVyuh.vendorStats.size,
+      cartelRiskCount: totalCartelRiskCount,
+      monopolyCount: totalMonopolyCount,
+      totalVouchersCount: chakraVyuh.vouchersCount
     });
   }
 
@@ -151,6 +193,17 @@ const server = http.createServer((req, res) => {
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
     return sendJson(list);
+  }
+
+  // API 2B: Top Cartel Constituencies
+  if (pathname === '/api/top-cartels') {
+    return sendJson(chakraVyuh.getTopCartels(20));
+  }
+
+  // API 2C: Ego-Network Graph for an MP
+  if (pathname === '/api/cartel-graph') {
+    const mp = reqUrl.searchParams.get('mp') || 'SUDAMA PRASAD';
+    return sendJson(chakraVyuh.getEgoGraph(mp));
   }
 
   // API 3: Filterable / Paginated Projects List
@@ -172,6 +225,14 @@ const server = http.createServer((req, res) => {
     } else if (mode === 'vidhi-kavach') {
       if (!filter || filter === 'violations') {
         filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH'));
+      }
+    } else if (mode === 'artha-darpan') {
+      if (!filter || filter === 'inflated') {
+        filtered = filtered.filter(p => p.artha && p.artha.isAnomaly);
+      }
+    } else if (mode === 'chakra-vyuh') {
+      if (!filter || filter === 'cartels') {
+        filtered = filtered.filter(p => p.chakra && p.chakra.hasCartelRisk);
       }
     }
 
@@ -195,6 +256,24 @@ const server = http.createServer((req, res) => {
       filtered = filtered.filter(p => p.duplicate && p.duplicate.similarityScore === 100);
     } else if (filter === 'near-clones') {
       filtered = filtered.filter(p => p.duplicate && p.duplicate.similarityScore >= 80 && p.duplicate.similarityScore < 100);
+    } else if (filter === 'inflated') {
+      filtered = filtered.filter(p => p.artha && p.artha.isAnomaly);
+    } else if (filter === 'critical-inflation') {
+      filtered = filtered.filter(p => p.artha && p.artha.status === 'CRITICAL_INFLATION');
+    } else if (filter === 'moderate-inflation') {
+      filtered = filtered.filter(p => p.artha && p.artha.status === 'MODERATE_INFLATION');
+    } else if (filter === 'underquoted') {
+      filtered = filtered.filter(p => p.artha && p.artha.status === 'UNVIABLE_UNDERQUOTING');
+    } else if (filter === 'fair-estimate') {
+      filtered = filtered.filter(p => p.artha && p.artha.status === 'FAIR_MARKET');
+    } else if (filter === 'cartels') {
+      filtered = filtered.filter(p => p.chakra && p.chakra.hasCartelRisk);
+    } else if (filter === 'monopoly') {
+      filtered = filtered.filter(p => p.chakra && p.chakra.status === 'MONOPOLY_CARTEL_RISK');
+    } else if (filter === 'elevated') {
+      filtered = filtered.filter(p => p.chakra && p.chakra.status === 'ELEVATED_CONCENTRATION');
+    } else if (filter === 'competitive') {
+      filtered = filtered.filter(p => p.chakra && !p.chakra.hasCartelRisk);
     }
 
     // Apply Search
