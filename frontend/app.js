@@ -87,13 +87,17 @@ async function loadStats() {
     document.getElementById('stat-cost').innerText = `₹${data.totalSanctionedCrore.toLocaleString('en-IN')} Cr`;
     document.getElementById('stat-states').innerText = `${data.totalStates} States / UTs`;
     
-    // VIDHI-KAVACH Stats
+    // VIDHI-KAVACH + PUNAR-DRISHTI Stats
     document.getElementById('stat-violations').innerText = data.totalViolations.toLocaleString('en-IN');
     document.getElementById('stat-violations-desc').innerText = `${data.negativeListCount.toLocaleString('en-IN')} Negative List + ${data.marchRushCount.toLocaleString('en-IN')} March Rush`;
 
     // Filter Tab Pills
     document.getElementById('pill-violations').innerText = data.totalViolations.toLocaleString('en-IN');
     document.getElementById('pill-neglist').innerText = data.negativeListCount.toLocaleString('en-IN');
+    const dupePill = document.getElementById('pill-duplicates');
+    if (dupePill && data.duplicateClaimsCount) {
+      dupePill.innerText = data.duplicateClaimsCount.toLocaleString('en-IN');
+    }
   } catch (err) {
     console.error('Error loading stats:', err);
   }
@@ -127,7 +131,7 @@ async function loadStates() {
 // 3. Fetch Paginated Project Works
 async function loadProjects() {
   const tbody = document.getElementById('projects-tbody');
-  tbody.innerHTML = '<tr><td colspan="6" class="loading-cell">Auditing government projects with VIDHI-KAVACH...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="6" class="loading-cell">Auditing government projects with VIDHI-KAVACH & PUNAR-DRISHTI...</td></tr>';
 
   try {
     const query = new URLSearchParams({
@@ -155,27 +159,37 @@ async function loadProjects() {
       const tr = document.createElement('tr');
       tr.className = 'clickable-row';
 
-      // VIDHI-KAVACH Badge HTML
-      const audit = p.audit || { isCompliant: true, status: 'COMPLIANT' };
+      // VIDHI-KAVACH + PUNAR-DRISHTI Badges
+      const audit = p.audit || { isCompliant: true, status: 'COMPLIANT', violations: [] };
+      const dupe = p.duplicate;
       let badgeHtml = '';
 
-      if (audit.isCompliant) {
-        badgeHtml = `
-          <div class="audit-badge audit-badge-success">
-            <span class="badge-tag">✓ COMPLIANT</span>
-            <span class="badge-desc">Zero Guidelines Breach</span>
+      if (dupe && dupe.isDuplicate) {
+        badgeHtml += `
+          <div class="audit-badge audit-badge-purple" style="margin-bottom: 4px;" title="Click to inspect twin duplicate project">
+            <span class="badge-tag">🔍 PUNAR-DRISHTI: ${dupe.similarityScore}% CLONE</span>
+            <span class="badge-desc">Twin Work: ${dupe.matchedId}</span>
           </div>
         `;
-      } else {
-        const firstViol = audit.violations[0];
+      }
+
+      if (audit.violations.some(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH')) {
+        const firstViol = audit.violations.find(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
         const isNegList = firstViol.ruleId.startsWith('NEG-LIST');
         const badgeClass = isNegList ? 'audit-badge-danger' : 'audit-badge-warning';
         const kwHtml = firstViol.matchedKeyword ? `<span class="badge-kw">"${firstViol.matchedKeyword}"</span>` : '';
 
-        badgeHtml = `
+        badgeHtml += `
           <div class="audit-badge ${badgeClass}" title="Click to view statutory citation">
             <span class="badge-tag">🚨 ${firstViol.ruleId} (+${firstViol.penalty} pts)</span>
             <span class="badge-desc">${firstViol.ruleName} ${kwHtml}</span>
+          </div>
+        `;
+      } else if (!dupe) {
+        badgeHtml = `
+          <div class="audit-badge audit-badge-success">
+            <span class="badge-tag">✓ COMPLIANT</span>
+            <span class="badge-desc">Zero Guidelines Breach</span>
           </div>
         `;
       }
@@ -217,10 +231,11 @@ async function loadProjects() {
   }
 }
 
-// 3. Open Detailed Statutory Inspection Modal
+// 4. Open Detailed Statutory & Duplicate Inspection Modal
 function openModal(project) {
   const modal = document.getElementById('audit-modal');
   const audit = project.audit || { isCompliant: true, violations: [] };
+  const dupe = project.duplicate;
 
   document.getElementById('modal-project-id').innerText = `${project.id} (Work #${project.workDtlId})`;
   document.getElementById('modal-desc').innerText = project.title;
@@ -232,16 +247,43 @@ function openModal(project) {
   const findingsContainer = document.getElementById('modal-findings-container');
   findingsContainer.innerHTML = '';
 
-  if (audit.isCompliant) {
+  // 1. If Duplicate Detected by PUNAR-DRISHTI, render rich comparison box
+  if (dupe && dupe.isDuplicate) {
+    const dupeBox = document.createElement('div');
+    dupeBox.className = 'duplicate-compare-box';
+    dupeBox.innerHTML = `
+      <div class="duplicate-compare-title">🔍 PUNAR-DRISHTI: Lexical NLP Twin Work Detected (${dupe.similarityScore}% Similarity)</div>
+      <div class="duplicate-grid">
+        <div>
+          <div class="dupe-item-label">Current Work (${project.id}):</div>
+          <div class="dupe-item-text">${project.title}</div>
+          <div style="font-size:11px;color:#64748b;margin-top:4px;">Cost: <b>${project.costFormatted}</b></div>
+        </div>
+        <div>
+          <div class="dupe-item-label">Twin Work in Same District (${dupe.matchedId}):</div>
+          <div class="dupe-item-text">${dupe.matchedTitle}</div>
+          <div style="font-size:11px;color:#64748b;margin-top:4px;">Cost: <b>${dupe.matchedCost}</b></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#6b21a8;margin-top:8px;">
+        <b>Forensic Audit Directive:</b> High probability of double-billing or re-sanctioning the same asset under two different letters. Verify physical measurement books before releasing funds.
+      </div>
+    `;
+    findingsContainer.appendChild(dupeBox);
+  }
+
+  // 2. Statutory Violations
+  const nonDupeViols = audit.violations.filter(v => v.ruleId !== 'PUNAR-01');
+  if (nonDupeViols.length === 0 && !dupe) {
     findingsContainer.innerHTML = `
       <div class="violation-card compliant">
         <div class="violation-title">✅ 100% STATUTORILY COMPLIANT</div>
         <div class="violation-clause">MPLADS Guidelines 2023 & General Financial Rules (GFR 2017)</div>
-        <div class="violation-desc">No negative list keywords or fiscal year-end rush detected. Admissible for central fund release.</div>
+        <div class="violation-desc">No negative list keywords, duplicate claims, or fiscal year-end rush detected. Admissible for central fund release.</div>
       </div>
     `;
   } else {
-    audit.violations.forEach(v => {
+    nonDupeViols.forEach(v => {
       const card = document.createElement('div');
       card.className = 'violation-card';
       card.innerHTML = `

@@ -336,6 +336,22 @@ body {
   color: #ffffff;
 }
 
+.filter-tab.purple-tab {
+  color: #7c3aed;
+  border-color: #ddd6fe;
+}
+
+.filter-tab.purple-tab:hover {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.filter-tab.purple-tab.active {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #ffffff;
+}
+
 /* TABLE */
 .table-container {
   overflow-x: auto;
@@ -407,6 +423,54 @@ body {
   background: #ecfdf5;
   border: 1px solid #a7f3d0;
   color: #047857;
+}
+
+.audit-badge-purple {
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  color: #6d28d9;
+}
+
+.duplicate-compare-box {
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  border-left: 4px solid #8b5cf6;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.duplicate-compare-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6d28d9;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.duplicate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ede9fe;
+}
+
+.dupe-item-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #7c3aed;
+  margin-bottom: 2px;
+}
+
+.dupe-item-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
 .badge-tag {

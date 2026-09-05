@@ -7,6 +7,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const vidhiKavach = require('./rules/vidhi_kavach');
+const punarDrishti = require('./ml/punar_drishti');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
@@ -16,10 +17,11 @@ let totalSanctionedINR = 0;
 let totalViolationsCount = 0;
 let totalNegativeListCount = 0;
 let totalMarchRushCount = 0;
+let totalDuplicateClaimsCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
-// 1. Load the real government projects & run VIDHI-KAVACH on them
+// 1. Load the real government projects & run VIDHI-KAVACH + PUNAR-DRISHTI on them
 console.log('Loading real projects data & running VIDHI-KAVACH audit...');
 if (fs.existsSync(DATA_FILE)) {
   const rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
@@ -79,8 +81,33 @@ if (fs.existsSync(DATA_FILE)) {
     round++;
   }
 
+  // 2. Run PUNAR-DRISHTI (Vaibhav's TF-IDF Duplicate Detector)
+  const duplicateMap = punarDrishti.analyzeDuplicates(allProjects, 0.82);
+  allProjects.forEach(p => {
+    const dupe = duplicateMap.get(p.id);
+    if (dupe) {
+      p.duplicate = dupe;
+      totalDuplicateClaimsCount++;
+      p.audit.violations.push({
+        ruleId: dupe.ruleId,
+        ruleName: dupe.ruleName,
+        clause: dupe.clause,
+        severity: dupe.severity,
+        penalty: dupe.penalty,
+        matchedKeyword: `${dupe.similarityScore}% Match with ${dupe.matchedId}`,
+        explanation: dupe.explanation,
+        matchedTitle: dupe.matchedTitle,
+        matchedId: dupe.matchedId,
+        matchedCost: dupe.matchedCost
+      });
+      p.audit.isCompliant = false;
+      p.audit.riskScore = Math.min(100, p.audit.riskScore + dupe.penalty);
+    }
+  });
+
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
   console.log(`🛡️ VIDHI-KAVACH flagged ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)!`);
+  console.log(`🔍 PUNAR-DRISHTI flagged ${totalDuplicateClaimsCount} duplicate works!`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -107,7 +134,8 @@ const server = http.createServer((req, res) => {
       totalStates: statesSet.size,
       totalViolations: totalViolationsCount,
       negativeListCount: totalNegativeListCount,
-      marchRushCount: totalMarchRushCount
+      marchRushCount: totalMarchRushCount,
+      duplicateClaimsCount: totalDuplicateClaimsCount
     });
   }
 
@@ -141,6 +169,8 @@ const server = http.createServer((req, res) => {
       filtered = filtered.filter(p => p.audit.isCompliant);
     } else if (filter === 'negative-list') {
       filtered = filtered.filter(p => p.audit.violations.some(v => v.ruleId.startsWith('NEG-LIST')));
+    } else if (filter === 'duplicates') {
+      filtered = filtered.filter(p => p.duplicate && p.duplicate.isDuplicate);
     }
 
     // Apply Search
