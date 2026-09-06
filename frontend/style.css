@@ -124,12 +124,12 @@ body {
 /* FEATURE MODE SWITCHER */
 .feature-mode-switcher {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
   margin-bottom: 24px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
   .feature-mode-switcher {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -145,7 +145,7 @@ body {
   background: var(--surface);
   border: 2px solid var(--border);
   border-radius: 10px;
-  padding: 14px 14px;
+  padding: 12px 12px;
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -183,6 +183,11 @@ body {
   box-shadow: 0 6px 16px rgba(225, 29, 72, 0.15);
 }
 
+.mode-tab.active[data-mode="vibhed-netra"] {
+  border-color: #0d9488;
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.15);
+}
+
 .mode-pill {
   display: inline-block;
   font-size: 10px;
@@ -198,6 +203,7 @@ body {
 .pill-purple { background: #ede9fe; color: #6d28d9; }
 .pill-amber { background: #fef3c7; color: #b45309; }
 .pill-crimson { background: #ffe4e6; color: #be123c; }
+.pill-teal { background: #ccfbf1; color: #0f766e; }
 .pill-blue { background: #dbeafe; color: #1e40af; }
 
 .mode-title {
@@ -261,6 +267,7 @@ body {
 .text-blue { color: var(--accent-blue) !important; }
 .text-green { color: var(--accent-green) !important; }
 .text-red { color: #dc2626 !important; }
+.text-teal { color: #0d9488 !important; }
 
 .kpi-desc {
   font-size: 11px;
@@ -445,6 +452,22 @@ body {
   color: #ffffff;
 }
 
+.filter-tab.teal-tab {
+  color: #0d9488;
+  border-color: #99f6e4;
+}
+
+.filter-tab.teal-tab:hover {
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.filter-tab.teal-tab.active {
+  background: #0d9488;
+  border-color: #0d9488;
+  color: #ffffff;
+}
+
 /* TABLE */
 .table-container {
   overflow-x: auto;
@@ -534,6 +557,80 @@ body {
   background: #fff1f2;
   border: 1px solid #fecdd3;
   color: #be123c;
+}
+
+.audit-badge-teal {
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  color: #0f766e;
+}
+
+/* XAI 4-QUESTION EXPLAINABILITY CARD */
+.xai-card {
+  background: #f0fdfa;
+  border: 1.5px solid #5eead4;
+  border-left: 5px solid #0d9488;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.xai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #ccfbf1;
+  padding-bottom: 8px;
+}
+
+.xai-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f766e;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.xai-score-pill {
+  background: #0d9488;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.xai-row {
+  margin-bottom: 10px;
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #e6fffa;
+}
+
+.xai-q {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.q-where { color: #2563eb; }
+.q-what { color: #d97706; }
+.q-why { color: #7c3aed; }
+.q-next { color: #dc2626; }
+
+.xai-a {
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.45;
 }
 
 /* NETWORK EGO-GRAPH BOX */

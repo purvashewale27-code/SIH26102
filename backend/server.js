@@ -10,6 +10,7 @@ const vidhiKavach = require('./rules/vidhi_kavach');
 const punarDrishti = require('./ml/punar_drishti');
 const arthaDarpan = require('./ml/artha_darpan');
 const chakraVyuh = require('./ml/chakra_vyuh');
+const vibhedNetra = require('./ml/vibhed_netra');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
@@ -27,6 +28,9 @@ let totalModerateInflationCount = 0;
 let totalExcessINR = 0;
 let totalCartelRiskCount = 0;
 let totalMonopolyCount = 0;
+let totalMlAnomaliesCount = 0;
+let totalCriticalMlAnomaliesCount = 0;
+let totalElevatedMlAnomaliesCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
@@ -139,11 +143,23 @@ if (fs.existsSync(DATA_FILE)) {
     }
   });
 
+  // 5. Run VIBHED-NETRA (Feature 5: 12-Dimensional Isolation Forest & Multi-Feature Anomaly Sentry)
+  vibhedNetra.calibrate(allProjects);
+  allProjects.forEach(p => {
+    p.vibhed = vibhedNetra.evaluateProject(p);
+    if (p.vibhed.isAnomaly) {
+      totalMlAnomaliesCount++;
+      if (p.vibhed.status === 'CRITICAL_OUTLIER') totalCriticalMlAnomaliesCount++;
+      if (p.vibhed.status === 'ELEVATED_RISK') totalElevatedMlAnomaliesCount++;
+    }
+  });
+
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
   console.log(`🛡️ VIDHI-KAVACH: ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)`);
   console.log(`🔍 PUNAR-DRISHTI: ${totalDuplicateClaimsCount} duplicate works (${totalExactClonesCount} exact 100% clones)`);
   console.log(`💰 ARTHA-DARPAN: ${totalInflatedCostCount} cost anomalies (₹${(totalExcessINR / 1e7).toFixed(1)} Cr excess risk flagged)`);
   console.log(`🕸️ CHAKRA-VYUH: ${totalCartelRiskCount} contractor cartel risks across ${chakraVyuh.vendorStats.size} vendors`);
+  console.log(`🌲 VIBHED-NETRA: ${totalMlAnomaliesCount} multi-dimensional anomalies (${totalCriticalMlAnomaliesCount} critical outliers)`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -183,7 +199,11 @@ const server = http.createServer((req, res) => {
       totalVendorsCount: chakraVyuh.vendorStats.size,
       cartelRiskCount: totalCartelRiskCount,
       monopolyCount: totalMonopolyCount,
-      totalVouchersCount: chakraVyuh.vouchersCount
+      totalVouchersCount: chakraVyuh.vouchersCount,
+      // Feature 5: VIBHED-NETRA
+      mlAnomaliesCount: totalMlAnomaliesCount,
+      criticalMlAnomaliesCount: totalCriticalMlAnomaliesCount,
+      elevatedMlAnomaliesCount: totalElevatedMlAnomaliesCount
     });
   }
 
@@ -234,6 +254,10 @@ const server = http.createServer((req, res) => {
       if (!filter || filter === 'cartels') {
         filtered = filtered.filter(p => p.chakra && p.chakra.hasCartelRisk);
       }
+    } else if (mode === 'vibhed-netra') {
+      if (!filter || filter === 'anomalies') {
+        filtered = filtered.filter(p => p.vibhed && p.vibhed.isAnomaly);
+      }
     }
 
     // Apply State Filter
@@ -274,6 +298,14 @@ const server = http.createServer((req, res) => {
       filtered = filtered.filter(p => p.chakra && p.chakra.status === 'ELEVATED_CONCENTRATION');
     } else if (filter === 'competitive') {
       filtered = filtered.filter(p => p.chakra && !p.chakra.hasCartelRisk);
+    } else if (filter === 'anomalies') {
+      filtered = filtered.filter(p => p.vibhed && p.vibhed.isAnomaly);
+    } else if (filter === 'critical-anomalies') {
+      filtered = filtered.filter(p => p.vibhed && p.vibhed.status === 'CRITICAL_OUTLIER');
+    } else if (filter === 'elevated-anomalies') {
+      filtered = filtered.filter(p => p.vibhed && p.vibhed.status === 'ELEVATED_RISK');
+    } else if (filter === 'inliers') {
+      filtered = filtered.filter(p => p.vibhed && p.vibhed.status === 'HEALTHY_INLIER');
     }
 
     // Apply Search

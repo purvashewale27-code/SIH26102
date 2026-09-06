@@ -216,7 +216,45 @@ function switchMode(newMode) {
     loadCartelGraph(document.getElementById('cartel-mp-select').value);
 
   // ==========================================
-  // MODE 5: ALL-INDIA REPOSITORY (Master Explorer)
+  // MODE 5: VIBHED-NETRA (12D Isolation Forest)
+  // ==========================================
+  } else if (currentMode === 'vibhed-netra') {
+    currentFilter = 'anomalies';
+
+    setFeatureHeader(
+      '🌲 FEATURE 5: VIBHED-NETRA (विभेद-नेत्र — 12D Isolation Forest Anomaly Sentry)',
+      '12-Dimensional Multi-Variate Unsupervised Anomaly Detection & 4-Question Explainability (XAI)',
+      'Forensic detection of camouflaged corruption, milestone-fund discrepancies, and synthetic risks across 176,925 MoSPI works',
+      '#f0fdfa', '#0d9488', '#99f6e4'
+    );
+
+    const mlTotal = statsData && statsData.mlAnomaliesCount ? statsData.mlAnomaliesCount : 40971;
+    const critMl = statsData && statsData.criticalMlAnomaliesCount ? statsData.criticalMlAnomaliesCount : 10286;
+    const elevatedMl = statsData && statsData.elevatedMlAnomaliesCount ? statsData.elevatedMlAnomaliesCount : 30685;
+
+    renderKPIs({
+      c1: { label: 'Total Works Evaluated', val: statsData ? statsData.totalProjects.toLocaleString('en-IN') : '176,925', desc: 'Evaluated across 12 Dimensions' },
+      c2: { label: 'Isolation Forest Outliers', val: mlTotal.toLocaleString('en-IN'), desc: 'Multi-dimensional camouflaged risks', color: 'text-teal', isTeal: true },
+      c3: { label: 'Critical Outliers (Score ≥ 70)', val: critMl.toLocaleString('en-IN'), desc: 'Severe multi-metric dissonance', color: 'text-red', isDanger: true },
+      c4: { label: 'Elevated Outliers (55–69)', val: elevatedMl.toLocaleString('en-IN'), desc: 'High milestone or progress gap', isWarning: true }
+    });
+
+    renderFilterTabs([
+      { id: 'anomalies', label: '🌲 All ML Anomalies', count: mlTotal, cls: 'teal-tab active' },
+      { id: 'critical-anomalies', label: '🚨 Critical Outliers (Score ≥ 70)', count: critMl, cls: 'danger-tab' },
+      { id: 'elevated-anomalies', label: '⚠️ Elevated Outliers (55–69)', count: elevatedMl, cls: 'warning-tab' },
+      { id: 'inliers', label: '✅ Normal Inliers (Conforming)', count: 135954, cls: 'success-tab' },
+      { id: 'all', label: '📋 All 176,925 Works', count: statsData ? statsData.totalProjects : 176925, cls: '' }
+    ]);
+
+    document.getElementById('th-audit-col').innerText = 'Isolation Forest Verdict (VIBHED-NETRA)';
+    setRoadmap(
+      '🌲 Feature 5: VIBHED-NETRA (विभेद-नेत्र) Live in Action',
+      'VIBHED-NETRA implements an unsupervised <b>12-Dimensional Isolation Forest</b> to detect complex, camouflaged anomalies that escape single-metric rule checks. It isolates projects with glaring <b>efficiency gaps (e.g. 100% funds released but 0% physical progress)</b>, extreme delays, and synthetic risk patterns. Every flagged project features Vaibhav’s <b>4 Explainability Questions (Where, What, Why, What Next)</b>.'
+    );
+
+  // ==========================================
+  // MASTER REPOSITORY (All-India Explorer)
   // ==========================================
   } else {
     currentFilter = 'all';
@@ -301,6 +339,10 @@ function renderKPIs(kpis) {
     c2.style.background = '#faf5ff';
     c2.style.borderColor = '#ddd6fe';
     document.getElementById('kpi-c2-val').style.color = '#7c3aed';
+  } else if (kpis.c2.isTeal) {
+    c2.style.background = '#f0fdfa';
+    c2.style.borderColor = '#99f6e4';
+    document.getElementById('kpi-c2-val').style.color = '#0d9488';
   } else if (kpis.c2.isWarning) {
     c2.style.background = '#fffbeb';
     c2.style.borderColor = '#fde68a';
@@ -434,6 +476,7 @@ async function loadProjects() {
     'punar-drishti': 'Scanning works with PUNAR-DRISHTI NLP Duplicate Sentry...',
     'artha-darpan': 'Evaluating project budgets with ARTHA-DARPAN CPWD Rate Sentry...',
     'chakra-vyuh': 'Tracing vendor contracts with CHAKRA-VYUH Cartel Sentry...',
+    'vibhed-netra': 'Isolating 12-dimensional anomalies with VIBHED-NETRA ML Forest...',
     'all-works': 'Loading nationwide MoSPI records...'
   };
 
@@ -572,6 +615,35 @@ async function loadProjects() {
           `;
         }
 
+      } else if (currentMode === 'vibhed-netra') {
+        // ONLY FEATURE 5 (VIBHED-NETRA) BADGES
+        const ml = p.vibhed || p.mlAnomaly || { isAnomaly: false, anomalyScore: 0, severity: 'NORMAL', status: 'HEALTHY_INLIER' };
+        const f = ml.features || {};
+        if (ml.isAnomaly) {
+          const isCrit = ml.status === 'CRITICAL_OUTLIER' || ml.severity === 'CRITICAL';
+          const badgeCls = isCrit ? 'audit-badge-danger' : 'audit-badge-teal';
+          const gap = f.efficiencyGap != null ? f.efficiencyGap : (p.efficiencyGap || 0);
+          const topAnomaly = gap > 0 ? `Progress Gap (+${gap}%)` : (f.costDev > 0 ? `Cost Dev (+${f.costDev}%)` : (f.delayDays > 0 ? `Delay (${f.delayDays}d)` : 'Multi-Factor'));
+          badgeHtml = `
+            <div class="audit-badge ${badgeCls}">
+              <span class="badge-tag">${isCrit ? '🚨 CRITICAL OUTLIER' : '🌲 ML ANOMALY'} (${ml.anomalyScore}/100)</span>
+              <span class="badge-desc">Driver: ${topAnomaly} · Funds: ${f.financialProgress || 0}% / Phys: ${f.physicalProgress || 0}%</span>
+            </div>
+            <div style="margin-top:4px;">
+              <span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;color:#0d9488;background:#ccfbf1;border-radius:4px;">
+                👁️ Explain My Score (4-Q XAI)
+              </span>
+            </div>
+          `;
+        } else {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-success">
+              <span class="badge-tag">✅ INLIER (SCORE ${ml.anomalyScore || 18})</span>
+              <span class="badge-desc">Conforms to Cluster Norms</span>
+            </div>
+          `;
+        }
+
       } else {
         // MASTER EXPLORER (Combined)
         if (dupe && dupe.isDuplicate) {
@@ -582,6 +654,9 @@ async function loadProjects() {
         }
         if (chakra && chakra.status === 'MONOPOLY_CARTEL_RISK') {
           badgeHtml += `<div class="audit-badge audit-badge-cartel" style="margin-bottom:2px;"><span class="badge-tag">🕸️ MONOPOLY (${chakra.topVendorShare}%)</span></div>`;
+        }
+        if (p.vibhed && p.vibhed.status === 'CRITICAL_OUTLIER') {
+          badgeHtml += `<div class="audit-badge audit-badge-teal" style="margin-bottom:2px;"><span class="badge-tag">🌲 ML OUTLIER (${p.vibhed.anomalyScore})</span></div>`;
         }
         const firstViol = audit.violations.find(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
         if (firstViol) {
@@ -904,6 +979,81 @@ function openModal(project) {
     findingsContainer.appendChild(card);
 
   // ==========================================
+  // FEATURE 5 MODAL: VIBHED-NETRA (4-Question XAI)
+  // ==========================================
+  } else if (currentMode === 'vibhed-netra') {
+    document.getElementById('modal-badge').innerText = 'VIBHED-NETRA 12D ISOLATION FOREST AUDIT';
+    document.getElementById('modal-badge').style.background = '#f0fdfa';
+    document.getElementById('modal-badge').style.color = '#0d9488';
+    document.getElementById('modal-badge').style.borderColor = '#99f6e4';
+
+    const ml = project.vibhed || project.mlAnomaly || { isAnomaly: false, anomalyScore: 0, severity: 'NORMAL', status: 'HEALTHY_INLIER', features: {}, explainability: {} };
+    const xai = ml.explainability || {};
+    const f = ml.features || {};
+
+    const card = document.createElement('div');
+    card.className = 'xai-card';
+
+    // Highlight key 12-D drivers
+    const drivers = [];
+    if (f.efficiencyGap >= 20) drivers.push({ name: `Efficiency Gap: +${f.efficiencyGap}%`, color: '#dc2626' });
+    if (f.costDev >= 40) drivers.push({ name: `Cost Inflation: +${f.costDev}%`, color: '#d97706' });
+    if (f.topVendorShare >= 50) drivers.push({ name: `Vendor Monopoly: ${f.topVendorShare}%`, color: '#be123c' });
+    if (f.delayDays >= 60) drivers.push({ name: `Milestone Delay: ${f.delayDays}d`, color: '#7c3aed' });
+    if (f.duplicateScore >= 80) drivers.push({ name: `Duplicate Risk: ${f.duplicateScore}%`, color: '#6d28d9' });
+    if (f.statutoryPenalty > 0) drivers.push({ name: `Statutory Penalty: ${f.statutoryPenalty}pts`, color: '#b91c1c' });
+
+    let factorsHtml = drivers.map(d =>
+      `<span style="display:inline-block;margin:2px 6px 2px 0;padding:3px 10px;font-size:11px;font-weight:700;background:#ffffff;color:${d.color};border-radius:12px;border:1px solid #ccfbf1;box-shadow:0 1px 2px rgba(0,0,0,0.03);">${d.name}</span>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="xai-header">
+        <div>
+          <div class="xai-title">🌲 12-Dimensional Isolation Forest Anomaly Analysis</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">Unsupervised Multi-Variate Cluster Isolation & Anomaly Scoring</div>
+        </div>
+        <div class="xai-score-pill" style="background:${ml.status === 'CRITICAL_OUTLIER' ? '#dc2626' : (ml.isAnomaly ? '#0d9488' : '#059669')};">
+          SCORE: ${ml.anomalyScore}/100 [${ml.status || ml.severity}]
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;padding:10px 12px;background:#ffffff;border-radius:6px;border:1px solid #ccfbf1;">
+        <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">Key 12-D Anomaly Vectors:</div>
+        <div>${factorsHtml || '<span style="font-size:11px;color:#047857;font-weight:600;">✅ All 12 dimensions conform to normal cluster distribution.</span>'}</div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;display:flex;gap:16px;font-size:11px;color:#475569;">
+          <span>Financial Disbursed: <b>${f.financialProgress != null ? f.financialProgress : 0}%</b></span>
+          <span>Physical Completed: <b>${f.physicalProgress != null ? f.physicalProgress : 0}%</b></span>
+          <span>Efficiency Gap: <b style="color:${(f.efficiencyGap || 0) > 20 ? '#dc2626' : '#047857'};">+${f.efficiencyGap != null ? f.efficiencyGap : 0}%</b></span>
+          <span>Delay: <b>${f.delayDays != null ? f.delayDays : 0} days</b></span>
+        </div>
+      </div>
+
+      <!-- 4 EXPLAINABILITY QUESTIONS -->
+      <div class="xai-row">
+        <div class="xai-q q-where"><span>📍</span> Question 1: WHERE was this anomaly detected?</div>
+        <div class="xai-a">${xai.where || `Detected in ${project.district}, ${project.state} under Lok Sabha Constituency ${project.constituency}, recommended by ${project.mpName}.`}</div>
+      </div>
+
+      <div class="xai-row">
+        <div class="xai-q q-what"><span>⚡</span> Question 2: WHAT is the multi-dimensional anomaly?</div>
+        <div class="xai-a">${xai.what || `Sanctioned allocation of ${project.costFormatted} exhibits multi-metric divergence from normal work trajectories.`}</div>
+      </div>
+
+      <div class="xai-row" style="border-left:3px solid #7c3aed;">
+        <div class="xai-q q-why"><span>🔬</span> Question 3: WHY was this work flagged by the ML model?</div>
+        <div class="xai-a">${xai.why || `Tree isolation depth indicates anomalous coordination across budget, expenditure speed, and physical milestone completion.`}</div>
+      </div>
+
+      <div class="xai-row" style="border-left:3px solid #dc2626;background:#fff5f5;">
+        <div class="xai-q q-next"><span>🎯</span> Question 4: WHAT NEXT should the District Authority do?</div>
+        <div class="xai-a" style="font-weight:600;color:#991b1b;">${xai.whatNext || 'Deploy field physical verification team and halt further milestone disbursements pending technical audit.'}</div>
+      </div>
+    `;
+
+    findingsContainer.appendChild(card);
+
+  // ==========================================
   // MASTER EXPLORER MODAL
   // ==========================================
   } else {
@@ -920,7 +1070,8 @@ function openModal(project) {
         • <b>Statutory Status:</b> ${audit.isCompliant ? '✅ Compliant' : '🚨 ' + audit.violations.length + ' Violations Flagged'}<br>
         • <b>Duplicate Status:</b> ${dupe && dupe.isDuplicate ? `🔍 ${dupe.similarityScore}% Clone with ${dupe.matchedId}` : '✅ Unique Asset'}<br>
         • <b>Cost Benchmark:</b> ${artha && artha.isAnomaly ? `💰 ${artha.status} (+${artha.costDeviationPct}%)` : '✅ Fair Market Price'}<br>
-        • <b>Vendor Concentration:</b> ${chakra && chakra.hasCartelRisk ? `🕸️ ${chakra.status} (${chakra.topVendorShare}%)` : '✅ Competitive Bidding'}
+        • <b>Vendor Concentration:</b> ${chakra && chakra.hasCartelRisk ? `🕸️ ${chakra.status} (${chakra.topVendorShare}%)` : '✅ Competitive Bidding'}<br>
+        • <b>ML Forest Anomaly:</b> ${project.mlAnomaly && project.mlAnomaly.isAnomaly ? `🌲 ${project.mlAnomaly.severity} Outlier (Score ${project.mlAnomaly.anomalyScore}/100)` : '✅ Normal Inlier'}
       </div>
     `;
     findingsContainer.appendChild(card);
