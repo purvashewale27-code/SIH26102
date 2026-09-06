@@ -193,6 +193,11 @@ body {
   box-shadow: 0 6px 16px rgba(79, 70, 229, 0.15);
 }
 
+.mode-tab.active[data-mode="bhu-drishti"] {
+  border-color: #059669;
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.18);
+}
+
 .mode-pill {
   display: inline-block;
   font-size: 10px;
@@ -210,6 +215,7 @@ body {
 .pill-crimson { background: #ffe4e6; color: #be123c; }
 .pill-teal { background: #ccfbf1; color: #0f766e; }
 .pill-indigo { background: #e0e7ff; color: #4338ca; }
+.pill-emerald { background: #d1fae5; color: #047857; }
 .pill-blue { background: #dbeafe; color: #1e40af; }
 
 .mode-title {
@@ -1081,3 +1087,111 @@ body {
 .btn-secondary:hover {
   background: #f1f5f9;
 }
+
+/* ==========================================================================
+   FEATURE 7: BHU-DRISHTI (भू-दृष्टि) STYLES
+   ========================================================================== */
+.pill-emerald {
+  background: #0d9488;
+  color: #ffffff;
+}
+
+.mode-tab[data-mode="bhu-drishti"].active {
+  border-color: #0d9488;
+  background: #f0fdfa;
+}
+
+.mode-tab[data-mode="bhu-drishti"].active .mode-title {
+  color: #0f766e;
+}
+
+.filter-tab.emerald-tab.active {
+  border-bottom: 2.5px solid #0d9488;
+  color: #0f766e;
+}
+
+.bhu-map-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.bhu-map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.map-ctrl-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.map-ctrl-btn:hover {
+  background: #f1f5f9;
+}
+
+.map-ctrl-btn.active {
+  background: #0d9488;
+  color: #ffffff;
+  border-color: #0f766e;
+}
+
+.map-ctrl-btn.btn-api-key {
+  background: #f0fdfa;
+  border-color: #99f6e4;
+  color: #0f766e;
+}
+
+.map-ctrl-btn.btn-api-key:hover {
+  background: #ccfbf1;
+}
+
+.audit-badge-ghost {
+  display: inline-block;
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.audit-badge-cluster {
+  display: inline-block;
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  color: #7e22ce;
+  font-weight: 700;
+}
+
+.audit-badge-verified {
+  display: inline-block;
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  color: #0f766e;
+  font-weight: 700;
+}
+

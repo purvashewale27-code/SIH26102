@@ -57,10 +57,11 @@ Every step we take, every architectural decision, every formula, and every piece
 | **Phase 3** | Signal 4: Cross-Scheme Block-Level Deduplication | **DONE** | `backend/engines/signal4_deduplication.js` |
 | **Phase 3** | Signal 5: Benford's Law Forensic Digit Engine | **DONE** | `backend/engines/signal5_benford_analysis.js` |
 | **Phase 3** | Signal 6: Cox Survival Analysis ("Zombie Projects") | **DONE** | `backend/engines/signal6_survival_analysis.js` |
+| **Phase 3** | Feature 7: BHU-DRISHTI Geospatial Satellite & Ghost Asset Radar | **DONE** | `backend/ml/bhu_drishti.js`, `frontend/app.js` |
 | **Phase 4** | Priority Score Aggregator & "Explain-My-Score" Waterfall | **DONE** | `backend/services/scoring_service.js` |
 | **Phase 4** | Hot Path Live Injection Demo Service (<50ms SLA) | **DONE** | `backend/api/server.js` (Runs in ~1ms!) |
 | **Phase 5** | 4 Role-Based Dashboards (Ministry, State, District, MP) | **DONE** | `frontend/index.html`, `frontend/app.js` |
-| **Phase 5** | Interactive GIS Map & Ego-Graph Visualizer (Vis.js) | **DONE** | `frontend/style.css`, `frontend/app.js` |
+| **Phase 5** | Interactive GIS Map & Ego-Graph Visualizer (Vis.js / Leaflet) | **DONE** | `frontend/style.css`, `frontend/app.js` |
 | **Phase 6** | One-Click Printable Audit Dossier (PDF/Print Memo) | **DONE** | `backend/services/dossier_generator.js` |
 
 
@@ -81,6 +82,7 @@ All data is permanently stored on your hard drive under `backend/data/`:
 8. **CPWD Cost Rate Book (DSR)**: Standard construction benchmarks with state cost multipliers for **all 36 States & UTs** in `backend/data/cpwd/cpwd_dsr_rates.json`.
 9. **Statutory Rules (Policy-as-Data)**: 13 bitemporal rules (SC/ST Quotas, Negative List 01-07, Pacing Cap, Completion Deadline, Trust Cap, Admin Cap) in `backend/policy/statutory_rules.json`.
 10. **Bhuvan ISRO / MGNREGA Assets**: 24 geo-tagged rural assets across Indian zones in `backend/data/bhuvan/bhuvan_mgnrega_assets.json`.
+11. **BHU-DRISHTI Geocoded Registry**: 176,925 works mapped with GPS centroids across all 36 States/UTs, 3,031 Ghost Assets flagged (>₹4L disbursed without verified geotags), and 12,320 hyper-local clusters (<250m) in `backend/ml/bhu_drishti.js`.
 
 ---
 
@@ -105,6 +107,7 @@ All data is permanently stored on your hard drive under `backend/data/`:
 - **2026-09-06 03:30 PM**: **Feature 5 (`VIBHED-NETRA`) Live**: 12D Isolation Forest & Multi-Variate Anomaly Sentry detecting non-linear multidimensional outliers (Commit `24ed1ab`).
 - **2026-09-06 04:00 PM**: **Feature 6 (`SANKHYA-SATYA`) Live**: Forensic Digit Analysis (Benford's Law Chi-Square = 13,917.59) & Tender-Splitting Sentry catching 7,710 ₹5L/₹10L GFR bypass works and 54,820 un-engineered round-number estimates (Commit `ebddfe6`).
 - **2026-09-06 04:15 PM**: **Full 6-Feature Suite Synchronized & Pushed**: All 6 forensic sentinels fully integrated with dedicated tabs, distinct color palettes, dedicated KPIs, zero badge-blending, and full explainability modals. Branch `main` up to date with remote.
+- **2026-09-06 03:40 PM**: **Feature 7 (`BHU-DRISHTI`) Live**: Geospatial Satellite Sentry, GIS Spatial Clustering (<250m) & Ghost Asset Radar. Integrated dual-mode Leaflet GIS map (Esri World Satellite HD free default + configurable Mapbox/Google Maps key modal), scanning 176,925 works across 36 States/UTs, isolating 3,031 Ghost Assets and 12,320 hyper-local clusters with 4-question Explainability (Where, What, Why, What Next).
 
 
 ---

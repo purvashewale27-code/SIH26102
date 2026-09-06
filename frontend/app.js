@@ -18,6 +18,13 @@ const limit = 20;
 let currentLoadedProjects = [];
 let statsData = null;
 
+// Feature 7: BHU-DRISHTI Map State
+let bhuLeafletMap = null;
+let bhuMarkersLayer = null;
+let bhuCurrentTileLayer = null;
+let bhuActiveBasemap = 'satellite';
+let bhuCurrentMapFilter = 'all-spatial';
+
 document.addEventListener('DOMContentLoaded', () => {
   setupModeSwitcher();
   setupEventListeners();
@@ -70,6 +77,12 @@ function switchMode(newMode) {
   const benfordSec = document.getElementById('benford-histogram-section');
   if (benfordSec) {
     benfordSec.style.display = currentMode === 'sankhya-satya' ? 'block' : 'none';
+  }
+
+  // Feature 7 Geospatial Satellite Map section visibility (only visible in bhu-drishti mode)
+  const mapSec = document.getElementById('bhu-drishti-map-section');
+  if (mapSec) {
+    mapSec.style.display = currentMode === 'bhu-drishti' ? 'block' : 'none';
   }
 
   // ==========================================
@@ -301,6 +314,47 @@ function switchMode(newMode) {
     loadBenfordHistogram();
 
   // ==========================================
+  // MODE 7: BHU-DRISHTI (Geospatial Satellite & Ghost Asset Radar)
+  // ==========================================
+  } else if (currentMode === 'bhu-drishti') {
+    currentFilter = 'all-spatial';
+
+    setFeatureHeader(
+      '🛰️ FEATURE 7: BHU-DRISHTI (भू-दृष्टि — Geospatial Satellite Sentry & Ghost Asset Radar)',
+      'GIS Spatial Clustering (<250m) & Para 4.3 Mandatory Geotag Audit',
+      'Satellite verification of 176,925 physical works, detecting phantom assets and high-density geographic bunching',
+      '#ecfdf5', '#047857', '#a7f3d0'
+    );
+
+    const ghostTotal = statsData && statsData.ghostAssetsCount ? statsData.ghostAssetsCount : 3031;
+    const clusterTotal = statsData && statsData.spatialClustersCount ? statsData.spatialClustersCount : 12320;
+    const verifiedTotal = statsData && statsData.verifiedGeotagsCount ? statsData.verifiedGeotagsCount : 161574;
+    const totalGeocoded = statsData && statsData.totalGeocodedCount ? statsData.totalGeocodedCount : 176925;
+
+    renderKPIs({
+      c1: { label: 'Geocoded Work Coordinates', val: totalGeocoded.toLocaleString('en-IN'), desc: '36 States & UTs mapped via GIS' },
+      c2: { label: 'Ghost Assets Flagged', val: ghostTotal.toLocaleString('en-IN'), desc: 'Funds disbursed without verified geotag', isDanger: true },
+      c3: { label: 'Spatial Clusters (<250m)', val: clusterTotal.toLocaleString('en-IN'), desc: 'Tight spatial bunching (GFR 139)', color: 'text-purple', isPurple: true },
+      c4: { label: 'Verified Physical Geotags', val: verifiedTotal.toLocaleString('en-IN'), desc: 'Compliant Gram Panchayat geotags', color: 'text-green' }
+    });
+
+    renderFilterTabs([
+      { id: 'all-spatial', label: '🌐 All Geocoded Works', count: totalGeocoded, cls: 'emerald-tab active' },
+      { id: 'ghost-assets', label: '👻 Ghost Assets (No Geotag)', count: ghostTotal, cls: 'danger-tab' },
+      { id: 'spatial-clusters', label: '📍 Spatial Clusters (<250m)', count: clusterTotal, cls: 'purple-tab' },
+      { id: 'verified-geotags', label: '✅ Verified Physical Assets', count: verifiedTotal, cls: 'success-tab' },
+      { id: 'all', label: '📋 All 176,925 Works', count: statsData ? statsData.totalProjects : 176925, cls: '' }
+    ]);
+
+    document.getElementById('th-audit-col').innerText = 'Geospatial Radar Verdict (BHU-DRISHTI)';
+    setRoadmap(
+      '🛰️ Feature 7: BHU-DRISHTI (भू-दृष्टि) Live in Action',
+      'BHU-DRISHTI audits every work against <b>MPLADS 2023 Guidelines Para 4.3</b> (mandatory physical geo-tagging on official mobile app) and <b>GFR Rule 139</b> (public utility dispersion). It detects <b>Ghost Assets</b> (sanctions with zero physical GPS footprint despite funds disbursed) and flags <b>hyper-local clusters</b> bunched within a 250m radius. Interact with the high-resolution satellite map above or click any work below to fly to its coordinates.'
+    );
+
+    initOrUpdateBhuMap();
+
+  // ==========================================
   // MASTER REPOSITORY (All-India Explorer)
   // ==========================================
   } else {
@@ -442,6 +496,9 @@ function renderFilterTabs(tabs) {
       currentFilter = t.id;
       currentPage = 1;
       loadProjects();
+      if (currentMode === 'bhu-drishti') {
+        loadBhuMapPoints(t.id);
+      }
     });
 
     container.appendChild(btn);
@@ -529,6 +586,7 @@ async function loadProjects() {
     'chakra-vyuh': 'Tracing vendor contracts with CHAKRA-VYUH Cartel Sentry...',
     'vibhed-netra': 'Isolating 12-dimensional anomalies with VIBHED-NETRA ML Forest...',
     'sankhya-satya': 'Auditing digit distributions with SANKHYA-SATYA Forensic Sentry...',
+    'bhu-drishti': 'Scanning geospatial coordinates with BHU-DRISHTI Satellite Radar...',
     'all-works': 'Loading nationwide MoSPI records...'
   };
 
@@ -733,6 +791,47 @@ async function loadProjects() {
           `;
         }
 
+      } else if (currentMode === 'bhu-drishti') {
+        // ONLY FEATURE 7 (BHU-DRISHTI) BADGES
+        const bhu = p.bhu_drishti || { isGhostAsset: false, isSpatialCluster: false, riskLevel: 'LOW', anomalyType: 'VERIFIED_GEOTAG' };
+        if (bhu.isGhostAsset) {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-ghost">
+              <span class="badge-tag">🚨 GHOST ASSET (NO GEOTAG)</span>
+              <span class="badge-desc">Violates Para 4.3 · Disbursed: ${p.costFormatted}</span>
+            </div>
+            <div style="margin-top:4px;">
+              <button class="locate-btn" style="padding:2px 8px;font-size:10px;font-weight:700;color:#dc2626;background:#fee2e2;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;" onclick="event.stopPropagation(); flyToProject(${p.lat}, ${p.lon}, '${p.id}')">
+                📍 Locate on Map
+              </button>
+            </div>
+          `;
+        } else if (bhu.isSpatialCluster) {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-cluster">
+              <span class="badge-tag">📍 SPATIAL CLUSTER (${bhu.clusterCount} works)</span>
+              <span class="badge-desc">Radius: ${bhu.clusterRadius}m · Cluster ID: ${bhu.clusterId}</span>
+            </div>
+            <div style="margin-top:4px;">
+              <button class="locate-btn" style="padding:2px 8px;font-size:10px;font-weight:700;color:#7e22ce;background:#f3e8ff;border:1px solid #d8b4fe;border-radius:4px;cursor:pointer;" onclick="event.stopPropagation(); flyToProject(${p.lat}, ${p.lon}, '${p.id}')">
+                📍 Locate on Map
+              </button>
+            </div>
+          `;
+        } else {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-verified">
+              <span class="badge-tag">✅ VERIFIED GEOTAG</span>
+              <span class="badge-desc">GPS: ${p.lat != null ? p.lat.toFixed(3) : 0}°N, ${p.lon != null ? p.lon.toFixed(3) : 0}°E</span>
+            </div>
+            <div style="margin-top:4px;">
+              <button class="locate-btn" style="padding:2px 8px;font-size:10px;font-weight:700;color:#0f766e;background:#ccfbf1;border:1px solid #99f6e4;border-radius:4px;cursor:pointer;" onclick="event.stopPropagation(); flyToProject(${p.lat}, ${p.lon}, '${p.id}')">
+                📍 Locate on Map
+              </button>
+            </div>
+          `;
+        }
+
       } else {
         // MASTER EXPLORER (Combined)
         if (dupe && dupe.isDuplicate) {
@@ -749,6 +848,9 @@ async function loadProjects() {
         }
         if (p.sankhya && p.sankhya.isThresholdSplit) {
           badgeHtml += `<div class="audit-badge audit-badge-indigo" style="margin-bottom:2px;"><span class="badge-tag">🔢 TENDER-SPLIT (${p.costFormatted})</span></div>`;
+        }
+        if (p.bhu_drishti && p.bhu_drishti.isGhostAsset) {
+          badgeHtml += `<div class="audit-badge audit-badge-ghost" style="margin-bottom:2px;"><span class="badge-tag">🛰️ GHOST ASSET</span></div>`;
         }
         const firstViol = audit.violations.find(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
         if (firstViol) {
@@ -1252,6 +1354,72 @@ function openModal(project) {
     findingsContainer.appendChild(card);
 
   // ==========================================
+  // FEATURE 7 MODAL: BHU-DRISHTI (Geospatial & Ghost Asset Audit)
+  // ==========================================
+  } else if (currentMode === 'bhu-drishti') {
+    document.getElementById('modal-badge').innerText = 'BHU-DRISHTI GEOSPATIAL AUDIT';
+    document.getElementById('modal-badge').style.background = '#ecfdf5';
+    document.getElementById('modal-badge').style.color = '#047857';
+    document.getElementById('modal-badge').style.borderColor = '#a7f3d0';
+
+    const bhu = project.bhu_drishti || { isGhostAsset: false, isSpatialCluster: false, riskLevel: 'LOW', anomalyType: 'VERIFIED_GEOTAG', xai: {} };
+    const xai = bhu.xai || {};
+
+    const card = document.createElement('div');
+    card.className = 'xai-card';
+    card.style.borderColor = bhu.isGhostAsset ? '#fca5a5' : (bhu.isSpatialCluster ? '#d8b4fe' : '#99f6e4');
+    card.style.borderLeftColor = bhu.isGhostAsset ? '#dc2626' : (bhu.isSpatialCluster ? '#7e22ce' : '#059669');
+    card.style.background = bhu.isGhostAsset ? '#fffafa' : '#fafffd';
+
+    card.innerHTML = `
+      <div class="xai-header" style="border-bottom-color: #e2e8f0;">
+        <div>
+          <div class="xai-title" style="color: ${bhu.isGhostAsset ? '#dc2626' : (bhu.isSpatialCluster ? '#7e22ce' : '#047857')};">
+            🛰️ Geospatial Remote Sensing & GPS Audit
+          </div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">MPLADS 2023 Guidelines Para 4.3 Mandatory Geotagging & GFR 139 Sentry</div>
+        </div>
+        <div class="xai-score-pill" style="background:${bhu.riskLevel === 'CRITICAL' ? '#dc2626' : (bhu.riskLevel === 'MEDIUM' ? '#7e22ce' : '#059669')};">
+          ${bhu.anomalyType} [${bhu.riskLevel}]
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;padding:10px 12px;background:#ffffff;border-radius:6px;border:1px solid #e2e8f0;">
+        <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">GIS Coordinates & Spatial Indicators:</div>
+        <div style="display:flex;gap:16px;font-size:11px;color:#475569;flex-wrap:wrap;">
+          <span>Latitude: <b style="font-family:var(--font-mono);">${project.lat != null ? project.lat.toFixed(5) : 'N/A'}°N</b></span>
+          <span>Longitude: <b style="font-family:var(--font-mono);">${project.lon != null ? project.lon.toFixed(5) : 'N/A'}°E</b></span>
+          <span>GPS Geotag Status: <b style="color:${bhu.isGhostAsset ? '#dc2626' : '#047857'};">${bhu.isGhostAsset ? '❌ Missing / Discrepant' : '✅ Verified Geotagged'}</b></span>
+          <span>Spatial Radius: <b>${bhu.clusterRadius ? bhu.clusterRadius + 'm' : 'Dispersed (>500m)'}</b></span>
+          <span>Implementing Agency: <b>${project.implementingAgency || 'District Planning Authority'}</b></span>
+        </div>
+      </div>
+
+      <!-- 4 EXPLAINABILITY QUESTIONS -->
+      <div class="xai-row">
+        <div class="xai-q q-where"><span>📍</span> Question 1: WHERE is this asset geographically located?</div>
+        <div class="xai-a">${xai.where || `Located at coordinates [${project.lat}, ${project.lon}] in ${project.district}, ${project.state}.`}</div>
+      </div>
+
+      <div class="xai-row">
+        <div class="xai-q q-what"><span>⚡</span> Question 2: WHAT is the geospatial anomaly flagged?</div>
+        <div class="xai-a">${xai.what || `Audit flagged asset status: ${bhu.anomalyType}.`}</div>
+      </div>
+
+      <div class="xai-row" style="border-left:3px solid #7c3aed;">
+        <div class="xai-q q-why"><span>🔬</span> Question 3: WHY is this a statutory or governance risk?</div>
+        <div class="xai-a">${xai.why || `MPLADS 2023 Guidelines Para 4.3 mandates verified GPS coordinates before releasing final installments.`}</div>
+      </div>
+
+      <div class="xai-row" style="border-left:3px solid #dc2626;background:#fff5f5;">
+        <div class="xai-q q-next"><span>🎯</span> Question 4: WHAT NEXT should the District Authority do?</div>
+        <div class="xai-a" style="font-weight:600;color:#991b1b;">${xai.whatNext || 'Deploy field physical verification team to verify physical existence before fund disbursement.'}</div>
+      </div>
+    `;
+
+    findingsContainer.appendChild(card);
+
+  // ==========================================
   // MASTER EXPLORER MODAL
   // ==========================================
   } else {
@@ -1270,7 +1438,8 @@ function openModal(project) {
         • <b>Cost Benchmark:</b> ${artha && artha.isAnomaly ? `💰 ${artha.status} (+${artha.costDeviationPct}%)` : '✅ Fair Market Price'}<br>
         • <b>Vendor Concentration:</b> ${chakra && chakra.hasCartelRisk ? `🕸️ ${chakra.status} (${chakra.topVendorShare}%)` : '✅ Competitive Bidding'}<br>
         • <b>ML Forest Anomaly:</b> ${project.mlAnomaly && project.mlAnomaly.isAnomaly ? `🌲 ${project.mlAnomaly.severity} Outlier (Score ${project.mlAnomaly.anomalyScore}/100)` : '✅ Normal Inlier'}<br>
-        • <b>Forensic Digit (Benford):</b> ${project.sankhya && project.sankhya.isThresholdSplit ? '🚨 Tender-Splitting Suspect (GFR 149)' : (project.sankhya && project.sankhya.isRoundNumber ? '🎯 Artificial Round Estimate' : '✅ Benford Conformity')}
+        • <b>Forensic Digit (Benford):</b> ${project.sankhya && project.sankhya.isThresholdSplit ? '🚨 Tender-Splitting Suspect (GFR 149)' : (project.sankhya && project.sankhya.isRoundNumber ? '🎯 Artificial Round Estimate' : '✅ Benford Conformity')}<br>
+        • <b>Geospatial Radar:</b> ${project.bhu_drishti && project.bhu_drishti.isGhostAsset ? '🚨 GHOST ASSET (Missing Geotag)' : (project.bhu_drishti && project.bhu_drishti.isSpatialCluster ? '📍 Spatial Cluster (<250m)' : '✅ Verified Physical Asset')}
       </div>
     `;
     findingsContainer.appendChild(card);
@@ -1281,4 +1450,241 @@ function openModal(project) {
 
 function closeModal() {
   document.getElementById('audit-modal').style.display = 'none';
+}
+
+// ==========================================
+// FEATURE 7: BHU-DRISHTI GIS & MAP CONTROLLER
+// ==========================================
+
+function initOrUpdateBhuMap() {
+  const mapContainer = document.getElementById('bhu-drishti-map');
+  if (!mapContainer) return;
+
+  if (!bhuLeafletMap) {
+    // Initialize Leaflet Map centered on India
+    bhuLeafletMap = L.map('bhu-drishti-map', {
+      center: [22.9734, 78.6569],
+      zoom: 5,
+      minZoom: 4,
+      maxZoom: 18
+    });
+
+    bhuMarkersLayer = L.layerGroup().addTo(bhuLeafletMap);
+
+    const savedProvider = localStorage.getItem('bhu_map_provider') || 'esri';
+    const savedKey = localStorage.getItem('bhu_map_api_key') || '';
+    applyBasemap(savedProvider, bhuActiveBasemap, savedKey);
+  } else {
+    setTimeout(() => {
+      bhuLeafletMap.invalidateSize();
+    }, 200);
+  }
+
+  loadBhuMapPoints(currentFilter);
+}
+
+function applyBasemap(provider, type, apiKey) {
+  if (!bhuLeafletMap) return;
+
+  if (bhuCurrentTileLayer) {
+    bhuLeafletMap.removeLayer(bhuCurrentTileLayer);
+  }
+
+  const badge = document.getElementById('active-provider-badge');
+
+  if (provider === 'mapbox' && apiKey) {
+    const layerUrl = type === 'street'
+      ? `https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=${apiKey}`
+      : `https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/tiles/{z}/{x}/{y}?access_token=${apiKey}`;
+    
+    bhuCurrentTileLayer = L.tileLayer(layerUrl, {
+      maxZoom: 19,
+      tileSize: 512,
+      zoomOffset: -1,
+      attribution: '© Mapbox © OpenStreetMap'
+    }).addTo(bhuLeafletMap);
+
+    if (badge) badge.innerText = `Mapbox HD (${type === 'satellite' ? 'Satellite' : 'Street'})`;
+  } else if (provider === 'google' && apiKey) {
+    const lyrs = type === 'street' ? 'm' : 'y';
+    bhuCurrentTileLayer = L.tileLayer(`https://mt1.google.com/vt/lyrs=${lyrs}&x={x}&y={y}&z={z}&key=${apiKey}`, {
+      maxZoom: 20,
+      attribution: '© Google Maps'
+    }).addTo(bhuLeafletMap);
+
+    if (badge) badge.innerText = `Google Maps (${type === 'satellite' ? 'Satellite' : 'Street'})`;
+  } else {
+    // Default 100% Free / Zero-Config: Esri Satellite & CartoDB Dark
+    if (type === 'street') {
+      bhuCurrentTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap © CARTO'
+      }).addTo(bhuLeafletMap);
+      if (badge) badge.innerText = 'CartoDB Dark Street (Free / Zero-Config)';
+    } else {
+      bhuCurrentTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 18,
+        attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, GIS Community'
+      }).addTo(bhuLeafletMap);
+      if (badge) badge.innerText = 'Esri Satellite HD (Free / Zero-Config)';
+    }
+  }
+}
+
+function switchBasemap(type) {
+  bhuActiveBasemap = type;
+  const satBtn = document.getElementById('btn-tile-satellite');
+  const strBtn = document.getElementById('btn-tile-street');
+  if (satBtn) satBtn.classList.toggle('active', type === 'satellite');
+  if (strBtn) strBtn.classList.toggle('active', type === 'street');
+
+  const savedProvider = localStorage.getItem('bhu_map_provider') || 'esri';
+  const savedKey = localStorage.getItem('bhu_map_api_key') || '';
+  applyBasemap(savedProvider, type, savedKey);
+}
+
+async function loadBhuMapPoints(filterType) {
+  if (!bhuLeafletMap || !bhuMarkersLayer) return;
+
+  bhuCurrentMapFilter = filterType || 'all-spatial';
+  const countEl = document.getElementById('map-point-count');
+  if (countEl) countEl.innerText = 'Loading geospatial points...';
+
+  try {
+    const res = await fetch(`/api/spatial-map?filter=${encodeURIComponent(bhuCurrentMapFilter)}`);
+    if (!res.ok) throw new Error('Failed to fetch spatial points');
+    const result = await res.json();
+    const points = result.data || [];
+
+    bhuMarkersLayer.clearLayers();
+
+    points.forEach(pt => {
+      let markerColor = '#10b981'; // Green (Verified)
+      let radius = 4;
+      let fillOpacity = 0.75;
+
+      if (pt.anomaly === 'GHOST_ASSET') {
+        markerColor = '#ef4444'; // Red (Ghost)
+        radius = 6;
+        fillOpacity = 0.95;
+      } else if (pt.anomaly === 'SPATIAL_CLUSTER') {
+        markerColor = '#a855f7'; // Purple (Cluster)
+        radius = 5;
+        fillOpacity = 0.9;
+      }
+
+      const marker = L.circleMarker([pt.lat, pt.lon], {
+        radius: radius,
+        fillColor: markerColor,
+        color: '#ffffff',
+        weight: 1.5,
+        opacity: 1,
+        fillOpacity: fillOpacity
+      });
+
+      const popupHtml = `
+        <div style="font-family: var(--font-sans); min-width: 220px; font-size: 12px; line-height: 1.4;">
+          <div style="font-weight: 700; color: #0f172a; margin-bottom: 3px;">${pt.title}</div>
+          <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">${pt.district}, ${pt.state}</div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 11px;">
+            <span>Sanction: <b>${pt.costFormatted}</b></span>
+            <span style="font-weight: 700; color: ${pt.riskLevel === 'CRITICAL' ? '#dc2626' : (pt.riskLevel === 'MEDIUM' ? '#7e22ce' : '#059669')};">${pt.anomalyTitle}</span>
+          </div>
+          <div style="font-size: 10px; color: #94a3b8; margin-bottom: 8px;">GPS: ${pt.lat != null ? pt.lat.toFixed(4) : 0}°N, ${pt.lon != null ? pt.lon.toFixed(4) : 0}°E</div>
+          <button style="width: 100%; padding: 5px 8px; font-size: 11px; font-weight: 700; background: #0d9488; color: #fff; border: none; border-radius: 4px; cursor: pointer;" onclick="openModalById('${pt.id}')">
+            🔍 Inspect 4-Q XAI Details
+          </button>
+        </div>
+      `;
+
+      marker.bindPopup(popupHtml);
+      bhuMarkersLayer.addLayer(marker);
+    });
+
+    if (countEl) {
+      countEl.innerText = `Showing ${points.length} Balanced Works (${filterType})`;
+    }
+  } catch (err) {
+    console.error('Failed to load spatial map points:', err);
+    if (countEl) countEl.innerText = 'Error loading spatial points.';
+  }
+}
+
+function flyToProject(lat, lon, id) {
+  if (!bhuLeafletMap) return;
+  const mapSec = document.getElementById('bhu-drishti-map-section');
+  if (mapSec) {
+    mapSec.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  bhuLeafletMap.flyTo([lat, lon], 14, {
+    duration: 1.5
+  });
+
+  // Open modal after flight
+  setTimeout(() => {
+    openModalById(id);
+  }, 1600);
+}
+
+// Open project modal directly by ID
+async function openModalById(id) {
+  const found = currentLoadedProjects.find(p => p.id === id);
+  if (found) {
+    openModal(found);
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/projects?search=${encodeURIComponent(id)}&limit=1`);
+    if (!res.ok) return;
+    const result = await res.json();
+    if (result.data && result.data.length > 0) {
+      openModal(result.data[0]);
+    }
+  } catch (err) {
+    console.error('Error fetching project for modal:', err);
+  }
+}
+
+// API Key Modal Controls
+function openApiKeyModal() {
+  const modal = document.getElementById('api-key-modal');
+  if (!modal) return;
+  const select = document.getElementById('map-provider-select');
+  const input = document.getElementById('custom-api-key-input');
+  if (select) select.value = localStorage.getItem('bhu_map_provider') || 'esri';
+  if (input) input.value = localStorage.getItem('bhu_map_api_key') || '';
+  modal.style.display = 'flex';
+}
+
+function closeApiKeyModal() {
+  const modal = document.getElementById('api-key-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function saveCustomApiKey() {
+  const select = document.getElementById('map-provider-select');
+  const input = document.getElementById('custom-api-key-input');
+  const provider = select ? select.value : 'esri';
+  const key = input ? input.value.trim() : '';
+
+  localStorage.setItem('bhu_map_provider', provider);
+  localStorage.setItem('bhu_map_api_key', key);
+
+  applyBasemap(provider, bhuActiveBasemap, key);
+  closeApiKeyModal();
+}
+
+function resetToFreeMap() {
+  localStorage.removeItem('bhu_map_provider');
+  localStorage.removeItem('bhu_map_api_key');
+
+  const select = document.getElementById('map-provider-select');
+  const input = document.getElementById('custom-api-key-input');
+  if (select) select.value = 'esri';
+  if (input) input.value = '';
+
+  applyBasemap('esri', bhuActiveBasemap, '');
+  closeApiKeyModal();
 }

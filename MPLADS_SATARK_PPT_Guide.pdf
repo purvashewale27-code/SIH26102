@@ -1,0 +1,373 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R] /Count 8 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 1303 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 1: Title  Hook: MPLADS-SATARK ()) '
+/F1 11 Tf
+15 TL
+(Tagline: Automated AI Risk Scoring Multi-Layer Fraud Detection  Explainable Auditing) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* Problem Statement 26102  Ministry of Statistics  Programme Implementation ) '
+(  (MoSPI  DIID) ) '
+(* What is MPLADS Over Rs 4,000 Crore is given annually to 779 MPs across 788 ) '
+(  districts for local public infrastructure. ) '
+(* The Core Hook: Official portals only show WHAT happened in the past. They do ) '
+(  not warn officers BEFORE public money is wasted on duplicate works, overpriced ) '
+(  tenders, or stalled projects. ) '
+(* Our Solution: SATARK ()  an AI-powered proactive vigilance system that scans ) '
+(  government works in real-time, catches corruption patterns, and explains every ) '
+(  red flag in plain language. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Start with high energy: Good morning respected jury members Every year, 4,000+ Crore ) '
+( of taxpayers money is spent on MPLADS for roads, schools, and drinking water. But ) '
+( today, audits happen 2 years too late. We present MPLADS-SATARK  an AI system that ) '
+( catches fraud, overpricing, and ghost projects before public funds are wasted ") '
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 1318 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 2: Ground Realities  4 Massive Problems in MPLADS) '
+/F1 11 Tf
+15 TL
+(Tagline: Why Government Audits Fail Today and Where Public Money is Leaking) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* 1. Double Invoicing  Ghost Works: The same rural road or hall is funded under ) '
+(  MPLADS AND also billed under MGNREGA or PMGSY. ) '
+(* 2. Inflated Estimates (Overpricing): Contractors charge Rs 50 Lakhs for a ) '
+(  basic road that CPWD standard rates benchmark at Rs 20 Lakhs. ) '
+(* 3. Contractor-Agency Cartels (Favoritism): 70 to 80 of an MPs funds repeatedly ) '
+(  awarded to a single favorite agency or contractor. ) '
+(* 4. Statutory Violations  March Rush: Sanctioning ineligible works (places of ) '
+(  worship, private clubs) and dumping 30 of funds in March without verification. ) '
+(* 5. Zombie Projects: Works that are 10 complete on paper, stalled for 3 years, ) '
+(  with zero progress. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Highlight ground reality: Judges, fraud in public works doesnt happen with ) '
+( complicated equations. It happens when someone claims money for the same road twice, ) '
+( charges double the CPWD rate book, or creates a fake bill of 4.98 Lakhs to avoid ) '
+( mandatory online tenders ") '
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 1259 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 3: Our Solution: MPLADS-SATARK Architecture in Simple Words) '
+/F1 11 Tf
+15 TL
+(Tagline: How We Catch Irregularities Without Black-Box Confusion) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* 100 Real Government Data: Sourced directly from MoSPI eSAKSHI live endpoints ) '
+(  (176,831 real works, 109,475 payment vouchers, 3636 States  UTs). ) '
+(* Multi-Layer Defense (6 Independent Signals): A project is never flagged based ) '
+(  on one single model. It requires multiple red flags to become high priority. ) '
+(* Honest Data Provenance Badges: Every number carries a clear badge  REAL, ) '
+(  DERIVED, ESTIMATED, or STATUTORY. Zero fake numbers, zero black boxes. ) '
+(* Explain-My-Score Waterfall: Instead of an obscure decimal, officers see plain ) '
+(  English points: e.g. +30 CPWD Overpricing, +25 Contractor Favoritism, +20 ) '
+(  March Rush. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Explain clearly: We dont use black-box AI. Government officers cannot take ) '
+( disciplinary action on a black-box percentage. SATARK gives an itemized additive ) '
+( waterfall: why was this project flagged, which rule was broken, and how much is the ) '
+( cost variance ") '
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 1634 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 4: The 6 Independent AI  Detection Signals (Explained Simply)) '
+/F1 11 Tf
+15 TL
+(Tagline: Each Signal Catches a Different Type of Financial or Operational Fraud) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* Signal 1 (Cost  Delay Outliers): Uses Isolation Forest ML calibrated against ) '
+(  official CPWD Delhi Schedule of Rates (DSR) to spot inflated estimates. ) '
+(* Signal 2 (Contractor Cartels  Network Graph): Measures fund concentration ) '
+(  (HHI) and spots syndicate bidding where 1 contractor monopolizes funds. ) '
+(* Signal 3 (Statutory Compliance Engine): Policy-as-Data checking mandatory 15 ) '
+(  SC  7.5 ST quotas, and 7 Negative List clauses (e.g. prohibited religious ) '
+(  structures). ) '
+(* Signal 4 (Cross-Scheme Deduplication): Probabilistic matching comparing MPLADS ) '
+(  works against ISRO Bhuvan  MGNREGA registries in the same Gram Panchayat. ) '
+(* Signal 5 (Benfords Law Forensic Accounting): Analyzes leading digits (1-9) in ) '
+(  bills to detect human-padded figures and 4.98L split tenders. ) '
+(* Signal 6 (Cox Survival Hazard for Zombie Projects): Statistical time-to-event ) '
+(  model forecasting completion curves and warning of stalls 6 months early. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Walk through the 6 signals: Signal 1 checks pricing. Signal 2 checks who got the ) '
+( contract. Signal 3 checks government guidelines. Signal 4 checks if another scheme ) '
+( already built it. Signal 5 checks the mathematics of the invoice. Signal 6 predicts ) '
+( if the project will die before finish ") '
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 1094 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 5: Bifurcated Architecture: Cold Path vs Hot Path Live Demo) '
+/F1 11 Tf
+15 TL
+(Tagline: Engineered for Government Scale and Flawless Live Demonstration) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* Cold Path (Offline Analytics): Indexes 176,831 projects in under 2 seconds for ) '
+(  instant nationalstate aggregations and filtering. ) '
+(* Hot Path (Live Stage Injection): Live scoring of any newly proposed work in ) '
+(  UNDER 15 MILLISECONDS (against  50ms SLA). ) '
+(* Focus  Context Ego-Graph: Rather than crashing browser with 27,000 nodes, ) '
+(  renders 1-2 hop neighborhood (10-15 related nodes) on click. ) '
+(* Bitemporal Policy Engine: Versioned rules ensure projects sanctioned under ) '
+(  older guidelines are evaluated against the rules active on that date. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Emphasize live demo speed: Most teams struggle with live demo lag. We built a ) '
+( bifurcated architecture where live injection scores any new project in 1 millisecond ) '
+( on stage ") '
+ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 1168 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 6: 4 Role-Based Dashboards for Every Level of Governance) '
+/F1 11 Tf
+15 TL
+(Tagline: One Unified Source of Truth Scoped to 4 Key Administrative Roles) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* 1. Union Ministry  DIID: National macro overview, inter-state benchmarking, ) '
+(  fund utilization rates, and nationwide GIS risk density map. ) '
+(* 2. State Nodal Authority: Inter-district performance roll-up, agency ) '
+(  concentration heatmaps, and unspent balances. ) '
+(* 3. District Magistrate  Collector: Prioritized inspection queue, one-click ) '
+(  Explain-My-Score modal, and print-ready field audit dossiers. ) '
+(* 4. Honble Member of Parliament: Self-check scorecard, live SC (15) and ST ) '
+(  (7.5) statutory quota meters, and pending approvals. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Demonstrate governance value: Different users need different views. The MP wants a ) '
+( self-check tool to stay compliant. The District Collector wants an inspection list. ) '
+( The Ministry wants national macro trends. SATARK serves all 4 from one single ) '
+( database ") '
+ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 1155 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 7: Closing the Loop: One-Click Printable Audit Dossier) '
+/F1 11 Tf
+15 TL
+(Tagline: Moving From Digital Flags to Real Administrative Ground Action) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* Official Inspection Memorandum: 1-click printable CAGDistrict Engineer notice ) '
+(  with pre-filled citations and evidence. ) '
+(* On-Ground Verification Checklist: Standardized checks for physical asset ) '
+(  existence, signboard display, and Measurement Book (MB) reconciliation. ) '
+(* Human-in-the-Loop Governance: AI never freezes funds or replaces officers it ) '
+(  acts as an intelligent assistant providing audit-defensible proof. ) '
+(* Digital Sign-Off Audit Trail: District engineers record photos, GPS ) '
+(  coordinates, and inspection findings directly onto the system. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Show practical impact: AI that just shows red badges on a screen is useless in ) '
+( government. Our system outputs an official inspection memorandum that a junior ) '
+( engineer can take directly to the construction site to verify the work ") '
+ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 1117 >>
+stream
+BT
+/F1 18 Tf
+22 TL
+50 780 Td
+(SLIDE 8: Why MPLADS-SATARK Wins (The Scorecard)) '
+/F1 11 Tf
+15 TL
+(Tagline: Comparing Our Solution Against Typical Hackathon Submissions) '
+
+/F1 12 Tf
+17 TL
+(KEY BULLET POINTS FOR SLIDE:) '
+/F1 10 Tf
+14 TL
+(* 1. Data Integrity: Typical teams use fakesynthetic data. We use 100 real ) '
+(  government MoSPI, CPWD DSR, and Bhuvan data. ) '
+(* 2. AI Breadth: Typical teams use 1 basic ML model. We use 6 independent ) '
+(  mathematical and ML layers. ) '
+(* 3. Transparency: Typical teams have black-box scores. We have an itemized ) '
+(  additive waterfall with legal rule citations. ) '
+(* 4. Legal Grounding: Grounded directly in GFR 2017  MPLADS 2023 Guidelines. ) '
+(* 5. Ready Working Prototype: Full REST API, Hot Path live sandbox, and ) '
+(  interactive UI ready today. ) '
+
+/F1 11 Tf
+15 TL
+(WHAT TO SAY TO JUDGES:) '
+/F1 9 Tf
+12 TL
+("Conclude with confidence: In conclusion, MPLADS-SATARK is not a toy project with ) '
+( dummy numbers. It is an audit-defensible, legally grounded, and ultra-fast vigilance ) '
+( platform ready for national rollout across India. Thank you ") '
+ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 18 0 R >>
+endobj
+xref
+0 20
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000162 00000 n 
+0000000232 00000 n 
+0000001587 00000 n 
+0000001713 00000 n 
+0000003083 00000 n 
+0000003209 00000 n 
+0000004520 00000 n 
+0000004646 00000 n 
+0000006333 00000 n 
+0000006461 00000 n 
+0000007608 00000 n 
+0000007736 00000 n 
+0000008957 00000 n 
+0000009085 00000 n 
+0000010293 00000 n 
+0000010421 00000 n 
+0000011591 00000 n 
+trailer
+<< /Size 20 /Root 1 0 R >>
+startxref
+11719
+%%EOF

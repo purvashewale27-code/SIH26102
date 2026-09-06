@@ -11,6 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
+  <!-- Leaflet GIS Map CSS and JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -31,7 +34,8 @@
         <span class="step-pill done">✓ Step 4: ARTHA-DARPAN</span>
         <span class="step-pill done">✓ Step 5: CHAKRA-VYUH</span>
         <span class="step-pill done">✓ Step 6: VIBHED-NETRA</span>
-        <span class="step-pill active">✓ Step 7: SANKHYA-SATYA</span>
+        <span class="step-pill done">✓ Step 7: SANKHYA-SATYA</span>
+        <span class="step-pill active">✓ Step 8: BHU-DRISHTI</span>
       </div>
     </div>
   </header>
@@ -39,7 +43,7 @@
   <!-- Main Content Container -->
   <main class="page-container">
 
-    <!-- Dedicated Feature Selector Tabs (Complete Separation of All 6 Features) -->
+    <!-- Dedicated Feature Selector Tabs (Complete Separation of All 7 Features) -->
     <section class="feature-mode-switcher">
       <button class="mode-tab active" data-mode="vidhi-kavach" id="tab-vidhi-kavach">
         <div class="mode-pill pill-red">FEATURE 1</div>
@@ -75,6 +79,12 @@
         <div class="mode-pill pill-indigo">FEATURE 6</div>
         <div class="mode-title">🔢 SANKHYA-SATYA</div>
         <div class="mode-desc">Benford's Law & Tender-Splitting</div>
+      </button>
+
+      <button class="mode-tab" data-mode="bhu-drishti" id="tab-bhu-drishti">
+        <div class="mode-pill pill-emerald">FEATURE 7</div>
+        <div class="mode-title">🛰️ BHU-DRISHTI</div>
+        <div class="mode-desc">Satellite & Ghost Asset Radar</div>
       </button>
 
       <button class="mode-tab" data-mode="all-works" id="tab-all-works">
@@ -202,6 +212,40 @@
         </div>
       </div>
 
+      <!-- Feature 7 Dedicated Interactive Geospatial Satellite Map (Visible only in BHU-DRISHTI mode) -->
+      <div id="bhu-drishti-map-section" class="bhu-map-card" style="display: none;">
+        <div class="bhu-map-header">
+          <div>
+            <div style="font-size: 11px; font-weight: 700; color: #0d9488; text-transform: uppercase;">🛰️ BHU-DRISHTI Geospatial Satellite & GPS Geotag Sentry</div>
+            <div style="font-size: 14px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <span>Interactive All-India Asset Radar & Ghost Asset Locator</span>
+              <span id="active-provider-badge" style="font-size: 10.5px; font-weight: 700; background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono);">
+                Esri Satellite HD (Free / Zero-Config)
+              </span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="map-ctrl-btn active" id="btn-tile-satellite" onclick="switchBasemap('satellite')">
+              🛰️ Satellite HD
+            </button>
+            <button class="map-ctrl-btn" id="btn-tile-street" onclick="switchBasemap('street')">
+              🗺️ Dark Street
+            </button>
+            <button class="map-ctrl-btn btn-api-key" id="btn-open-api-modal" onclick="openApiKeyModal()">
+              ⚙️ Custom API Key
+            </button>
+          </div>
+        </div>
+
+        <!-- Leaflet Map Container -->
+        <div id="bhu-drishti-map" style="width: 100%; height: 350px; border-radius: 8px; margin-top: 10px; border: 1px solid #cbd5e1; z-index: 1;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: #64748b;">
+          <span>🔴 Red Marker: Ghost Asset (Disbursed Without Verified Geotag) &nbsp;|&nbsp; 🟣 Purple Marker: Hyper-Local Cluster (&lt;250m) &nbsp;|&nbsp; 🟢 Green Marker: Verified Physical Geotag</span>
+          <span id="map-point-count" style="font-weight: 700; color: #0d9488;">Showing 400 Balanced Works</span>
+        </div>
+      </div>
+
       <!-- Real Data Table -->
       <div class="table-container">
         <table class="simple-table">
@@ -282,6 +326,44 @@
       </div>
       <div class="modal-footer">
         <button class="btn-secondary" id="modal-dismiss-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Key Configuration Modal -->
+  <div class="modal-backdrop" id="api-key-modal" style="display: none;">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-badge" style="background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4;">CUSTOM MAP PROVIDER</span>
+          <h3 style="margin: 4px 0 0 0; font-size: 16px; color: #0f172a;">⚙️ Configure Map API Key</h3>
+        </div>
+        <button class="modal-close" onclick="closeApiKeyModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 12px; line-height: 1.5;">
+          By default, <b>BHU-DRISHTI</b> uses high-resolution <b>Esri World Satellite Imagery</b> and <b>CartoDB Dark Basemaps</b> with zero API key required. If you or your team have a custom <b>Mapbox Access Token</b> or <b>Google Maps API Key</b>, you can configure it below:
+        </p>
+        <div class="modal-section" style="margin-bottom: 12px;">
+          <label style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 4px; display: block;">Select Map Provider:</label>
+          <select id="map-provider-select" style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 12px; font-weight: 600;">
+            <option value="esri">Esri Satellite HD (Default · Zero-Config / Free)</option>
+            <option value="mapbox">Mapbox HD Satellite (Requires pk.eyJ1... Token)</option>
+            <option value="google">Google Maps Satellite (Requires API Key)</option>
+          </select>
+        </div>
+        <div class="modal-section" style="margin-bottom: 16px;">
+          <label style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 4px; display: block;">API Key / Access Token:</label>
+          <input type="text" id="custom-api-key-input" placeholder="e.g. pk.eyJ1IjoiYWRtaW4iLCJhIjoi..." style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 12px; font-family: monospace;">
+          <span style="font-size: 10.5px; color: #94a3b8; margin-top: 4px; display: block;">Saved locally in your browser (never transmitted externally).</span>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="btn-secondary" onclick="resetToFreeMap()" style="font-size: 12px;">Reset to Free Esri</button>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-secondary" onclick="closeApiKeyModal()" style="font-size: 12px;">Cancel</button>
+          <button style="padding: 8px 16px; border-radius: 6px; border: none; background: #0d9488; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer;" onclick="saveCustomApiKey()">Save & Switch Map</button>
+        </div>
       </div>
     </div>
   </div>

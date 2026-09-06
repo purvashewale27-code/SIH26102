@@ -12,6 +12,7 @@ const arthaDarpan = require('./ml/artha_darpan');
 const chakraVyuh = require('./ml/chakra_vyuh');
 const vibhedNetra = require('./ml/vibhed_netra');
 const sankhyaSatya = require('./ml/sankhya_satya');
+const bhuDrishti = require('./ml/bhu_drishti');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
@@ -34,6 +35,9 @@ let totalCriticalMlAnomaliesCount = 0;
 let totalElevatedMlAnomaliesCount = 0;
 let totalTenderSplitsCount = 0;
 let totalRoundNumbersCount = 0;
+let totalGhostAssetsCount = 0;
+let totalSpatialClustersCount = 0;
+let totalGeocodedCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
@@ -164,6 +168,16 @@ if (fs.existsSync(DATA_FILE)) {
     if (p.sankhya.isRoundNumber) totalRoundNumbersCount++;
   });
 
+  // 7. Run BHU-DRISHTI (Feature 7: Geospatial Satellite Sentry & Ghost Asset Radar)
+  allProjects.forEach((p, idx) => {
+    p.bhu_drishti = bhuDrishti.evaluateBhuDrishti(p, idx);
+    p.lat = p.bhu_drishti.latitude;
+    p.lon = p.bhu_drishti.longitude;
+    totalGeocodedCount++;
+    if (p.bhu_drishti.spatial_anomaly === 'GHOST_ASSET') totalGhostAssetsCount++;
+    if (p.bhu_drishti.spatial_anomaly === 'SPATIAL_CLUSTER') totalSpatialClustersCount++;
+  });
+
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
   console.log(`🛡️ VIDHI-KAVACH: ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)`);
   console.log(`🔍 PUNAR-DRISHTI: ${totalDuplicateClaimsCount} duplicate works (${totalExactClonesCount} exact 100% clones)`);
@@ -171,6 +185,7 @@ if (fs.existsSync(DATA_FILE)) {
   console.log(`🕸️ CHAKRA-VYUH: ${totalCartelRiskCount} contractor cartel risks across ${chakraVyuh.vendorStats.size} vendors`);
   console.log(`🌲 VIBHED-NETRA: ${totalMlAnomaliesCount} multi-dimensional anomalies (${totalCriticalMlAnomaliesCount} critical outliers)`);
   console.log(`🔢 SANKHYA-SATYA: ${totalTenderSplitsCount} tender-splitting threshold evasions, ${totalRoundNumbersCount} round estimates`);
+  console.log(`🛰️ BHU-DRISHTI: ${totalGeocodedCount} geocoded assets (${totalGhostAssetsCount} ghost assets flagged, ${totalSpatialClustersCount} hyper-local clusters)`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -219,7 +234,13 @@ const server = http.createServer((req, res) => {
       tenderSplitsCount: totalTenderSplitsCount,
       roundNumbersCount: totalRoundNumbersCount,
       benfordChiSquare: sankhyaSatya.globalStats.chiSquareStat,
-      benfordEvaluatedCount: sankhyaSatya.globalStats.totalWorksEvaluated
+      benfordEvaluatedCount: sankhyaSatya.globalStats.totalWorksEvaluated,
+      // Feature 7: BHU-DRISHTI
+      ghostAssetsCount: totalGhostAssetsCount,
+      spatialClustersCount: totalSpatialClustersCount,
+      geocodedCount: totalGeocodedCount,
+      totalGeocodedCount: totalGeocodedCount,
+      verifiedGeotagsCount: totalGeocodedCount - totalGhostAssetsCount - totalSpatialClustersCount
     });
   }
 
@@ -245,6 +266,39 @@ const server = http.createServer((req, res) => {
   // API 2D: Benford Forensic Digit Histogram
   if (pathname === '/api/benford-histogram') {
     return sendJson(sankhyaSatya.globalStats);
+  }
+
+  // API 2E: BHU-DRISHTI Spatial Map Points
+  if (pathname === '/api/spatial-map') {
+    const filter = (reqUrl.searchParams.get('filter') || 'all').toLowerCase();
+    let sample = allProjects;
+    if (filter === 'ghost-assets') {
+      sample = sample.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'GHOST_ASSET');
+    } else if (filter === 'spatial-clusters') {
+      sample = sample.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'SPATIAL_CLUSTER');
+    } else if (filter === 'verified-geotags') {
+      sample = sample.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'VERIFIED_GEOTAG');
+    }
+
+    // Return balanced slice of up to 400 projects for smooth 60fps Leaflet rendering
+    const points = sample.slice(0, 400).map(p => ({
+      id: p.id,
+      title: p.title,
+      state: p.state,
+      district: p.district,
+      constituency: p.constituency,
+      cost: p.cost,
+      costFormatted: p.costFormatted,
+      lat: p.bhu_drishti.latitude,
+      lon: p.bhu_drishti.longitude,
+      anomaly: p.bhu_drishti.spatial_anomaly,
+      riskLevel: p.bhu_drishti.risk_level,
+      clusterId: p.bhu_drishti.cluster_id,
+      clusterRadius: p.bhu_drishti.cluster_radius_meters,
+      clusterCount: p.bhu_drishti.cluster_count,
+      anomalyTitle: p.bhu_drishti.anomaly_title
+    }));
+    return sendJson({ count: points.length, totalAvailable: sample.length, data: points, points });
   }
 
   // API 3: Filterable / Paginated Projects List
@@ -282,6 +336,10 @@ const server = http.createServer((req, res) => {
     } else if (mode === 'sankhya-satya') {
       if (!filter || filter === 'all-forensic') {
         filtered = filtered.filter(p => p.sankhya && p.sankhya.isAnomalous);
+      }
+    } else if (mode === 'bhu-drishti') {
+      if (!filter || filter === 'all-spatial') {
+        filtered = filtered.filter(p => p.bhu_drishti);
       }
     }
 
@@ -339,6 +397,14 @@ const server = http.createServer((req, res) => {
       filtered = filtered.filter(p => p.sankhya && p.sankhya.isRoundNumber);
     } else if (filter === 'benford-inliers') {
       filtered = filtered.filter(p => p.sankhya && !p.sankhya.isAnomalous);
+    } else if (filter === 'all-spatial') {
+      filtered = filtered.filter(p => p.bhu_drishti);
+    } else if (filter === 'ghost-assets') {
+      filtered = filtered.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'GHOST_ASSET');
+    } else if (filter === 'spatial-clusters') {
+      filtered = filtered.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'SPATIAL_CLUSTER');
+    } else if (filter === 'verified-geotags') {
+      filtered = filtered.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'VERIFIED_GEOTAG');
     }
 
     // Apply Search
