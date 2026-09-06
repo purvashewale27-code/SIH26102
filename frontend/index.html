@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.2">
   <!-- Leaflet GIS Map CSS and JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -40,10 +40,10 @@
           <span class="step-pill active" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-weight:700;">🏆 10/10 Enterprise Core</span>
         </div>
         <div class="header-action-buttons">
-          <button class="header-btn-sim" id="btn-open-simulator">
+          <button class="header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Simulate civil proposals with 7 sentinels (<50ms)">
             <span class="btn-icon">🧪</span> Live Proposal Simulator
           </button>
-          <button class="header-btn-prov" id="btn-open-provenance">
+          <button class="header-btn-prov" id="btn-open-provenance" onclick="openProvenanceModal()" title="View 176,925 MoSPI records & cryptographic ledger">
             <span class="btn-icon">📜</span> Data Lineage &amp; HITL
           </button>
         </div>
@@ -304,7 +304,7 @@
           <span class="modal-badge" id="modal-badge">STATUTORY AUDIT VERDICT</span>
           <h3 id="modal-project-id">MPLADS-XXXXXX</h3>
         </div>
-        <button class="modal-close" id="modal-close-btn">&times;</button>
+        <button class="modal-close" id="modal-close-btn" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-body">
         <div class="modal-section">
@@ -338,7 +338,7 @@
         <button class="btn-primary" id="modal-gen-dossier-btn" style="background:linear-gradient(135deg, #1e3a8a, #2563eb); font-weight:600; padding:8px 16px; border-radius:6px;">
           🖨️ Generate Official Vigilance Memorandum
         </button>
-        <button class="btn-secondary" id="modal-dismiss-btn">Close</button>
+        <button class="btn-secondary" id="modal-dismiss-btn" onclick="closeModal()">Close</button>
       </div>
     </div>
   </div>
@@ -352,7 +352,7 @@
           <h3>🧪 Live "What-If" Proposal Simulator (&lt;50ms)</h3>
           <p style="font-size:12px; color:#64748b; margin-top:2px;">Simulate any arbitrary civil work proposal across all 7 forensic sentinels before sanction approval</p>
         </div>
-        <button class="modal-close" id="sim-close-btn">&times;</button>
+        <button class="modal-close" id="sim-close-btn" onclick="closeSimulator()">&times;</button>
       </div>
 
       <div class="modal-body">
@@ -502,7 +502,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-secondary" id="sim-dismiss-btn">Close Sandbox</button>
+        <button class="btn-secondary" id="sim-dismiss-btn" onclick="closeSimulator()">Close Sandbox</button>
       </div>
     </div>
   </div>
@@ -520,7 +520,7 @@
           <button class="btn-primary" id="btn-print-dossier" onclick="window.print()" style="background:#1e3a8a; color:#fff; font-weight:600;">
             🖨️ Print Notice / Save PDF
           </button>
-          <button class="btn-secondary" id="dossier-close-btn">&times; Close</button>
+          <button class="btn-secondary" id="dossier-close-btn" onclick="closeDossierModal()">&times; Close</button>
         </div>
       </div>
 
@@ -693,7 +693,7 @@
           <h3>📜 Verifiable Data Lineage &amp; Provenance Ledger</h3>
           <p style="font-size:12px; color:#64748b; margin-top:2px;">Auditing 100% Real MoSPI Records under Strict Human-in-the-Loop (HITL) Governance</p>
         </div>
-        <button class="modal-close" id="prov-close-btn">&times;</button>
+        <button class="modal-close" id="prov-close-btn" onclick="closeProvenanceModal()">&times;</button>
       </div>
 
       <div class="modal-body">
@@ -795,11 +795,11 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-secondary" id="prov-dismiss-btn">Close Ledger</button>
+        <button class="btn-secondary" id="prov-dismiss-btn" onclick="closeProvenanceModal()">Close Ledger</button>
       </div>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2.2"></script>
 </body>
 </html>

@@ -556,32 +556,45 @@ function renderFilterTabs(tabs) {
 function setupEventListeners() {
   const searchInput = document.getElementById('search-input');
   let debounceTimer;
-  searchInput.addEventListener('input', (e) => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      currentSearch = e.target.value.trim();
-      currentPage = 1;
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        currentSearch = e.target.value.trim();
+        currentPage = 1;
+        loadProjects();
+      }, 300);
+    });
+  }
+
+  const prevBtn = document.getElementById('prev-btn');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        loadProjects();
+      }
+    });
+  }
+
+  const nextBtn = document.getElementById('next-btn');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      currentPage++;
       loadProjects();
-    }, 300);
-  });
+    });
+  }
 
-  document.getElementById('prev-btn').addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      loadProjects();
-    }
-  });
-
-  document.getElementById('next-btn').addEventListener('click', () => {
-    currentPage++;
-    loadProjects();
-  });
-
-  document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-  document.getElementById('modal-dismiss-btn').addEventListener('click', closeModal);
-  document.getElementById('audit-modal').addEventListener('click', (e) => {
-    if (e.target.id === 'audit-modal') closeModal();
-  });
+  const modalCloseBtn = document.getElementById('modal-close-btn');
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  const modalDismissBtn = document.getElementById('modal-dismiss-btn');
+  if (modalDismissBtn) modalDismissBtn.addEventListener('click', closeModal);
+  const auditModal = document.getElementById('audit-modal');
+  if (auditModal) {
+    auditModal.addEventListener('click', (e) => {
+      if (e.target.id === 'audit-modal') closeModal();
+    });
+  }
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal();
@@ -1595,11 +1608,12 @@ function openModal(project) {
     findingsContainer.appendChild(card);
   }
 
-  modal.style.display = 'flex';
+  if (modal) modal.style.setProperty('display', 'flex', 'important');
 }
 
 function closeModal() {
-  document.getElementById('audit-modal').style.display = 'none';
+  const modal = document.getElementById('audit-modal');
+  if (modal) modal.style.setProperty('display', 'none', 'important');
 }
 
 // ==========================================
@@ -1792,7 +1806,7 @@ async function openModalById(id) {
 function openSimulator() {
   const modal = document.getElementById('simulator-modal');
   if (modal) {
-    modal.style.display = 'flex';
+    modal.style.setProperty('display', 'flex', 'important');
     // Load Preset 1 and run immediate simulation
     loadSimulatorPreset(1);
   }
@@ -1800,7 +1814,7 @@ function openSimulator() {
 
 function closeSimulator() {
   const modal = document.getElementById('simulator-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.style.setProperty('display', 'none', 'important');
 }
 
 function loadSimulatorPreset(num) {
@@ -2133,12 +2147,12 @@ async function openDossierModal(projectId) {
 
   // Display Modal
   const modal = document.getElementById('dossier-modal');
-  if (modal) modal.style.display = 'flex';
+  if (modal) modal.style.setProperty('display', 'flex', 'important');
 }
 
 function closeDossierModal() {
   const modal = document.getElementById('dossier-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.style.setProperty('display', 'none', 'important');
 }
 
 // ==========================================================
@@ -2149,7 +2163,7 @@ async function openProvenanceModal() {
   const modal = document.getElementById('provenance-modal');
   if (!modal) return;
 
-  modal.style.display = 'flex';
+  modal.style.setProperty('display', 'flex', 'important');
 
   try {
     const res = await fetch('/api/provenance-ledger');
@@ -2177,7 +2191,7 @@ async function openProvenanceModal() {
 
 function closeProvenanceModal() {
   const modal = document.getElementById('provenance-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.style.setProperty('display', 'none', 'important');
 }
 
 function copyDatasetHash() {
@@ -2194,3 +2208,20 @@ function copyDatasetHash() {
     alert('Hash: ' + hashElem.innerText);
   });
 }
+
+// Global window assignments for instant inline onclick responsiveness & console access
+window.openSimulator = openSimulator;
+window.closeSimulator = closeSimulator;
+window.loadSimulatorPreset = loadSimulatorPreset;
+window.runSimulation = runSimulation;
+window.openDossierModal = openDossierModal;
+window.closeDossierModal = closeDossierModal;
+window.openProvenanceModal = openProvenanceModal;
+window.closeProvenanceModal = closeProvenanceModal;
+window.copyDatasetHash = copyDatasetHash;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.openModalById = openModalById;
+window.flyToProject = flyToProject;
+window.switchMode = switchMode;
+
