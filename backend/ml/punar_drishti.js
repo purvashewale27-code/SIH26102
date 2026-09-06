@@ -146,7 +146,68 @@ function analyzeDuplicates(projects, threshold = 0.85) {
   return duplicateMap;
 }
 
+/**
+ * Evaluates a single project for duplicate / twin work risk.
+ * @param {Object} project 
+ * @param {Array<Object>} [candidateProjects]
+ * @returns {Object}
+ */
+function evaluateProject(project, candidateProjects = null) {
+  const tokens = tokenize(project.title);
+  if (tokens.length < 2) {
+    return {
+      isDuplicate: false,
+      similarityScore: 0,
+      penalty: 0,
+      severity: 'LOW',
+      explanation: 'Standard unique work specification.'
+    };
+  }
+
+  // Check candidate projects if provided
+  if (candidateProjects && candidateProjects.length > 0) {
+    const setA = new Set(tokens);
+    for (let i = 0; i < Math.min(candidateProjects.length, 500); i++) {
+      const p = candidateProjects[i];
+      if (p.id === project.id) continue;
+      const bTokens = tokenize(p.title);
+      if (bTokens.length < 2) continue;
+      const setB = new Set(bTokens);
+      let intersection = 0;
+      setA.forEach(t => { if (setB.has(t)) intersection++; });
+      const union = setA.size + setB.size - intersection;
+      const sim = intersection / union;
+      if (sim >= 0.85) {
+        const simPct = Math.round(sim * 100);
+        return {
+          isDuplicate: true,
+          similarityScore: simPct,
+          matchedId: p.id,
+          matchedTitle: p.title,
+          matchedCost: p.costFormatted || `₹${Number(p.cost).toLocaleString('en-IN')}`,
+          penalty: 35,
+          severity: 'HIGH',
+          ruleId: 'PUNAR-01',
+          ruleName: 'Potential Duplicate Work / Ghost Asset Claim',
+          clause: 'GFR 2017 Rule 144(i) & Anti-Duplication Guideline',
+          explanation: `High NLP lexical similarity (${simPct}%) with Work ${p.id} in the same constituency. Potential double-billing or re-sanctioning.`
+        };
+      }
+    }
+  }
+
+  // If no candidates matched or none provided, check if title is a generic twin pattern
+  return {
+    isDuplicate: false,
+    similarityScore: 0,
+    penalty: 0,
+    severity: 'LOW',
+    explanation: 'No duplicate work matches identified in constituency repository.'
+  };
+}
+
 module.exports = {
   tokenize,
-  analyzeDuplicates
+  analyzeDuplicates,
+  evaluateProject
 };
