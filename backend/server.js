@@ -11,6 +11,7 @@ const punarDrishti = require('./ml/punar_drishti');
 const arthaDarpan = require('./ml/artha_darpan');
 const chakraVyuh = require('./ml/chakra_vyuh');
 const vibhedNetra = require('./ml/vibhed_netra');
+const sankhyaSatya = require('./ml/sankhya_satya');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
@@ -31,6 +32,8 @@ let totalMonopolyCount = 0;
 let totalMlAnomaliesCount = 0;
 let totalCriticalMlAnomaliesCount = 0;
 let totalElevatedMlAnomaliesCount = 0;
+let totalTenderSplitsCount = 0;
+let totalRoundNumbersCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
@@ -154,12 +157,20 @@ if (fs.existsSync(DATA_FILE)) {
     }
   });
 
+  // 6. Run SANKHYA-SATYA (Feature 6: Forensic Digit Analysis & Tender-Splitting Sentry)
+  allProjects.forEach(p => {
+    p.sankhya = sankhyaSatya.evaluateProject(p);
+    if (p.sankhya.isThresholdSplit) totalTenderSplitsCount++;
+    if (p.sankhya.isRoundNumber) totalRoundNumbersCount++;
+  });
+
   console.log(`✅ Loaded ${allProjects.length} real projects across ${statesSet.size} States!`);
   console.log(`🛡️ VIDHI-KAVACH: ${totalViolationsCount} statutory violations (${totalNegativeListCount} Negative List, ${totalMarchRushCount} March Rush)`);
   console.log(`🔍 PUNAR-DRISHTI: ${totalDuplicateClaimsCount} duplicate works (${totalExactClonesCount} exact 100% clones)`);
   console.log(`💰 ARTHA-DARPAN: ${totalInflatedCostCount} cost anomalies (₹${(totalExcessINR / 1e7).toFixed(1)} Cr excess risk flagged)`);
   console.log(`🕸️ CHAKRA-VYUH: ${totalCartelRiskCount} contractor cartel risks across ${chakraVyuh.vendorStats.size} vendors`);
   console.log(`🌲 VIBHED-NETRA: ${totalMlAnomaliesCount} multi-dimensional anomalies (${totalCriticalMlAnomaliesCount} critical outliers)`);
+  console.log(`🔢 SANKHYA-SATYA: ${totalTenderSplitsCount} tender-splitting threshold evasions, ${totalRoundNumbersCount} round estimates`);
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
@@ -203,7 +214,12 @@ const server = http.createServer((req, res) => {
       // Feature 5: VIBHED-NETRA
       mlAnomaliesCount: totalMlAnomaliesCount,
       criticalMlAnomaliesCount: totalCriticalMlAnomaliesCount,
-      elevatedMlAnomaliesCount: totalElevatedMlAnomaliesCount
+      elevatedMlAnomaliesCount: totalElevatedMlAnomaliesCount,
+      // Feature 6: SANKHYA-SATYA
+      tenderSplitsCount: totalTenderSplitsCount,
+      roundNumbersCount: totalRoundNumbersCount,
+      benfordChiSquare: sankhyaSatya.globalStats.chiSquareStat,
+      benfordEvaluatedCount: sankhyaSatya.globalStats.totalWorksEvaluated
     });
   }
 
@@ -224,6 +240,11 @@ const server = http.createServer((req, res) => {
   if (pathname === '/api/cartel-graph') {
     const mp = reqUrl.searchParams.get('mp') || 'SUDAMA PRASAD';
     return sendJson(chakraVyuh.getEgoGraph(mp));
+  }
+
+  // API 2D: Benford Forensic Digit Histogram
+  if (pathname === '/api/benford-histogram') {
+    return sendJson(sankhyaSatya.globalStats);
   }
 
   // API 3: Filterable / Paginated Projects List
@@ -257,6 +278,10 @@ const server = http.createServer((req, res) => {
     } else if (mode === 'vibhed-netra') {
       if (!filter || filter === 'anomalies') {
         filtered = filtered.filter(p => p.vibhed && p.vibhed.isAnomaly);
+      }
+    } else if (mode === 'sankhya-satya') {
+      if (!filter || filter === 'all-forensic') {
+        filtered = filtered.filter(p => p.sankhya && p.sankhya.isAnomalous);
       }
     }
 
@@ -306,6 +331,14 @@ const server = http.createServer((req, res) => {
       filtered = filtered.filter(p => p.vibhed && p.vibhed.status === 'ELEVATED_RISK');
     } else if (filter === 'inliers') {
       filtered = filtered.filter(p => p.vibhed && p.vibhed.status === 'HEALTHY_INLIER');
+    } else if (filter === 'all-forensic') {
+      filtered = filtered.filter(p => p.sankhya && p.sankhya.isAnomalous);
+    } else if (filter === 'tender-splits') {
+      filtered = filtered.filter(p => p.sankhya && p.sankhya.isThresholdSplit);
+    } else if (filter === 'round-numbers') {
+      filtered = filtered.filter(p => p.sankhya && p.sankhya.isRoundNumber);
+    } else if (filter === 'benford-inliers') {
+      filtered = filtered.filter(p => p.sankhya && !p.sankhya.isAnomalous);
     }
 
     // Apply Search

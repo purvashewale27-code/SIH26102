@@ -124,14 +124,14 @@ body {
 /* FEATURE MODE SWITCHER */
 .feature-mode-switcher {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 10px;
   margin-bottom: 24px;
 }
 
 @media (max-width: 1300px) {
   .feature-mode-switcher {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -188,6 +188,11 @@ body {
   box-shadow: 0 6px 16px rgba(13, 148, 136, 0.15);
 }
 
+.mode-tab.active[data-mode="sankhya-satya"] {
+  border-color: #4f46e5;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.15);
+}
+
 .mode-pill {
   display: inline-block;
   font-size: 10px;
@@ -204,6 +209,7 @@ body {
 .pill-amber { background: #fef3c7; color: #b45309; }
 .pill-crimson { background: #ffe4e6; color: #be123c; }
 .pill-teal { background: #ccfbf1; color: #0f766e; }
+.pill-indigo { background: #e0e7ff; color: #4338ca; }
 .pill-blue { background: #dbeafe; color: #1e40af; }
 
 .mode-title {
@@ -268,6 +274,7 @@ body {
 .text-green { color: var(--accent-green) !important; }
 .text-red { color: #dc2626 !important; }
 .text-teal { color: #0d9488 !important; }
+.text-indigo { color: #4f46e5 !important; }
 
 .kpi-desc {
   font-size: 11px;
@@ -468,6 +475,22 @@ body {
   color: #ffffff;
 }
 
+.filter-tab.indigo-tab {
+  color: #4f46e5;
+  border-color: #c7d2fe;
+}
+
+.filter-tab.indigo-tab:hover {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.filter-tab.indigo-tab.active {
+  background: #4f46e5;
+  border-color: #4f46e5;
+  color: #ffffff;
+}
+
 /* TABLE */
 .table-container {
   overflow-x: auto;
@@ -565,6 +588,12 @@ body {
   color: #0f766e;
 }
 
+.audit-badge-indigo {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #3730a3;
+}
+
 /* XAI 4-QUESTION EXPLAINABILITY CARD */
 .xai-card {
   background: #f0fdfa;
@@ -656,6 +685,88 @@ body {
   height: 260px;
   position: relative;
   overflow: hidden;
+}
+
+/* BENFORD FORENSIC DIGIT HISTOGRAM */
+.benford-chart-card {
+  background: #fdfefe;
+  border: 1.5px solid #e0e7ff;
+  border-left: 5px solid #4f46e5;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.benford-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.benford-bars-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 12px;
+  align-items: flex-end;
+  height: 190px;
+  padding: 12px 14px 20px;
+  background: #ffffff;
+  border: 1px solid #ede9fe;
+  border-radius: 6px;
+  position: relative;
+}
+
+.digit-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.digit-bars-pair {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  width: 100%;
+  height: 140px;
+  justify-content: center;
+}
+
+.bar-observed {
+  width: 16px;
+  background: #4f46e5;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.4s ease;
+}
+
+.bar-expected {
+  width: 16px;
+  background: #cbd5e1;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.4s ease;
+}
+
+.bar-observed.spike {
+  background: #dc2626 !important;
+}
+
+.digit-label {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: #1e1b4b;
+}
+
+.digit-val-text {
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  margin-bottom: 2px;
+  white-space: nowrap;
 }
 
 .duplicate-compare-box {

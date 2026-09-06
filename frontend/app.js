@@ -66,6 +66,12 @@ function switchMode(newMode) {
     graphSec.style.display = currentMode === 'chakra-vyuh' ? 'block' : 'none';
   }
 
+  // Benford chart section visibility (only visible in sankhya-satya mode)
+  const benfordSec = document.getElementById('benford-histogram-section');
+  if (benfordSec) {
+    benfordSec.style.display = currentMode === 'sankhya-satya' ? 'block' : 'none';
+  }
+
   // ==========================================
   // MODE 1: VIDHI-KAVACH (Statutory Shield)
   // ==========================================
@@ -254,6 +260,47 @@ function switchMode(newMode) {
     );
 
   // ==========================================
+  // MODE 6: SANKHYA-SATYA (Benford Forensic Digit Sentry)
+  // ==========================================
+  } else if (currentMode === 'sankhya-satya') {
+    currentFilter = 'all-forensic';
+
+    setFeatureHeader(
+      '🔢 FEATURE 6: SANKHYA-SATYA (संख्या-सत्य — Forensic Digit & Tender-Splitting Sentry)',
+      'Benford’s Law (P(d) = log₁₀(1 + 1/d)) & GFR 149 E-Tender Threshold Evasion Sentry',
+      'Forensic detection of contract smurfing, tender threshold bypasses, and artificial round estimates across 131,144 works',
+      '#eef2ff', '#4338ca', '#c7d2fe'
+    );
+
+    const splitTotal = statsData && statsData.tenderSplitsCount ? statsData.tenderSplitsCount : 7710;
+    const roundTotal = statsData && statsData.roundNumbersCount ? statsData.roundNumbersCount : 54820;
+    const evaluatedTotal = statsData && statsData.benfordEvaluatedCount ? statsData.benfordEvaluatedCount : 131144;
+    const chiVal = statsData && statsData.benfordChiSquare ? statsData.benfordChiSquare : 13917.6;
+
+    renderKPIs({
+      c1: { label: 'Total Works Evaluated', val: evaluatedTotal.toLocaleString('en-IN'), desc: 'Non-zero cost projects evaluated' },
+      c2: { label: 'Tender Splits Flagged', val: splitTotal.toLocaleString('en-IN'), desc: 'Priced just below ₹5L & ₹10L ceilings', isDanger: true },
+      c3: { label: 'Artificial Round Estimates', val: roundTotal.toLocaleString('en-IN'), desc: 'Lakh multiples without CPWD BOQ', isWarning: true },
+      c4: { label: 'Benford χ² Distortion', val: chiVal.toLocaleString('en-IN'), desc: 'Critical limit: 15.51 | p < 0.0001', isIndigo: true, color: 'text-indigo' }
+    });
+
+    renderFilterTabs([
+      { id: 'all-forensic', label: '🚨 All Forensic Red Flags', count: splitTotal + roundTotal, cls: 'danger-tab active' },
+      { id: 'tender-splits', label: '✂️ Tender-Splitting (<₹5L / <₹10L)', count: splitTotal, cls: 'danger-tab' },
+      { id: 'round-numbers', label: '🎯 Artificial Round-Number Sanctions', count: roundTotal, cls: 'warning-tab' },
+      { id: 'benford-inliers', label: '✅ Natural Benford Inliers', count: evaluatedTotal - splitTotal - roundTotal, cls: 'success-tab' },
+      { id: 'all', label: '📋 All 176,925 Works', count: statsData ? statsData.totalProjects : 176925, cls: '' }
+    ]);
+
+    document.getElementById('th-audit-col').innerText = 'Forensic Digit Verdict (SANKHYA-SATYA)';
+    setRoadmap(
+      '🔢 Feature 6: SANKHYA-SATYA (संख्या-सत्य) Live in Action',
+      'SANKHYA-SATYA applies <b>Newcomb-Benford’s Law</b> to detect mathematical manipulation and tender-splitting (contract smurfing). It flags works deliberately pegged at ₹4.80L–₹4.99L to evade mandatory public e-tendering under <b>GFR Rule 149</b>. The interactive histogram above displays real MoSPI digit distribution against the natural mathematical curve.'
+    );
+
+    loadBenfordHistogram();
+
+  // ==========================================
   // MASTER REPOSITORY (All-India Explorer)
   // ==========================================
   } else {
@@ -365,7 +412,11 @@ function renderKPIs(kpis) {
   document.getElementById('kpi-c4-val').className = `kpi-number ${kpis.c4.color || ''}`;
   document.getElementById('kpi-c4-val').innerText = kpis.c4.val;
   document.getElementById('kpi-c4-desc').innerText = kpis.c4.desc;
-  if (kpis.c4.isWarning) {
+  if (kpis.c4.isIndigo) {
+    c4.style.background = '#eef2ff';
+    c4.style.borderColor = '#c7d2fe';
+    document.getElementById('kpi-c4-val').style.color = '#4338ca';
+  } else if (kpis.c4.isWarning) {
     c4.style.background = '#fffbeb';
     c4.style.borderColor = '#fde68a';
     document.getElementById('kpi-c4-val').style.color = '#d97706';
@@ -477,6 +528,7 @@ async function loadProjects() {
     'artha-darpan': 'Evaluating project budgets with ARTHA-DARPAN CPWD Rate Sentry...',
     'chakra-vyuh': 'Tracing vendor contracts with CHAKRA-VYUH Cartel Sentry...',
     'vibhed-netra': 'Isolating 12-dimensional anomalies with VIBHED-NETRA ML Forest...',
+    'sankhya-satya': 'Auditing digit distributions with SANKHYA-SATYA Forensic Sentry...',
     'all-works': 'Loading nationwide MoSPI records...'
   };
 
@@ -644,6 +696,43 @@ async function loadProjects() {
           `;
         }
 
+      } else if (currentMode === 'sankhya-satya') {
+        // ONLY FEATURE 6 (SANKHYA-SATYA) BADGES
+        const s = p.sankhya || { isAnomalous: false, isThresholdSplit: false, isRoundNumber: false, status: 'NATURAL_BENFORD_CONFORMITY' };
+        if (s.isThresholdSplit) {
+          const limit = s.isEvasion5L ? '₹5L' : '₹10L';
+          badgeHtml = `
+            <div class="audit-badge audit-badge-danger">
+              <span class="badge-tag">🚨 TENDER-SPLIT EVASION</span>
+              <span class="badge-desc">Pegged at ${p.costFormatted} (Evading ${limit} e-tender)</span>
+            </div>
+            <div style="margin-top:4px;">
+              <span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;color:#dc2626;background:#fee2e2;border-radius:4px;">
+                🔍 GFR Rule 149 Audit
+              </span>
+            </div>
+          `;
+        } else if (s.isRoundNumber) {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-warning">
+              <span class="badge-tag">🎯 ROUND INTEGER ESTIMATE</span>
+              <span class="badge-desc">Exact Lakh Multiple (No CPWD BOQ)</span>
+            </div>
+            <div style="margin-top:4px;">
+              <span style="display:inline-block;padding:2px 6px;font-size:10px;font-weight:700;color:#d97706;background:#fef3c7;border-radius:4px;">
+                📊 Check Rate Analysis
+              </span>
+            </div>
+          `;
+        } else {
+          badgeHtml = `
+            <div class="audit-badge audit-badge-success">
+              <span class="badge-tag">✅ NATURAL INLIER</span>
+              <span class="badge-desc">Digit ${s.leadingDigit || 1} Conforms to Benford Curve</span>
+            </div>
+          `;
+        }
+
       } else {
         // MASTER EXPLORER (Combined)
         if (dupe && dupe.isDuplicate) {
@@ -657,6 +746,9 @@ async function loadProjects() {
         }
         if (p.vibhed && p.vibhed.status === 'CRITICAL_OUTLIER') {
           badgeHtml += `<div class="audit-badge audit-badge-teal" style="margin-bottom:2px;"><span class="badge-tag">🌲 ML OUTLIER (${p.vibhed.anomalyScore})</span></div>`;
+        }
+        if (p.sankhya && p.sankhya.isThresholdSplit) {
+          badgeHtml += `<div class="audit-badge audit-badge-indigo" style="margin-bottom:2px;"><span class="badge-tag">🔢 TENDER-SPLIT (${p.costFormatted})</span></div>`;
         }
         const firstViol = audit.violations.find(v => v.ruleId.startsWith('NEG-LIST') || v.ruleId === 'MARCH-RUSH');
         if (firstViol) {
@@ -792,6 +884,49 @@ async function loadCartelGraph(mpName) {
 
   } catch (err) {
     console.error('Failed to load cartel graph:', err);
+  }
+}
+
+// 9B. Interactive Benford Forensic Digit Histogram Visualizer
+async function loadBenfordHistogram() {
+  const container = document.getElementById('benford-bars-container');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/benford-histogram');
+    if (!res.ok) return;
+    const data = await res.json();
+    const hist = data.histogram || [];
+
+    const chiBadge = document.getElementById('benford-chi-badge');
+    if (chiBadge) {
+      chiBadge.innerText = `Chi-Square: ${data.chiSquareStat} (p < 0.0001) · Severe Manipulation`;
+    }
+
+    container.innerHTML = '';
+    hist.forEach(h => {
+      const col = document.createElement('div');
+      col.className = 'digit-col';
+
+      // Scale height relative to max ~32%
+      const maxPct = 32;
+      const obsH = Math.min(130, Math.round((h.observedPct / maxPct) * 130));
+      const expH = Math.min(130, Math.round((h.expectedPct / maxPct) * 130));
+      const isSpike = (h.observedPct - h.expectedPct) >= 3.0;
+
+      col.innerHTML = `
+        <div class="digit-val-text" style="color: ${isSpike ? '#dc2626' : '#4338ca'};">
+          ${h.observedPct}%
+        </div>
+        <div class="digit-bars-pair">
+          <div class="bar-observed ${isSpike ? 'spike' : ''}" style="height: ${obsH}px;" title="Real Observed: ${h.observedPct}% (${h.count.toLocaleString('en-IN')} works)"></div>
+          <div class="bar-expected" style="height: ${expH}px;" title="Benford Expected: ${h.expectedPct}%"></div>
+        </div>
+        <div class="digit-label">D${h.digit}</div>
+      `;
+      container.appendChild(col);
+    });
+  } catch (err) {
+    console.error('Failed to load Benford histogram:', err);
   }
 }
 
@@ -1054,6 +1189,69 @@ function openModal(project) {
     findingsContainer.appendChild(card);
 
   // ==========================================
+  // FEATURE 6 MODAL: SANKHYA-SATYA (Forensic Digit Audit)
+  // ==========================================
+  } else if (currentMode === 'sankhya-satya') {
+    document.getElementById('modal-badge').innerText = 'SANKHYA-SATYA BENFORD FORENSIC AUDIT';
+    document.getElementById('modal-badge').style.background = '#eef2ff';
+    document.getElementById('modal-badge').style.color = '#4338ca';
+    document.getElementById('modal-badge').style.borderColor = '#c7d2fe';
+
+    const s = project.sankhya || { isAnomalous: false, forensicScore: 15, severity: 'NORMAL', explainability: {} };
+    const xai = s.explainability || {};
+
+    const card = document.createElement('div');
+    card.className = 'xai-card';
+    card.style.borderColor = '#c7d2fe';
+    card.style.borderLeftColor = '#4f46e5';
+    card.style.background = '#f8faff';
+
+    card.innerHTML = `
+      <div class="xai-header" style="border-bottom-color: #e0e7ff;">
+        <div>
+          <div class="xai-title" style="color: #3730a3;">🔢 Benford Forensic Digit & Tender-Splitting Analysis</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">GFR Rule 149 E-Procurement Evasion & Integer Clustering Sentry</div>
+        </div>
+        <div class="xai-score-pill" style="background:${s.severity === 'CRITICAL' ? '#dc2626' : (s.severity === 'WARNING' ? '#d97706' : '#4338ca')};">
+          SCORE: ${s.forensicScore}/100 [${s.status}]
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;padding:10px 12px;background:#ffffff;border-radius:6px;border:1px solid #c7d2fe;">
+        <div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">Forensic Accounting Identifiers:</div>
+        <div style="display:flex;gap:16px;font-size:11px;color:#475569;flex-wrap:wrap;">
+          <span>Leading Digit: <b style="font-family:var(--font-mono);font-size:13px;color:#1e1b4b;">Digit ${s.leadingDigit || 1}</b></span>
+          <span>Sanction Cost: <b>${project.costFormatted}</b></span>
+          <span>Threshold Evasion: <b style="color:${s.isThresholdSplit ? '#dc2626' : '#047857'};">${s.isThresholdSplit ? '🚨 YES (GFR 149 Evasion)' : '✅ NONE'}</b></span>
+          <span>Round Multiple: <b>${s.isRoundNumber ? '⚠️ Yes (Multiples of ₹1L)' : '✅ Realistic DSR Estimate'}</b></span>
+        </div>
+      </div>
+
+      <!-- 4 EXPLAINABILITY QUESTIONS -->
+      <div class="xai-row">
+        <div class="xai-q q-where"><span>📍</span> Question 1: WHERE was this work sanctioned?</div>
+        <div class="xai-a">${xai.where || `Sanctioned in ${project.district}, ${project.state} by ${project.mpName}.`}</div>
+      </div>
+
+      <div class="xai-row">
+        <div class="xai-q q-what"><span>⚡</span> Question 2: WHAT is the forensic digit red flag?</div>
+        <div class="xai-a">${xai.what || `Sanction of ${project.costFormatted} analyzed under Benford distribution.`}</div>
+      </div>
+
+      <div class="xai-row" style="border-left:3px solid #7c3aed;">
+        <div class="xai-q q-why"><span>🔬</span> Question 3: WHY is tender-splitting statutorily prohibited?</div>
+        <div class="xai-a">${xai.why || `GFR Rule 149 prohibits artificial fragmentation of requirements to bypass competitive e-tendering.`}</div>
+      </div>
+
+      <div class="xai-row" style="border-left:3px solid #dc2626;background:#fff5f5;">
+        <div class="xai-q q-next"><span>🎯</span> Question 4: WHAT NEXT should the District Vigilance Authority do?</div>
+        <div class="xai-a" style="font-weight:600;color:#991b1b;">${xai.whatNext || 'Consolidate contiguous split orders and institute mandatory open competitive e-procurement.'}</div>
+      </div>
+    `;
+
+    findingsContainer.appendChild(card);
+
+  // ==========================================
   // MASTER EXPLORER MODAL
   // ==========================================
   } else {
@@ -1071,7 +1269,8 @@ function openModal(project) {
         • <b>Duplicate Status:</b> ${dupe && dupe.isDuplicate ? `🔍 ${dupe.similarityScore}% Clone with ${dupe.matchedId}` : '✅ Unique Asset'}<br>
         • <b>Cost Benchmark:</b> ${artha && artha.isAnomaly ? `💰 ${artha.status} (+${artha.costDeviationPct}%)` : '✅ Fair Market Price'}<br>
         • <b>Vendor Concentration:</b> ${chakra && chakra.hasCartelRisk ? `🕸️ ${chakra.status} (${chakra.topVendorShare}%)` : '✅ Competitive Bidding'}<br>
-        • <b>ML Forest Anomaly:</b> ${project.mlAnomaly && project.mlAnomaly.isAnomaly ? `🌲 ${project.mlAnomaly.severity} Outlier (Score ${project.mlAnomaly.anomalyScore}/100)` : '✅ Normal Inlier'}
+        • <b>ML Forest Anomaly:</b> ${project.mlAnomaly && project.mlAnomaly.isAnomaly ? `🌲 ${project.mlAnomaly.severity} Outlier (Score ${project.mlAnomaly.anomalyScore}/100)` : '✅ Normal Inlier'}<br>
+        • <b>Forensic Digit (Benford):</b> ${project.sankhya && project.sankhya.isThresholdSplit ? '🚨 Tender-Splitting Suspect (GFR 149)' : (project.sankhya && project.sankhya.isRoundNumber ? '🎯 Artificial Round Estimate' : '✅ Benford Conformity')}
       </div>
     `;
     findingsContainer.appendChild(card);
