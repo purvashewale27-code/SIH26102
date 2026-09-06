@@ -33,10 +33,10 @@ async function runTests() {
   console.log('Cache-Control:', root.headers['cache-control']);
   console.log('Has onclick="openSimulator()":', root.data.includes('onclick="openSimulator()"'));
   console.log('Has onclick="openProvenanceModal()":', root.data.includes('onclick="openProvenanceModal()"'));
-  console.log('Has script app.js?v=2.2:', root.data.includes('app.js?v=2.2'));
+  console.log('Has script app.js?v=2.3:', root.data.includes('app.js?v=2.3'));
 
-  console.log('\n--- 2. Testing GET /app.js?v=2.2 ---');
-  const js = await testEndpoint('/app.js?v=2.2');
+  console.log('\n--- 2. Testing GET /app.js?v=2.3 ---');
+  const js = await testEndpoint('/app.js?v=2.3');
   console.log('JS Status:', js.status);
   console.log('JS length (bytes):', js.data.length);
   console.log('Has window.openSimulator:', js.data.includes('window.openSimulator = openSimulator'));
