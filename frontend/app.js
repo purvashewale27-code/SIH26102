@@ -1460,6 +1460,12 @@ function initOrUpdateBhuMap() {
   const mapContainer = document.getElementById('bhu-drishti-map');
   if (!mapContainer) return;
 
+  // Clear any legacy custom key to avoid watermark tiles
+  try {
+    localStorage.removeItem('bhu_map_provider');
+    localStorage.removeItem('bhu_map_api_key');
+  } catch(e) {}
+
   if (!bhuLeafletMap) {
     // Initialize Leaflet Map centered on India
     bhuLeafletMap = L.map('bhu-drishti-map', {
@@ -1470,10 +1476,7 @@ function initOrUpdateBhuMap() {
     });
 
     bhuMarkersLayer = L.layerGroup().addTo(bhuLeafletMap);
-
-    const savedProvider = localStorage.getItem('bhu_map_provider') || 'esri';
-    const savedKey = localStorage.getItem('bhu_map_api_key') || '';
-    applyBasemap(savedProvider, bhuActiveBasemap, savedKey);
+    applyBasemap(bhuActiveBasemap);
   } else {
     setTimeout(() => {
       bhuLeafletMap.invalidateSize();
@@ -1483,7 +1486,7 @@ function initOrUpdateBhuMap() {
   loadBhuMapPoints(currentFilter);
 }
 
-function applyBasemap(provider, type, apiKey) {
+function applyBasemap(type) {
   if (!bhuLeafletMap) return;
 
   if (bhuCurrentTileLayer) {
@@ -1492,42 +1495,27 @@ function applyBasemap(provider, type, apiKey) {
 
   const badge = document.getElementById('active-provider-badge');
 
-  if (provider === 'mapbox' && apiKey) {
-    const layerUrl = type === 'street'
-      ? `https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=${apiKey}`
-      : `https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/tiles/{z}/{x}/{y}?access_token=${apiKey}`;
-    
-    bhuCurrentTileLayer = L.tileLayer(layerUrl, {
+  if (type === 'dark') {
+    // 100% Free Esri World Dark Gray Base (Clean dark background, ZERO watermarks, ZERO API key)
+    bhuCurrentTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16,
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+    }).addTo(bhuLeafletMap);
+    if (badge) badge.innerText = 'Esri Night Canvas (100% Free / Verified)';
+  } else if (type === 'street') {
+    // 100% Free OpenStreetMap Standard (Clean road map, ZERO watermarks, ZERO API key)
+    bhuCurrentTileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      tileSize: 512,
-      zoomOffset: -1,
-      attribution: '© Mapbox © OpenStreetMap'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(bhuLeafletMap);
-
-    if (badge) badge.innerText = `Mapbox HD (${type === 'satellite' ? 'Satellite' : 'Street'})`;
-  } else if (provider === 'google' && apiKey) {
-    const lyrs = type === 'street' ? 'm' : 'y';
-    bhuCurrentTileLayer = L.tileLayer(`https://mt1.google.com/vt/lyrs=${lyrs}&x={x}&y={y}&z={z}&key=${apiKey}`, {
-      maxZoom: 20,
-      attribution: '© Google Maps'
-    }).addTo(bhuLeafletMap);
-
-    if (badge) badge.innerText = `Google Maps (${type === 'satellite' ? 'Satellite' : 'Street'})`;
+    if (badge) badge.innerText = 'OpenStreetMap (100% Free / Verified)';
   } else {
-    // Default 100% Free / Zero-Config: Esri Satellite & CartoDB Dark
-    if (type === 'street') {
-      bhuCurrentTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap © CARTO'
-      }).addTo(bhuLeafletMap);
-      if (badge) badge.innerText = 'CartoDB Dark Street (Free / Zero-Config)';
-    } else {
-      bhuCurrentTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 18,
-        attribution: 'Tiles © Esri — Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, GIS Community'
-      }).addTo(bhuLeafletMap);
-      if (badge) badge.innerText = 'Esri Satellite HD (Free / Zero-Config)';
-    }
+    // Default: 100% Free Esri World Imagery (High-Definition Satellite, ZERO watermarks, ZERO API key)
+    bhuCurrentTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 18,
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, GIS Community'
+    }).addTo(bhuLeafletMap);
+    if (badge) badge.innerText = 'Esri Satellite HD (100% Free / Verified)';
   }
 }
 
@@ -1535,12 +1523,12 @@ function switchBasemap(type) {
   bhuActiveBasemap = type;
   const satBtn = document.getElementById('btn-tile-satellite');
   const strBtn = document.getElementById('btn-tile-street');
+  const darkBtn = document.getElementById('btn-tile-dark');
   if (satBtn) satBtn.classList.toggle('active', type === 'satellite');
   if (strBtn) strBtn.classList.toggle('active', type === 'street');
+  if (darkBtn) darkBtn.classList.toggle('active', type === 'dark');
 
-  const savedProvider = localStorage.getItem('bhu_map_provider') || 'esri';
-  const savedKey = localStorage.getItem('bhu_map_api_key') || '';
-  applyBasemap(savedProvider, type, savedKey);
+  applyBasemap(type);
 }
 
 async function loadBhuMapPoints(filterType) {
@@ -1645,46 +1633,4 @@ async function openModalById(id) {
   } catch (err) {
     console.error('Error fetching project for modal:', err);
   }
-}
-
-// API Key Modal Controls
-function openApiKeyModal() {
-  const modal = document.getElementById('api-key-modal');
-  if (!modal) return;
-  const select = document.getElementById('map-provider-select');
-  const input = document.getElementById('custom-api-key-input');
-  if (select) select.value = localStorage.getItem('bhu_map_provider') || 'esri';
-  if (input) input.value = localStorage.getItem('bhu_map_api_key') || '';
-  modal.style.display = 'flex';
-}
-
-function closeApiKeyModal() {
-  const modal = document.getElementById('api-key-modal');
-  if (modal) modal.style.display = 'none';
-}
-
-function saveCustomApiKey() {
-  const select = document.getElementById('map-provider-select');
-  const input = document.getElementById('custom-api-key-input');
-  const provider = select ? select.value : 'esri';
-  const key = input ? input.value.trim() : '';
-
-  localStorage.setItem('bhu_map_provider', provider);
-  localStorage.setItem('bhu_map_api_key', key);
-
-  applyBasemap(provider, bhuActiveBasemap, key);
-  closeApiKeyModal();
-}
-
-function resetToFreeMap() {
-  localStorage.removeItem('bhu_map_provider');
-  localStorage.removeItem('bhu_map_api_key');
-
-  const select = document.getElementById('map-provider-select');
-  const input = document.getElementById('custom-api-key-input');
-  if (select) select.value = 'esri';
-  if (input) input.value = '';
-
-  applyBasemap('esri', bhuActiveBasemap, '');
-  closeApiKeyModal();
 }
