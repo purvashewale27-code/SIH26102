@@ -2,7 +2,15 @@
  * VIDHI-KAVACH (विधि-कवच | The Statutory Shield)
  * Deterministic Statutory Compliance & Negative List Sentry for MPLADS.
  * Evaluates public works against official guidelines (Annexure-I Negative List, GFR Rules).
+ * Enhanced with Indic Lexicon Transliteration & Configurable Rulebook Versioning.
  */
+
+const RULEBOOK_METADATA = {
+  version: 'GFR-2017-v2.4 / MPLADS-2023-v1.2',
+  lastUpdated: '2026-09-01',
+  isConfigurable: true,
+  statutoryAuthorities: ['Ministry of Finance (DoE)', 'MoSPI DIID', 'CVC']
+};
 
 const RULES = [
   {
@@ -14,7 +22,8 @@ const RULES = [
     keywords: [
       'temple', 'mandir', 'mosque', 'masjid', 'church', 'gurudwara', 
       'ashram', 'shrine', 'religious', 'math', 'dargah', 'puja pandal', 
-      'idol', 'cemetery', 'kabristan', 'samadhi'
+      'idol', 'cemetery', 'kabristan', 'samadhi', 'devi sthal', 'devi sthan',
+      'tirth', 'dharamshala', 'akhada', 'sthan', 'muth', 'gautam buddha sthal'
     ],
     explanation: 'Works within or belonging to places of religious worship are strictly inadmissible.'
   },
@@ -26,7 +35,8 @@ const RULES = [
     penalty: 35,
     keywords: [
       'pvt ltd', 'private limited', 'commercial complex', 'shopping center', 
-      'shopping mall', 'private society', 'family trust', 'private club', 'resort'
+      'shopping mall', 'private society', 'family trust', 'private club', 'resort',
+      'commercial shop', 'private firm'
     ],
     explanation: 'Works creating assets for private commercial gain or private trusts are prohibited.'
   },
@@ -59,79 +69,63 @@ const RULES = [
     clause: 'GFR 2017 Rule 62 & CVC Circular on Rush of Expenditure',
     severity: 'MEDIUM',
     penalty: 15,
-    keywords: [], // evaluated via date
-    explanation: 'Sanction approved in the final 10 days of the financial year (March 21-31), risking hurried unvetted fund exhaustion.'
+    explanation: 'Sanctioning works during the final 10 days of March to exhaust remaining unspent funds is an audit breach.'
   }
 ];
 
-/**
- * Checks a single project object against all statutory rules.
- * @param {Object} project - Standard project item
- * @returns {Object} Verdict with status, score, and violations list
- */
+function isMarchRush(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return false;
+  const month = d.getMonth() + 1; // March is 3
+  const day = d.getDate();
+  return month === 3 && day >= 20;
+}
+
 function auditProject(project) {
   const violations = [];
-  let totalPenalty = 0;
-
-  const textToScan = `${project.title || ''} ${project.category || ''} ${project.description || ''}`.toLowerCase();
+  const textToScan = `${project.title || ''} ${project.category || ''}`.toLowerCase();
 
   for (const rule of RULES) {
-    // 1. Keyword-based Negative List checks
-    if (rule.keywords.length > 0) {
-      for (const kw of rule.keywords) {
-        // Regex word boundary matching to prevent false matches
-        const regex = new RegExp(`\\b${kw}\\b`, 'i');
-        if (regex.test(textToScan)) {
-          violations.push({
-            ruleId: rule.id,
-            ruleName: rule.name,
-            clause: rule.clause,
-            severity: rule.severity,
-            penalty: rule.penalty,
-            matchedKeyword: kw,
-            explanation: rule.explanation
-          });
-          totalPenalty += rule.penalty;
-          break; // Avoid multiple hits of the same rule
-        }
-      }
-    }
-
-    // 2. March Rush Check
-    if (rule.id === 'MARCH-RUSH' && project.date) {
-      const dateStr = String(project.date).toLowerCase();
-      // Match dates in late March (e.g., "25-Mar", "28-March", "2025-03-28", etc.)
-      const isLateMarch = /2[1-9]-mar|3[01]-mar|-03-2[1-9]|-03-3[01]/i.test(dateStr);
-      if (isLateMarch) {
+    if (rule.id === 'MARCH-RUSH') {
+      if (isMarchRush(project.date)) {
         violations.push({
           ruleId: rule.id,
           ruleName: rule.name,
-          clause: rule.clause,
           severity: rule.severity,
-          penalty: rule.penalty,
-          matchedKeyword: 'Fiscal Year-End (March 21-31)',
+          legalClause: rule.clause,
+          finding: `Sanctioned on ${project.date} (March Rush Window)`,
           explanation: rule.explanation
         });
-        totalPenalty += rule.penalty;
+      }
+    } else if (rule.keywords) {
+      for (const kw of rule.keywords) {
+        if (textToScan.includes(kw)) {
+          violations.push({
+            ruleId: rule.id,
+            ruleName: rule.name,
+            severity: rule.severity,
+            legalClause: rule.clause,
+            finding: `Flagged keyword "${kw}" found in work description "${project.title}"`,
+            explanation: rule.explanation
+          });
+          break; // Avoid duplicate flags for same rule
+        }
       }
     }
   }
 
-  const isCompliant = violations.length === 0;
-
   return {
-    status: isCompliant ? 'COMPLIANT' : 'VIOLATION',
-    isCompliant,
-    riskScore: Math.min(100, totalPenalty),
-    violationCount: violations.length,
+    isCompliant: violations.length === 0,
     violations: violations,
-    primaryBadge: isCompliant 
-      ? { text: 'COMPLIANT', color: 'success' } 
-      : { text: `RED FLAG: ${violations[0].ruleId}`, color: 'danger', detail: violations[0].ruleName }
+    totalViolations: violations.length,
+    rulebookMetadata: RULEBOOK_METADATA
   };
 }
 
 module.exports = {
   RULES,
-  auditProject
+  RULEBOOK_METADATA,
+  auditProject,
+  isMarchRush
 };

@@ -31,43 +31,42 @@ async function runTests() {
   const root = await testEndpoint('/');
   console.log('Root Status:', root.status);
   console.log('Cache-Control:', root.headers['cache-control']);
-  console.log('Has onclick="openSimulator()":', root.data.includes('onclick="openSimulator()"'));
-  console.log('Has onclick="openProvenanceModal()":', root.data.includes('onclick="openProvenanceModal()"'));
-  console.log('Has script app.js?v=2.3:', root.data.includes('app.js?v=2.3'));
 
-  console.log('\n--- 2. Testing GET /app.js?v=2.3 ---');
-  const js = await testEndpoint('/app.js?v=2.3');
-  console.log('JS Status:', js.status);
-  console.log('JS length (bytes):', js.data.length);
-  console.log('Has window.openSimulator:', js.data.includes('window.openSimulator = openSimulator'));
-  console.log('Has window.openProvenanceModal:', js.data.includes('window.openProvenanceModal = openProvenanceModal'));
+  console.log('\n--- 2. Testing GET /api/trends (Predictive & Time-Series Analytics) ---');
+  const trends = await testEndpoint('/api/trends');
+  console.log('Trends Status:', trends.status);
+  const trendsJson = JSON.parse(trends.data);
+  console.log('Yearly Expenditure FY Count:', trendsJson.yearlyExpenditureVelocity.length);
+  console.log('March Rush Risk Ratio:', trendsJson.marchRushSpikeTrend.marchRushRiskRatio);
 
-  console.log('\n--- 3. Testing GET /style.css?v=2.2 ---');
-  const css = await testEndpoint('/style.css?v=2.2');
-  console.log('CSS Status:', css.status);
-  console.log('Has z-index: 99999 !important:', css.data.includes('99999 !important'));
-
-  console.log('\n--- 4. Testing POST /api/simulate-proposal ---');
+  console.log('\n--- 3. Testing POST /api/simulate-proposal (SHAP & Predictive Risk) ---');
   const sim = await testEndpoint('/api/simulate-proposal', 'POST', {
-    title: 'Construction of Community Hall and Mandir Boundary Wall',
+    title: 'Construction of Boundary Wall for Mandir',
     cost: 495000,
     date: '2024-03-29',
-    state: 'Uttar Pradesh',
-    district: 'Varanasi',
+    state: 'Assam',
+    district: 'Guwahati',
     category: 'Community Hall',
-    vendor: 'Shree Ram Infra Corp Pvt Ltd',
+    vendor: 'Shree Ram Infra Corp',
     hasGeotag: false
   });
   console.log('Sim Status:', sim.status);
   const simJson = JSON.parse(sim.data);
   console.log('Sim Score:', simJson.composite.score, 'Tier:', simJson.composite.tier);
+  console.log('SHAP Summary:', simJson.composite.shapSummary);
+  console.log('Predictive Delay Prob:', simJson.composite.predictiveRisk.delayProbability + '%');
+  console.log('Terrain Multiplier:', simJson.composite.predictiveRisk.regionalTerrainMultiplier + 'x');
+  console.log('Model Precision/Recall:', simJson.composite.modelValidationMetrics.precision, '/', simJson.composite.modelValidationMetrics.recall);
 
-  console.log('\n--- 5. Testing GET /api/provenance-ledger ---');
-  const prov = await testEndpoint('/api/provenance-ledger');
-  console.log('Prov Status:', prov.status);
-  const provJson = JSON.parse(prov.data);
-  console.log('Total Nationwide Projects:', provJson.verifiedRecordCounts.totalNationwideProjects);
-  console.log('Dataset Hash:', provJson.cryptographicProvenance.unifiedDatasetHash);
+  console.log('\n--- 4. Testing POST /api/feedback (HITL Active Learning) ---');
+  const fb = await testEndpoint('/api/feedback', 'POST', {
+    projectId: 'MPLADS-145555',
+    decision: 'CONFIRMED_FRAUD',
+    officerRole: 'District Magistrate'
+  });
+  console.log('Feedback Status:', fb.status);
+  const fbJson = JSON.parse(fb.data);
+  console.log('Feedback Result:', fbJson.message);
 
   console.log('\n✅ ALL VERIFICATIONS PASSED WITH 100% SUCCESS!');
 }
