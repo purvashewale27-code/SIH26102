@@ -48,8 +48,27 @@ const stateCounts = {};
 
 // 1. Load the real government projects & run VIDHI-KAVACH + PUNAR-DRISHTI on them
 console.log('Loading real projects data & running VIDHI-KAVACH audit...');
+
+// On Vercel: the 132MB combined file is .gitignored (exceeds GitHub 100MB limit).
+// The repo contains two split files (part1 + part2, ~66MB each). Auto-combine at startup.
+const PART1_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_part1.json');
+const PART2_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_part2.json');
+
+let rawData = null;
 if (fs.existsSync(DATA_FILE)) {
-  const rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  console.log(`✅ Loaded combined data file (${rawData.length} records)`);
+} else if (fs.existsSync(PART1_FILE) && fs.existsSync(PART2_FILE)) {
+  console.log('📦 Combined file not found. Recombining from part1 + part2...');
+  const p1 = JSON.parse(fs.readFileSync(PART1_FILE, 'utf8'));
+  const p2 = JSON.parse(fs.readFileSync(PART2_FILE, 'utf8'));
+  rawData = [...p1, ...p2];
+  console.log(`✅ Recombined ${rawData.length} records from split files`);
+} else {
+  console.warn('⚠️ No data files found (neither combined nor split parts). Server starting with empty dataset.');
+}
+
+if (rawData && rawData.length > 0) {
   const byState = {};
 
   rawData.forEach((w, index) => {
