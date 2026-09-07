@@ -18,18 +18,12 @@ if (hasStep1Pill || hasStepPillClass) {
   process.exit(1);
 }
 
-// 2. Check national utility strip
+// 2. Check national utility strip has been removed per design request
 const hasUtilityBar = html.includes('class="national-utility-bar"');
-const hasTricolor = html.includes('class="national-tricolor-line"');
-const hasClock = html.includes('id="ist-live-clock"');
-const hasAccessBtns = html.includes('setPortalFontSize');
-console.log('National utility bar present:', hasUtilityBar);
-console.log('Tricolor stripe present:', hasTricolor);
-console.log('Live IST clock container present:', hasClock);
-console.log('Accessibility buttons present:', hasAccessBtns);
+console.log('National utility bar cleanly removed:', !hasUtilityBar);
 
-if (!hasUtilityBar || !hasTricolor || !hasClock || !hasAccessBtns) {
-  console.error('FAIL: Missing national utility bar components!');
+if (hasUtilityBar) {
+  console.error('FAIL: National utility bar still found in index.html!');
   process.exit(1);
 }
 

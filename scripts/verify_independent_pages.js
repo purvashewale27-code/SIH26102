@@ -51,7 +51,7 @@ async function runTests() {
       const hasFooter = res.body.includes('class="site-footer"');
       const hasSpecial = res.body.includes(page.specialSelector);
 
-      if (is200 && isHtml && hasPageId && hasTitle && hasNavStrip && hasUtility && hasFooter && hasSpecial) {
+      if (is200 && isHtml && hasPageId && hasTitle && hasNavStrip && !hasUtility && hasFooter && hasSpecial) {
         console.log(`  ✅ [PASS] HTTP GET ${page.url.padEnd(20)} -> 200 OK | pageId="${page.pageId}" | title="${page.titleTag}" | special="${page.specialSelector}"`);
         passCount++;
       } else {

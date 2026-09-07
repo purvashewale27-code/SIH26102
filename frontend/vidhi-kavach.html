@@ -17,40 +17,8 @@
   
   <!-- Lenis Smooth Scroll Engine -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-  <!-- Three.js 3D WebGL Constellation Engine -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body data-page="vidhi-kavach">
-
-  <!-- 1. OFFICIAL NATIONAL PORTAL UTILITY STRIP (GIGW Compliant Sovereign Strip) -->
-  <div class="national-utility-bar">
-    <div class="national-tricolor-line"></div>
-    <div class="utility-container">
-      <div class="utility-left">
-        <span class="utility-seal">भारत सरकार | Government of India</span>
-        <span class="utility-sep">·</span>
-        <span class="utility-dept">सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय | Ministry of Statistics &amp; Programme Implementation</span>
-      </div>
-      <div class="utility-right">
-        <div class="utility-accessibility">
-          <span class="access-label">Text Size:</span>
-          <button class="access-btn" onclick="setPortalFontSize(-1)" title="Decrease font size">A-</button>
-          <button class="access-btn" onclick="setPortalFontSize(0)" title="Default font size">A</button>
-          <button class="access-btn" onclick="setPortalFontSize(1)" title="Increase font size">A+</button>
-        </div>
-        <span class="utility-sep">|</span>
-        <div class="utility-clock" id="ist-live-clock">
-          <svg class="clock-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span id="ist-clock-text">IST Loading...</span>
-        </div>
-        <span class="utility-sep">|</span>
-        <div class="utility-security-badge" title="Cryptographically verified e-SAKSHI data pipelines">
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#16a34a" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span>e-SAKSHI SECURE</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- 2. MINISTERIAL MASTHEAD -->
   <header class="top-header">
@@ -75,6 +43,10 @@
           </div>
         </div>
         <div class="header-action-buttons">
+          <button class="header-btn-search" id="btn-quick-search" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Jump to project search filter (Ctrl+K)">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Find Project <kbd class="nav-kbd">Ctrl+K</kbd>
+          </button>
           <button class="header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Simulate civil proposals with 7 sentinels (<50ms)">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
             Proposal Simulator
@@ -88,89 +60,105 @@
     </div>
   </header>
 
-  <!-- UNIFIED STICKY EXECUTIVE NAVIGATION HEADER (Primary Nav + Sentinel Directory) -->
+  <!-- UNIFIED STICKY EXECUTIVE NAVIGATION HEADER -->
   <div class="sticky-nav-header" id="sticky-nav-header">
-    <!-- 3. PRIMARY EXECUTIVE NAVIGATION BAR -->
-    <nav class="main-nav-bar" id="main-nav-bar">
-      <div class="nav-container">
-        <div class="nav-links-group">
-          <button class="main-nav-btn active" data-view="overview" onclick="switchMainView('overview')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-            Overview
-          </button>
-          <button class="main-nav-btn" data-view="investigate" onclick="switchMainView('investigate')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Investigate (Samvaad)
-          </button>
-          <button class="main-nav-btn" data-view="map" onclick="switchMainView('map')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-            Geospatial Risk (Bhu-Drishti)
-          </button>
-          <button class="main-nav-btn" data-view="networks" onclick="switchMainView('networks')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            Cartel Networks (Chakra-Vyuh)
-          </button>
-          <button class="main-nav-btn" data-view="trends" onclick="switchMainView('trends')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-            Expenditure Trends
-          </button>
-          <button class="main-nav-btn" data-view="reports" onclick="switchMainView('reports')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            Case Files &amp; Ledger
-          </button>
-        </div>
-        <div class="nav-actions-right">
-          <button class="nav-quick-search-btn" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Jump to project search filter">
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Find Project</span>
-            <kbd class="nav-kbd">Ctrl+K</kbd>
-          </button>
-        </div>
+    <nav class="sentinel-nav-strip" id="main-nav-bar" aria-label="Executive Portal Navigation">
+      <div class="sentinel-nav-container">
+        <!-- 1. VIDHI-KAVACH -->
+        <a href="vidhi-kavach.html" class="s-nav-tab active" data-nav="vidhi-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="1. VIDHI-KAVACH: Statutory Compliance &amp; Negative List Sentry">
+          <span class="s-nav-badge red">01</span>
+          <span class="s-nav-title">VIDHI</span>
+        </a>
+        <!-- 2. PUNAR-DRISHTI -->
+        <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="2. PUNAR-DRISHTI: NLP Duplicate Claims &amp; Twin Works Sentry">
+          <span class="s-nav-badge purple">02</span>
+          <span class="s-nav-title">PUNAR</span>
+        </a>
+        <!-- 3. ARTHA-DARPAN -->
+        <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="3. ARTHA-DARPAN: CPWD Rate Benchmark &amp; Cost Inflation Sentry">
+          <span class="s-nav-badge amber">03</span>
+          <span class="s-nav-title">ARTHA</span>
+        </a>
+        <!-- 4. CHAKRA-VYUH -->
+        <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="4. CHAKRA-VYUH: Contractor Cartel &amp; Vendor Nexus Sentry">
+          <span class="s-nav-badge crimson">04</span>
+          <span class="s-nav-title">CHAKRA</span>
+        </a>
+        <!-- 5. VIBHED-NETRA -->
+        <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="5. VIBHED-NETRA: 12-Dimensional Isolation Forest Outlier Sentry">
+          <span class="s-nav-badge teal">05</span>
+          <span class="s-nav-title">VIBHED</span>
+        </a>
+        <!-- 6. SANKHYA-SATYA -->
+        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="6. SANKHYA-SATYA: Benford's Law Digital &amp; Tender-Splitting Sentry">
+          <span class="s-nav-badge indigo">06</span>
+          <span class="s-nav-title">SANKHYA</span>
+        </a>
+        <!-- 7. BHU-DRISHTI -->
+        <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="7. BHU-DRISHTI: Geospatial Remote Sensing &amp; GPS Geofencing Sentry">
+          <span class="s-nav-badge emerald">07</span>
+          <span class="s-nav-title">BHU</span>
+        </a>
+
+        <!-- Vertical Divider -->
+        <div class="nav-strip-divider"></div>
+
+        <!-- 8. SATARK-DRISHTI -->
+        <a href="index.html#overview-hero-section" class="s-nav-tab" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="8. SATARK-DRISHTI: Unified National Risk Intelligence &amp; Macro Overview">
+          <span class="s-nav-badge gold">08</span>
+          <span class="s-nav-title">DRISHTI</span>
+        </a>
+        <!-- 9. SATARK-SAMVAAD -->
+        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="9. SATARK-SAMVAAD: GenAI Natural Language Audit Copilot">
+          <span class="s-nav-badge blue">09</span>
+          <span class="s-nav-title">SAMVAAD</span>
+        </a>
+        <!-- 10. PRASHNA-KAVACH -->
+        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="10. PRASHNA-KAVACH: Explainable AI &amp; Forensic Evidence Shield">
+          <span class="s-nav-badge rose">10</span>
+          <span class="s-nav-title">PRASHNA</span>
+        </a>
+        <!-- 11. SATARK-SIMULATION -->
+        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="11. SATARK-SIMULATION: Pre-Sanction Proposal Sandbox (&lt;50ms)">
+          <span class="s-nav-badge cyan">11</span>
+          <span class="s-nav-title">SIMULATION</span>
+        </a>
+        <!-- 12. BHAVISHYA-REKHA -->
+        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="12. BHAVISHYA-REKHA: Expenditure Velocity &amp; March Rush Trends">
+          <span class="s-nav-badge amber">12</span>
+          <span class="s-nav-title">BHAVISHYA</span>
+        </a>
+        <!-- 13. SATARK-KARYAA -->
+        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="13. SATARK-KARYAA: Project Explorer, Inspections &amp; Action Ledger">
+          <span class="s-nav-badge emerald">13</span>
+          <span class="s-nav-title">KARYAA</span>
+        </a>
       </div>
     </nav>
+  </div>
 
-    <!-- 3B. INDEPENDENT SENTINEL DIRECTORY BAR -->
-    <div class="sentinel-nav-strip">
-      <div class="sentinel-nav-container">
-        <a href="index.html" class="s-nav-tab" data-nav="overview">
-          <span class="s-nav-badge">OVERVIEW</span>
-          <span class="s-nav-title">National Dashboard</span>
+  
+  <!-- PAGE IDENTITY BREADCRUMB BAR -->
+  <nav class="page-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="breadcrumb-container">
+      <div class="breadcrumb-trail">
+        <a href="index.html" class="bc-root" title="National Risk Overview">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>MPLADS-SATARK</span>
         </a>
-        <a href="vidhi-kavach.html" class="s-nav-tab active" data-nav="vidhi-kavach">
-          <span class="s-nav-badge red">S-01</span>
-          <span class="s-nav-title">VIDHI-KAVACH</span>
-        </a>
-        <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti">
-          <span class="s-nav-badge purple">S-02</span>
-          <span class="s-nav-title">PUNAR-DRISHTI</span>
-        </a>
-        <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan">
-          <span class="s-nav-badge amber">S-03</span>
-          <span class="s-nav-title">ARTHA-DARPAN</span>
-        </a>
-        <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh">
-          <span class="s-nav-badge crimson">S-04</span>
-          <span class="s-nav-title">CHAKRA-VYUH</span>
-        </a>
-        <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra">
-          <span class="s-nav-badge teal">S-05</span>
-          <span class="s-nav-title">VIBHED-NETRA</span>
-        </a>
-        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya">
-          <span class="s-nav-badge indigo">S-06</span>
-          <span class="s-nav-title">SANKHYA-SATYA</span>
-        </a>
-        <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti">
-          <span class="s-nav-badge emerald">S-07</span>
-          <span class="s-nav-title">BHU-DRISHTI</span>
-        </a>
-        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad">
-          <span class="s-nav-badge blue">AI</span>
-          <span class="s-nav-title">SAMVAAD Copilot</span>
-        </a>
+        <span class="bc-sep">/</span>
+        <span class="bc-current" id="bc-current-page">
+          <span class="bc-sentinel-chip red">S-01</span>
+          <span><b>VIDHI-KAVACH (विधि-कवच)</b></span>
+        </span>
+      </div>
+      <div class="breadcrumb-context-badge" id="bc-context-badge">
+        <span class="bc-pulse-dot"></span>
+        <span id="bc-status-text">Dedicated Sentinel Mode · MoSPI eSAKSHI Verified</span>
       </div>
     </div>
-  </div>
+  </nav>
+  
 
   <!-- Main Content Container -->
   <main class="page-container">
