@@ -12,3 +12,8 @@ Thumbs.db
 # Files exceeding GitHub 100MB individual file limit
 # (Preserved via split files: real_works_part1.json & real_works_part2.json)
 backend/data/mospi/real_works_recommended_completed.json
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
