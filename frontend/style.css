@@ -471,6 +471,7 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
   padding: 0 16px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   overflow: visible !important;
   scrollbar-width: none;
