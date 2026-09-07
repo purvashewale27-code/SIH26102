@@ -159,6 +159,11 @@ function initPageDispatcher() {
     }
   });
 
+  // Scroll restoration logic across reloads
+  const navEntry = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]);
+  const isReload = (navEntry && navEntry.type === 'reload') ||
+                   (performance.navigation && performance.navigation.type === 1);
+
   if (pageName === 'overview') {
     if (document.getElementById('overview-trend-snapshot')) {
       renderOverviewTrendSnapshot();
@@ -173,32 +178,73 @@ function initPageDispatcher() {
       renderTrendsChart();
     }
     initScrollSpy();
-    if (window.location.hash) {
-      const targetId = window.location.hash.substring(1);
-      setTimeout(() => jumpToSection(targetId), 400);
+
+    // If an obsolete #overview-hero-section anchor is in URL, remove it so it does not hijack scroll
+    if (window.location.hash === '#overview-hero-section') {
+      if (history.replaceState) {
+        history.replaceState(null, null, window.location.pathname + window.location.search);
+      }
+    }
+
+    const currentHash = window.location.hash ? window.location.hash.substring(1) : '';
+
+    if (currentHash && currentHash !== 'overview-hero-section') {
+      // If arriving with a specific section anchor, jump to it
+      setTimeout(() => jumpToSection(currentHash, false), isReload ? 80 : 350);
+    } else if (isReload) {
+      // If user refreshed, restore EXACT scroll position where they were present!
+      try {
+        const savedPos = sessionStorage.getItem('satark_scroll_' + window.location.pathname);
+        if (savedPos != null) {
+          const parsedY = parseInt(savedPos, 10);
+          if (!isNaN(parsedY) && parsedY > 0) {
+            setTimeout(() => {
+              window.scrollTo({ top: parsedY, behavior: 'auto' });
+            }, 60);
+          }
+        }
+      } catch (e) {}
+      switchMode('vidhi-kavach');
     } else {
       // Default table preview in overview
       switchMode('vidhi-kavach');
     }
-  } else if (pageName === 'vidhi-kavach') {
-    switchMode('vidhi-kavach');
-  } else if (pageName === 'punar-drishti') {
-    switchMode('punar-drishti');
-  } else if (pageName === 'artha-darpan') {
-    switchMode('artha-darpan');
-  } else if (pageName === 'chakra-vyuh') {
-    switchMode('chakra-vyuh');
-    loadCartelGraph('Adv Adoor Prakash');
-  } else if (pageName === 'vibhed-netra') {
-    switchMode('vibhed-netra');
-  } else if (pageName === 'sankhya-satya') {
-    switchMode('sankhya-satya');
-    loadBenfordHistogram();
-  } else if (pageName === 'bhu-drishti') {
-    switchMode('bhu-drishti');
-  } else if (pageName === 'samvaad') {
-    const input = document.getElementById('samvaad-input');
-    if (input) setTimeout(() => input.focus(), 250);
+  } else {
+    // For independent feature pages, restore scroll position on reload
+    if (isReload) {
+      try {
+        const savedPos = sessionStorage.getItem('satark_scroll_' + window.location.pathname);
+        if (savedPos != null) {
+          const parsedY = parseInt(savedPos, 10);
+          if (!isNaN(parsedY) && parsedY > 0) {
+            setTimeout(() => {
+              window.scrollTo({ top: parsedY, behavior: 'auto' });
+            }, 60);
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (pageName === 'vidhi-kavach') {
+      switchMode('vidhi-kavach');
+    } else if (pageName === 'punar-drishti') {
+      switchMode('punar-drishti');
+    } else if (pageName === 'artha-darpan') {
+      switchMode('artha-darpan');
+    } else if (pageName === 'chakra-vyuh') {
+      switchMode('chakra-vyuh');
+      loadCartelGraph('Adv Adoor Prakash');
+    } else if (pageName === 'vibhed-netra') {
+      switchMode('vibhed-netra');
+    } else if (pageName === 'sankhya-satya') {
+      switchMode('sankhya-satya');
+      loadBenfordHistogram();
+    } else if (pageName === 'bhu-drishti') {
+      switchMode('bhu-drishti');
+    } else if (pageName === 'samvaad') {
+      const input = document.getElementById('samvaad-input');
+      if (input) setTimeout(() => input.focus(), 250);
+    }
   }
 }
 
@@ -4409,7 +4455,7 @@ window.initHeroSentinelConstellation = initHeroSentinelConstellation;
 // 6. SATARK-KARYAA (#satark-karyaa-section)
 // ==========================================================
 
-function jumpToSection(sectionId) {
+function jumpToSection(sectionId, updateHash = true) {
   closeForensicDropdown();
   const el = document.getElementById(sectionId);
   if (!el) {
@@ -4431,10 +4477,19 @@ function jumpToSection(sectionId) {
   const stickyHeader = document.getElementById('sticky-nav-header');
   const offset = stickyHeader ? stickyHeader.offsetHeight + 14 : 70;
   const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
-  const offsetPosition = elementPosition - offset;
+  const offsetPosition = Math.max(0, elementPosition - offset);
+
+  // Update browser URL hash cleanly without forcing abrupt jump
+  if (updateHash && history.replaceState) {
+    history.replaceState(null, null, `#${sectionId}`);
+  }
+  try {
+    sessionStorage.setItem('satark_active_section', sectionId);
+    sessionStorage.setItem('satark_scroll_' + window.location.pathname, String(offsetPosition));
+  } catch (e) {}
 
   if (window.lenis) {
-    window.lenis.scrollTo(offsetPosition, { duration: 1.1 });
+    window.lenis.scrollTo(offsetPosition, { duration: 0.8 });
   } else {
     window.scrollTo({
       top: offsetPosition,
@@ -4472,12 +4527,21 @@ function initScrollSpy() {
     { id: 'satark-karyaa-section', nav: 'satark-karyaa' }
   ];
 
+  let scrollSaveTimer = null;
   window.addEventListener('scroll', () => {
+    clearTimeout(scrollSaveTimer);
+    scrollSaveTimer = setTimeout(() => {
+      try {
+        sessionStorage.setItem('satark_scroll_' + window.location.pathname, String(window.pageYOffset));
+      } catch (e) {}
+    }, 60);
+
     const scrollPos = window.pageYOffset + 160;
     for (let i = sectionIds.length - 1; i >= 0; i--) {
       const el = document.getElementById(sectionIds[i].id);
       if (el && el.offsetTop <= scrollPos) {
         const currentNav = sectionIds[i].nav;
+        const currentSectionId = sectionIds[i].id;
         document.querySelectorAll('.s-nav-tab').forEach(t => {
           if (t.getAttribute('data-nav') === currentNav) {
             t.classList.add('active');
@@ -4491,6 +4555,15 @@ function initScrollSpy() {
             trigger.classList.add('active');
           } else {
             trigger.classList.remove('active');
+          }
+        }
+
+        // Dynamically track where user is present in the URL hash
+        if (history.replaceState) {
+          if (window.pageYOffset < 300) {
+            history.replaceState(null, null, window.location.pathname);
+          } else if (currentSectionId !== 'overview-hero-section') {
+            history.replaceState(null, null, `#${currentSectionId}`);
           }
         }
         break;
@@ -4854,6 +4927,15 @@ window.loadOnPageSimPreset = loadOnPageSimPreset;
 window.runOnPageSimulation = runOnPageSimulation;
 window.closeForensicDropdown = closeForensicDropdown;
 window.setupForensicDropdown = setupForensicDropdown;
+// Universal scroll preservation across refreshes
+window.addEventListener('scroll', () => {
+  try {
+    sessionStorage.setItem('satark_scroll_' + window.location.pathname, String(window.pageYOffset));
+  } catch (e) {}
+}, { passive: true });
 
-
-
+window.addEventListener('beforeunload', () => {
+  try {
+    sessionStorage.setItem('satark_scroll_' + window.location.pathname, String(window.pageYOffset));
+  } catch (e) {}
+});
