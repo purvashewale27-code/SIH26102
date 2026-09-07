@@ -41,7 +41,10 @@ initEnv();
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
 const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL_NAME = 'qwen/qwen3.8-27b';
+const PRIMARY_MODEL = 'qwen/qwen3.8-27b';
+const FALLBACK_MODEL = 'llama-3.3-70b-versatile';
+
+
 
 const SYSTEM_PROMPT = `You are SATARK-SAMVAAD, an elite AI Vigilance and Audit Intelligence Copilot for India's Ministry of Statistics and Programme Implementation (MoSPI), the Comptroller and Auditor General (CAG), and District Magistrates.
 
@@ -162,43 +165,63 @@ Structure:
 
     const tokenLimit = isGreeting ? 250 : 380;
 
-    // Attempt request with 1 retry on rate limit
+    const activeKey = process.env.GROQ_API_KEY || GROQ_API_KEY || '';
+    if (!activeKey) {
+      console.warn('[Groq Copilot] GROQ_API_KEY is not set. Please add GROQ_API_KEY in your Vercel Project Settings > Environment Variables.');
+      return {
+        success: false,
+        error: 'GROQ_API_KEY_NOT_CONFIGURED',
+        responseTimeMs: Date.now() - startTime
+      };
+    }
+    const modelsToTry = [PRIMARY_MODEL, FALLBACK_MODEL, 'llama-3.1-8b-instant'];
+
     let res = null;
-    for (let attempt = 0; attempt < 2; attempt++) {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 7000);
+    let successfulModel = PRIMARY_MODEL;
 
-      res = await fetch(GROQ_ENDPOINT, {
-        method: 'POST',
-        signal: controller.signal,
-        headers: {
-          'Authorization': `Bearer ${GROQ_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: MODEL_NAME,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            { role: 'user', content: userMessage }
-          ],
-          max_tokens: tokenLimit,
-          temperature: isGreeting ? 0.4 : 0.2
-        })
-      });
 
-      clearTimeout(timeout);
+    for (const model of modelsToTry) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 7000);
 
-      if (res.status === 429 && attempt === 0) {
-        console.warn('Groq rate limit encountered, waiting 2s for token replenishment...');
-        await new Promise(r => setTimeout(r, 2000));
-        continue;
+        res = await fetch(GROQ_ENDPOINT, {
+          method: 'POST',
+          signal: controller.signal,
+          headers: {
+            'Authorization': `Bearer ${activeKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: model,
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user', content: userMessage }
+            ],
+            max_tokens: tokenLimit,
+            temperature: isGreeting ? 0.4 : 0.2
+          })
+        });
+
+        clearTimeout(timeout);
+
+        if (res && res.ok) {
+          successfulModel = model;
+          break;
+        } else if (res && res.status === 429) {
+          console.warn(`Groq rate limit on ${model}, trying next model...`);
+          await new Promise(r => setTimeout(r, 500));
+        } else {
+          console.warn(`Groq HTTP ${res ? res.status : 'ERR'} on ${model}`);
+        }
+      } catch (reqErr) {
+        console.warn(`Groq request error for ${model}:`, reqErr.message);
       }
-      break;
     }
 
     if (!res || !res.ok) {
       const errorText = res ? await res.text() : 'No response';
-      console.error(`Groq API error:`, errorText);
+      console.error(`Groq API final error:`, errorText);
       return {
         success: false,
         error: `Groq error`,
@@ -220,7 +243,7 @@ Structure:
 
     const result = {
       success: true,
-      model: `Groq LPU (${MODEL_NAME})`,
+      model: `Groq LPU (${successfulModel})`,
       aiText: cleanedText,
       responseTimeMs: Date.now() - startTime
     };
@@ -246,5 +269,7 @@ Structure:
 module.exports = {
   generateAuditResponse,
   cleanContent,
-  MODEL_NAME
+  PRIMARY_MODEL,
+  MODEL_NAME: PRIMARY_MODEL
 };
+

@@ -205,8 +205,22 @@ if (fs.existsSync(DATA_FILE)) {
 
 // 2. Simple HTTP Server
 const server = http.createServer(async (req, res) => {
-  const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  const pathname = reqUrl.pathname;
+  const rawPath = req.headers['x-matched-path'] || 
+                  req.headers['x-vercel-matched-path'] || 
+                  req.headers['x-forwarded-uri'] || 
+                  req.url || '/';
+  
+  let fullUrlString = rawPath;
+  if (!fullUrlString.includes('?') && req.url && req.url.includes('?')) {
+    fullUrlString += req.url.slice(req.url.indexOf('?'));
+  }
+
+  const reqUrl = new URL(fullUrlString, `http://${req.headers.host || 'localhost'}`);
+  let pathname = reqUrl.pathname;
+  if ((pathname === '/api/index.js' || pathname === '/api/index') && (req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'])) {
+    pathname = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
+  }
+
 
   // Helper to send JSON responses
   const sendJson = (data, statusCode = 200) => {
