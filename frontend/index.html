@@ -11,12 +11,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css?v=2.5">
+  <!-- Lenis Smooth Scroll Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+
   <!-- Local High-Speed Leaflet GIS Map Engine (100% Offline Reliable) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   <script src="vendor/leaflet/leaflet.js"></script>
-  
-  <!-- Lenis Smooth Scroll Engine -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script>
+    if (typeof window !== 'undefined' && typeof window.leaflet !== 'undefined') {
+      window.L = window.leaflet;
+    }
+  </script>
 </head>
 <body data-page="overview">
 
@@ -28,32 +33,27 @@
           <img src="assets/satark-logo.png" alt="State Emblem · MPLADS-SATARK Official Seal" class="gov-logo-img ashoka-chakra-svg">
         </div>
         <div class="brand-text">
+          <div class="sub-gov-hindi">सांख्यिकी एवं कार्यक्रम कार्यान्वयन मंत्रालय</div>
           <div class="sub-gov">GOVERNMENT OF INDIA · MINISTRY OF STATISTICS &amp; PROGRAMME IMPLEMENTATION</div>
           <h1 class="main-title">MPLADS-SATARK <span class="hindi-badge">(सतर्क)</span></h1>
-          <div class="sub-portal-desc">National Public Fund Forensic Vigilance &amp; Risk Intelligence System (DIID Core)</div>
+          <div class="sub-portal-desc">Autonomous Public Fund Forensic Decision Intelligence</div>
         </div>
       </div>
 
       <div class="header-right-group">
-        <div class="system-status-badge">
-          <span class="status-pulse-dot"></span>
-          <div class="status-text-stack">
-            <span class="status-main">LIVE FORENSIC SENTINEL</span>
-            <span class="status-sub">176,925 Works Audited · 36 States/UTs</span>
-          </div>
-        </div>
         <div class="header-action-buttons">
-          <button class="header-btn-search" id="btn-quick-search" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Jump to project search filter (Ctrl+K)">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Find Project <kbd class="nav-kbd">Ctrl+K</kbd>
+          <button class="header-btn header-btn-search" id="btn-quick-search" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Search National Works by Project ID, MP, or District (Ctrl+K)">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Search Works</span>
+            <kbd class="nav-kbd">Ctrl+K</kbd>
           </button>
-          <button class="header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Simulate civil proposals with 7 sentinels (<50ms)">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-            Proposal Simulator
+          <button class="header-btn header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Pre-Sanction Proposal Sandbox (<50ms SHAP Audit)">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <span>Proposal Simulator</span>
           </button>
-          <button class="header-btn-prov" id="btn-open-provenance" onclick="openProvenanceModal()" title="View 176,925 MoSPI records & cryptographic ledger">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            Data Lineage &amp; Ledger
+          <button class="header-btn header-btn-prov" id="btn-open-provenance" onclick="openProvenanceModal()" title="Inspect 176,925 MoSPI Work Lineage &amp; Cryptographic Ledger">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <span>Data Lineage &amp; Ledger</span>
           </button>
         </div>
       </div>
@@ -64,102 +64,260 @@
   <div class="sticky-nav-header" id="sticky-nav-header">
     <nav class="sentinel-nav-strip" id="main-nav-bar" aria-label="Executive Portal Navigation">
       <div class="sentinel-nav-container">
-        <!-- 1. VIDHI-KAVACH -->
-        <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="1. VIDHI-KAVACH: Statutory Compliance &amp; Negative List Sentry">
-          <span class="s-nav-badge red">01</span>
-          <span class="s-nav-title">VIDHI</span>
-        </a>
-        <!-- 2. PUNAR-DRISHTI -->
-        <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="2. PUNAR-DRISHTI: NLP Duplicate Claims &amp; Twin Works Sentry">
-          <span class="s-nav-badge purple">02</span>
-          <span class="s-nav-title">PUNAR</span>
-        </a>
-        <!-- 3. ARTHA-DARPAN -->
-        <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="3. ARTHA-DARPAN: CPWD Rate Benchmark &amp; Cost Inflation Sentry">
-          <span class="s-nav-badge amber">03</span>
-          <span class="s-nav-title">ARTHA</span>
-        </a>
-        <!-- 4. CHAKRA-VYUH -->
-        <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="4. CHAKRA-VYUH: Contractor Cartel &amp; Vendor Nexus Sentry">
-          <span class="s-nav-badge crimson">04</span>
-          <span class="s-nav-title">CHAKRA</span>
-        </a>
-        <!-- 5. VIBHED-NETRA -->
-        <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="5. VIBHED-NETRA: 12-Dimensional Isolation Forest Outlier Sentry">
-          <span class="s-nav-badge teal">05</span>
-          <span class="s-nav-title">VIBHED</span>
-        </a>
-        <!-- 6. SANKHYA-SATYA -->
-        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="6. SANKHYA-SATYA: Benford's Law Digital &amp; Tender-Splitting Sentry">
-          <span class="s-nav-badge indigo">06</span>
-          <span class="s-nav-title">SANKHYA</span>
-        </a>
-        <!-- 7. BHU-DRISHTI -->
-        <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="7. BHU-DRISHTI: Geospatial Remote Sensing &amp; GPS Geofencing Sentry">
-          <span class="s-nav-badge emerald">07</span>
-          <span class="s-nav-title">BHU</span>
+        
+        <!-- 1. National Risk Overview -->
+        <a href="index.html#overview-hero-section" class="s-nav-tab active" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="National Risk Intelligence &amp; Macro Overview">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span class="s-nav-title">National Overview</span>
         </a>
 
-        <!-- Vertical Divider -->
-        <div class="nav-strip-divider"></div>
+        <!-- 2. Forensic Engines Dropdown -->
+        <div class="s-nav-dropdown" id="forensic-engines-dropdown">
+          <button class="s-nav-tab s-dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" id="btn-engines-menu">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="s-nav-title">Forensic Engines</span>
+            <svg class="dropdown-caret" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          
+          <div class="s-dropdown-menu" aria-labelledby="btn-engines-menu">
+            <div class="s-dropdown-header">
+              <span class="s-dropdown-header-title">7 Autonomous Sentinel AI Engines</span>
+              <span class="s-dropdown-header-badge">MoSPI Audited</span>
+            </div>
+            <div class="s-dropdown-grid">
+              <!-- S-01 VIDHI-KAVACH -->
+              <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="S-01: Statutory Compliance &amp; Negative List">
+                <span class="s-dd-code">S-01</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">VIDHI-KAVACH (विधि-कवच)</span>
+                  <span class="s-dd-sub">Statutory Compliance &amp; Negative List</span>
+                </div>
+              </a>
+              <!-- S-02 PUNAR-DRISHTI -->
+              <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="S-02: NLP Duplicate Claims &amp; Twin Works">
+                <span class="s-dd-code">S-02</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">PUNAR-DRISHTI (पुनर्दृष्टि)</span>
+                  <span class="s-dd-sub">NLP Duplicate Claims &amp; Twin Works</span>
+                </div>
+              </a>
+              <!-- S-03 ARTHA-DARPAN -->
+              <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="S-03: CPWD Rate Benchmark &amp; Cost Inflation">
+                <span class="s-dd-code">S-03</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">ARTHA-DARPAN (अर्थ-दर्पण)</span>
+                  <span class="s-dd-sub">CPWD Rate Benchmark &amp; Cost Inflation</span>
+                </div>
+              </a>
+              <!-- S-04 CHAKRA-VYUH -->
+              <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="S-04: Contractor Cartel &amp; Vendor Nexus">
+                <span class="s-dd-code">S-04</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">CHAKRA-VYUH (चक्रव्यूह)</span>
+                  <span class="s-dd-sub">Contractor Cartel &amp; Vendor Nexus</span>
+                </div>
+              </a>
+              <!-- S-05 VIBHED-NETRA -->
+              <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="S-05: 12-D Isolation Forest Outlier">
+                <span class="s-dd-code">S-05</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">VIBHED-NETRA (विभेद-नेत्र)</span>
+                  <span class="s-dd-sub">12D Isolation Forest Outlier Sentry</span>
+                </div>
+              </a>
+              <!-- S-06 SANKHYA-SATYA -->
+              <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="S-06: Benford's Law &amp; Tender-Splitting">
+                <span class="s-dd-code">S-06</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">SANKHYA-SATYA (संख्या-सत्य)</span>
+                  <span class="s-dd-sub">Benford's Law &amp; Tender-Splitting</span>
+                </div>
+              </a>
+              <!-- S-07 BHU-DRISHTI -->
+              <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="S-07: Geospatial Remote Sensing &amp; GPS">
+                <span class="s-dd-code">S-07</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">BHU-DRISHTI (भू-दृष्टि)</span>
+                  <span class="s-dd-sub">Geospatial Radar &amp; GPS Geofencing</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
 
-        <!-- 8. SATARK-DRISHTI -->
-        <a href="index.html#overview-hero-section" class="s-nav-tab active" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="8. SATARK-DRISHTI: Unified National Risk Intelligence &amp; Macro Overview">
-          <span class="s-nav-badge gold">08</span>
-          <span class="s-nav-title">DRISHTI</span>
+        <!-- 3. Audit Copilot -->
+        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="GenAI Natural Language Audit Copilot">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="s-nav-title">Audit Copilot</span>
         </a>
-        <!-- 9. SATARK-SAMVAAD -->
-        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="9. SATARK-SAMVAAD: GenAI Natural Language Audit Copilot">
-          <span class="s-nav-badge blue">09</span>
-          <span class="s-nav-title">SAMVAAD</span>
+
+        <!-- 4. Explainable Evidence (PRASHNA-KAVACH) -->
+        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="Explainable AI &amp; Forensic Evidence Shield">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span class="s-nav-title">Explainable AI</span>
         </a>
-        <!-- 10. PRASHNA-KAVACH -->
-        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="10. PRASHNA-KAVACH: Explainable AI &amp; Forensic Evidence Shield">
-          <span class="s-nav-badge rose">10</span>
-          <span class="s-nav-title">PRASHNA</span>
+
+        <!-- 5. Proposal Simulator -->
+        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="Pre-Sanction Proposal Sandbox (&lt;50ms)">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/></svg>
+          <span class="s-nav-title">Proposal Sandbox</span>
         </a>
-        <!-- 11. SATARK-SIMULATION -->
-        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="11. SATARK-SIMULATION: Pre-Sanction Proposal Sandbox (&lt;50ms)">
-          <span class="s-nav-badge cyan">11</span>
-          <span class="s-nav-title">SIMULATION</span>
+
+        <!-- 6. Expenditure Velocity -->
+        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="Expenditure Velocity &amp; Fiscal Rush Trends">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <span class="s-nav-title">Trends &amp; Velocity</span>
         </a>
-        <!-- 12. BHAVISHYA-REKHA -->
-        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="12. BHAVISHYA-REKHA: Expenditure Velocity &amp; March Rush Trends">
-          <span class="s-nav-badge amber">12</span>
-          <span class="s-nav-title">BHAVISHYA</span>
+
+        <!-- 7. Action Ledger -->
+        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="Project Explorer, Inspections &amp; Action Ledger">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span class="s-nav-title">Work Explorer</span>
         </a>
-        <!-- 13. SATARK-KARYAA -->
-        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="13. SATARK-KARYAA: Project Explorer, Inspections &amp; Action Ledger">
-          <span class="s-nav-badge emerald">13</span>
-          <span class="s-nav-title">KARYAA</span>
-        </a>
+
       </div>
     </nav>
   </div>
 
-  <!-- PAGE IDENTITY BREADCRUMB BAR -->
-  <nav class="page-breadcrumb-bar" aria-label="Breadcrumb">
-    <div class="breadcrumb-container">
-      <div class="breadcrumb-trail">
-        <a href="index.html" class="bc-root" title="National Risk Overview">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span>MPLADS-SATARK</span>
-        </a>
-        <span class="bc-sep">/</span>
-        <span class="bc-current" id="bc-current-page">
-          <span class="bc-sentinel-chip overview">NATIONAL</span>
-          <span>National Risk Overview Dashboard</span>
-        </span>
-      </div>
-      <div class="breadcrumb-context-badge" id="bc-context-badge">
-        <span class="bc-pulse-dot"></span>
-        <span id="bc-status-text">Live Sentinel Audit · 176,925 MoSPI Works · 36 States/UTs</span>
-      </div>
-    </div>
-  </nav>
-
   <!-- Main Content Container -->
   <main class="page-container">
+
+    <!-- ==========================================================================
+         PRAKALP-DRISHTI SOVEREIGN NATIONAL HERO BANNER
+         ========================================================================== -->
+    <section class="prakalp-hero-banner" id="prakalp-hero-banner" aria-label="National Decision Intelligence Hero Banner">
+      <!-- Top National Tri-Color Accent Ribbon -->
+      <div class="hero-tricolor-bar" aria-hidden="true"></div>
+
+      <!-- 3D Extruded / Relief India Map Background Silhouette -->
+      <div class="prakalp-hero-map" aria-hidden="true">
+        <svg viewBox="0 0 600 650" fill="none" xmlns="http://www.w3.org/2000/svg" class="india-map-svg">
+          <defs>
+            <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.45" />
+              <stop offset="100%" stop-color="#0f2744" stop-opacity="0.25" />
+            </linearGradient>
+            <filter id="mapShadow" x="-10%" y="-10%" width="130%" height="130%">
+              <feDropShadow dx="8" dy="12" stdDeviation="10" flood-color="#000000" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <!-- 3D Extrusion Shadow Layer -->
+          <path d="M 230 45 L 245 40 L 265 65 L 285 55 L 305 75 L 320 110 L 335 125 L 355 120 L 375 140 L 400 135 L 420 155 L 450 145 L 485 160 L 510 185 L 535 200 L 555 195 L 575 220 L 565 245 L 530 250 L 505 235 L 480 250 L 455 240 L 435 260 L 415 250 L 390 270 L 370 295 L 355 330 L 340 370 L 325 410 L 305 460 L 285 510 L 265 560 L 245 595 L 235 590 L 225 550 L 210 500 L 195 450 L 180 400 L 160 360 L 140 330 L 120 310 L 95 315 L 75 300 L 70 275 L 90 250 L 120 240 L 145 220 L 160 190 L 175 160 L 190 130 L 205 95 Z" fill="#08182b" transform="translate(6, 10)" opacity="0.6"/>
+          <!-- Relief Map Base Vector -->
+          <path d="M 230 45 L 245 40 L 265 65 L 285 55 L 305 75 L 320 110 L 335 125 L 355 120 L 375 140 L 400 135 L 420 155 L 450 145 L 485 160 L 510 185 L 535 200 L 555 195 L 575 220 L 565 245 L 530 250 L 505 235 L 480 250 L 455 240 L 435 260 L 415 250 L 390 270 L 370 295 L 355 330 L 340 370 L 325 410 L 305 460 L 285 510 L 265 560 L 245 595 L 235 590 L 225 550 L 210 500 L 195 450 L 180 400 L 160 360 L 140 330 L 120 310 L 95 315 L 75 300 L 70 275 L 90 250 L 120 240 L 145 220 L 160 190 L 175 160 L 190 130 L 205 95 Z" fill="url(#mapGradient)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" filter="url(#mapShadow)"/>
+          <!-- State Mesh Grid Overlays -->
+          <path d="M 205 95 L 265 140 L 320 110 M 265 140 L 260 210 L 355 210 M 160 190 L 220 240 L 260 210 M 220 240 L 210 320 L 285 310 L 355 270 M 210 320 L 240 400 L 305 380 M 240 400 L 265 480 M 265 480 L 245 595" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" stroke-dasharray="3 3"/>
+          <!-- Strategic Geospatial Radar Pings -->
+          <circle cx="230" cy="170" r="4" fill="#38bdf8" opacity="0.8"/>
+          <circle cx="230" cy="170" r="9" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+          <circle cx="160" cy="270" r="3.5" fill="#10b981" opacity="0.8"/>
+          <circle cx="280" cy="360" r="3.5" fill="#f59e0b" opacity="0.8"/>
+          <circle cx="225" cy="510" r="3.5" fill="#38bdf8" opacity="0.8"/>
+          <circle cx="480" cy="210" r="3.5" fill="#10b981" opacity="0.8"/>
+        </svg>
+      </div>
+
+      <!-- Hero Central Content -->
+      <div class="prakalp-hero-content">
+        <!-- Eyebrow with gold divider rules -->
+        <div class="hero-eyebrow">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text">NATIONAL PUBLIC FUND FORENSIC PIPELINE &middot; MOSPI &middot; SOVEREIGN OVERSIGHT</span>
+          <span class="eyebrow-line"></span>
+        </div>
+
+        <!-- Emblem Badge Container with India Gate SVG Icon -->
+        <div class="hero-emblem-badge" title="National Monument · India Gate (Government of India)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="india-gate-svg" aria-label="India Gate Memorial Arch Emblem">
+            <!-- Top Dome Urn & Finial -->
+            <path d="M 46 13 L 54 13 C 54 10.5 46 10.5 46 13 Z" fill="#0c2340"/>
+            <rect x="43" y="13" width="14" height="3" rx="0.8" fill="#0c2340"/>
+            <rect x="36" y="16" width="28" height="4" rx="0.8" fill="#0c2340"/>
+
+            <!-- Upper Cornice & Frieze Layer (Attic) -->
+            <rect x="25" y="20" width="50" height="4" rx="1" fill="#0c2340"/>
+            <rect x="28" y="24" width="44" height="11" fill="#0c2340"/>
+            <!-- Inscription Frieze Line -->
+            <line x1="33" y1="29.5" x2="67" y2="29.5" stroke="#ffffff" stroke-width="1.2" opacity="0.65" stroke-dasharray="2 1.5"/>
+            <rect x="26" y="35" width="48" height="4" rx="1" fill="#0c2340"/>
+
+            <!-- Main Pylon Columns -->
+            <rect x="29" y="39" width="14" height="43" fill="#0c2340"/>
+            <rect x="57" y="39" width="14" height="43" fill="#0c2340"/>
+
+            <!-- Fluted Column Details -->
+            <line x1="33" y1="41" x2="33" y2="80" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+            <line x1="39" y1="41" x2="39" y2="80" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+            <line x1="61" y1="41" x2="61" y2="80" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+            <line x1="67" y1="41" x2="67" y2="80" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+
+            <!-- Arch Spandrel & Archway -->
+            <path d="M 43 39 L 57 39 L 57 56 C 57 52.1 53.9 49 50 49 C 46.1 49 43 52.1 43 56 Z" fill="#0c2340"/>
+            <path d="M 43 82 L 43 58 C 43 54.1 46.1 51 50 51 C 53.9 51 57 54.1 57 58 L 57 82 Z" fill="#ffffff" stroke="#0c2340" stroke-width="1.5"/>
+
+            <!-- Golden Keystone Accent -->
+            <polygon points="48,47 52,47 51,51 49,51" fill="#e0a96d"/>
+
+            <!-- Stepped Plinth Base -->
+            <rect x="24" y="82" width="52" height="4" rx="0.8" fill="#0c2340"/>
+            <rect x="19" y="86" width="62" height="4" rx="0.8" fill="#0c2340"/>
+            <rect x="14" y="90" width="72" height="4" rx="0.8" fill="#0c2340"/>
+
+            <!-- Amar Jawan Jyoti Memorial Flame -->
+            <circle cx="50" cy="71" r="2.5" fill="#f59e0b"/>
+            <path d="M 50 64 C 52 67.5 52 69.5 50 72 C 48 69.5 48 67.5 50 64 Z" fill="#dc2626"/>
+          </svg>
+        </div>
+
+        <!-- Bilingual Ministry Title -->
+        <div class="hero-ministry-title">
+          <span class="ministry-hindi">भारत सरकार &middot; GOVERNMENT OF INDIA</span>
+          <span class="ministry-gold">MINISTRY OF STATISTICS &amp; PROGRAMME IMPLEMENTATION (MOSPI)</span>
+        </div>
+
+        <!-- Grand Display Heading -->
+        <h1 class="hero-main-title">
+          National Decision Intelligence for India's Public Funds
+        </h1>
+
+        <!-- Executive Narrative Subtitle -->
+        <p class="hero-desc">
+          MPLADS-SATARK transforms national public fund monitoring from retrospective descriptive auditing into predictive, risk-aware decision intelligence for sovereign policymakers, district collectors, and citizens.
+        </p>
+
+        <!-- CTA Button Group -->
+        <div class="hero-cta-group">
+          <button type="button" class="prakalp-cta-btn btn-cta-primary" onclick="jumpToSection('satark-karyaa-section')">
+            ENTER FORENSIC COMMAND HUB
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <button type="button" class="prakalp-cta-btn btn-cta-secondary" onclick="jumpToSection('vidhi-kavach-section')">
+            Explore 13 Sentinels
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <!-- 4-Column Macro Infrastructure Metric Bar -->
+        <div class="hero-macro-stats">
+          <div class="macro-stat-item">
+            <span class="macro-stat-num">1,76,925</span>
+            <span class="macro-stat-label">MONITORED WORKS</span>
+          </div>
+          <div class="macro-stat-item">
+            <span class="macro-stat-num">₹47,302 Cr</span>
+            <span class="macro-stat-label">AUDITED DISBURSAL PORTFOLIO</span>
+          </div>
+          <div class="macro-stat-item">
+            <span class="macro-stat-num">36</span>
+            <span class="macro-stat-label">STATES &amp; UNION TERRITORIES</span>
+          </div>
+          <div class="macro-stat-item">
+            <span class="macro-stat-num">13</span>
+            <span class="macro-stat-label">VIGILANCE ENGINES &amp; PLATFORMS</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ==========================================================================
          PART 1: THE 7 SENTINEL ENGINES (MODULES 01 - 07)
@@ -170,7 +328,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge red">MODULE 01</span>
+            <span class="module-seq-badge">MODULE 01</span>
             <span>VIDHI-KAVACH (विधि-कवच)</span>
             <span class="feature-type-pill">Statutory Compliance &amp; Negative List Sentry</span>
           </div>
@@ -184,28 +342,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">23,722</span>
-            <span class="sentinel-stat-lbl">Statutory Breaches Flagged</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">23,722</span>
+                <span class="bento-metric-tag tag-danger">BREACH</span>
+              </div>
+              <span class="bento-metric-lbl">Statutory Breaches Flagged</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">15,953</span>
+                <span class="bento-metric-tag tag-danger">ANNEXURE-I</span>
+              </div>
+              <span class="bento-metric-lbl">Places of Worship / Religious Trusts</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-amber">3,204</span>
+                <span class="bento-metric-tag tag-warning">GFR 62</span>
+              </div>
+              <span class="bento-metric-lbl">March Rush Surges (&gt;15% Annual Cap)</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-amber">4,565</span>
+                <span class="bento-metric-tag tag-warning">GFR 149</span>
+              </div>
+              <span class="bento-metric-lbl">Sub-Threshold Tender Splits</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">15,953</span>
-            <span class="sentinel-stat-lbl">Places of Worship / Trusts (Annexure-I)</span>
+          <div class="sentinel-statutory-clause">
+            <strong>Statutory Governance:</strong> Audits adherence to MoSPI MPLADS Guidelines 2023 Annexure-I prohibitions (commercial, religious, private entities) and GFR Rule 62 anti-rush provisions.
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-amber">3,204</span>
-            <span class="sentinel-stat-lbl">March Rush Surges (GFR 62)</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-amber">4,565</span>
-            <span class="sentinel-stat-lbl">Sub-Threshold Tenders (GFR 149)</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('vidhi-kavach'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-01 Breaches
+            </button>
+            <a href="vidhi-kavach.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('vidhi-kavach'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #dc2626;">
-          Filter Ledger for S-01 Breaches
-        </button>
       </div>
     </section>
 
@@ -214,7 +395,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge purple">MODULE 02</span>
+            <span class="module-seq-badge">MODULE 02</span>
             <span>PUNAR-DRISHTI (पुनर्दृष्टि)</span>
             <span class="feature-type-pill">NLP Duplicate Claims &amp; Twin Works Sentry</span>
           </div>
@@ -228,28 +409,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val" style="color:#9333ea;">10,204</span>
-            <span class="sentinel-stat-lbl">Duplicate Claims Detected</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">10,204</span>
+                <span class="bento-metric-tag tag-danger">DUPLICATES</span>
+              </div>
+              <span class="bento-metric-lbl">Duplicate Claims Detected</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">6,965</span>
+                <span class="bento-metric-tag tag-danger">TWIN CLONES</span>
+              </div>
+              <span class="bento-metric-lbl">Identical Clone Proposals</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">88.4%</span>
+                <span class="bento-metric-tag tag-warning">SIMILARITY</span>
+              </div>
+              <span class="bento-metric-lbl">Mean Lexical Match Ratio</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-green">₹142.8 Cr</span>
+                <span class="bento-metric-tag tag-success">SAFEGUARDED</span>
+              </div>
+              <span class="bento-metric-lbl">Duplicate Disbursal Blocked</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val" style="color:#9333ea;">6,965</span>
-            <span class="sentinel-stat-lbl">Identical Clone Works</span>
+          <div class="sentinel-statutory-clause">
+            <strong>NLP Cross-Matching:</strong> Evaluates proposal title and scope n-grams to prevent duplicate claims across neighboring village panchayats and overlapping financial years.
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">88.4%</span>
-            <span class="sentinel-stat-lbl">Mean Lexical Match Ratio</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-green">₹142.8 Cr</span>
-            <span class="sentinel-stat-lbl">Duplicate Disbursal Blocked</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('punar-drishti'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-02 Duplicates
+            </button>
+            <a href="punar-drishti.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('punar-drishti'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #9333ea;">
-          Filter Ledger for S-02 Duplicates
-        </button>
       </div>
     </section>
 
@@ -258,7 +462,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge amber">MODULE 03</span>
+            <span class="module-seq-badge">MODULE 03</span>
             <span>ARTHA-DARPAN (अर्थ-दर्पण)</span>
             <span class="feature-type-pill">CPWD Rate Benchmark &amp; Cost Inflation Sentry</span>
           </div>
@@ -272,28 +476,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">₹3,639.9 Cr</span>
-            <span class="sentinel-stat-lbl">Flagged Excess Overrun Risk</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">₹3,639.9 Cr</span>
+                <span class="bento-metric-tag tag-danger">OVERRUN</span>
+              </div>
+              <span class="bento-metric-lbl">Flagged Excess Overrun Risk</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">108</span>
+                <span class="bento-metric-tag tag-neutral">DSR NORMS</span>
+              </div>
+              <span class="bento-metric-lbl">CPWD Regional Benchmarks</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-amber">14,219</span>
+                <span class="bento-metric-tag tag-warning">&gt;20% DSR</span>
+              </div>
+              <span class="bento-metric-lbl">Works Above Regional Ceilings</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">1.84x</span>
+                <span class="bento-metric-tag tag-danger">OUTLIER</span>
+              </div>
+              <span class="bento-metric-lbl">Peak Outlier Cost Multiplier</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">108</span>
-            <span class="sentinel-stat-lbl">CPWD Regional Benchmarks</span>
+          <div class="sentinel-statutory-clause">
+            <strong>Benchmark Governance:</strong> Mandates CPWD DSR 2023 unit rates across civil works to prohibit inflated Detailed Project Reports (DPRs) and post-sanction scope creep.
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-amber">14,219</span>
-            <span class="sentinel-stat-lbl">Works &gt;20% Above DSR Limit</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">1.84x</span>
-            <span class="sentinel-stat-lbl">Peak Outlier Cost Multiplier</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('artha-darpan'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-03 Cost Overruns
+            </button>
+            <a href="artha-darpan.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('artha-darpan'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #d97706;">
-          Filter Ledger for S-03 Cost Overruns
-        </button>
       </div>
     </section>
 
@@ -302,7 +529,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge crimson">MODULE 04</span>
+            <span class="module-seq-badge">MODULE 04</span>
             <span>CHAKRA-VYUH (चक्रव्यूह)</span>
             <span class="feature-type-pill">Contractor Cartel &amp; Vendor Nexus Sentry</span>
           </div>
@@ -316,28 +543,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">47,302</span>
-            <span class="sentinel-stat-lbl">Cartel Risk Works Flagged</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">47,302</span>
+                <span class="bento-metric-tag tag-danger">CARTEL RISK</span>
+              </div>
+              <span class="bento-metric-lbl">Cartel Risk Works Flagged</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">1,248</span>
+                <span class="bento-metric-tag tag-danger">MONOPOLY</span>
+              </div>
+              <span class="bento-metric-lbl">Single-Vendor Monopolies</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">97.2%</span>
+                <span class="bento-metric-tag tag-warning">CAPTURE</span>
+              </div>
+              <span class="bento-metric-lbl">Peak Vendor Concentration (Attingal)</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">9,363</span>
+                <span class="bento-metric-tag tag-danger">HHI SEVERE</span>
+              </div>
+              <span class="bento-metric-lbl">Peak HHI Score (&gt;2,500 Threshold)</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">1,248</span>
-            <span class="sentinel-stat-lbl">Single-Vendor Monopolies</span>
+          <div class="sentinel-statutory-clause">
+            <strong>Anti-Cartel Audit:</strong> Quantifies vendor capture ratios and identifies dummy bidding rings using network graph adjacency matrices and payment voucher flows.
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">97%</span>
-            <span class="sentinel-stat-lbl">Peak Vendor Concentration (Attingal)</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">9,363</span>
-            <span class="sentinel-stat-lbl">Peak HHI Score (Severe Monopoly)</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('chakra-vyuh'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-04 Cartels
+            </button>
+            <a href="chakra-vyuh.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('chakra-vyuh'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #be123c;">
-          Filter Ledger for S-04 Cartels
-        </button>
       </div>
     </section>
 
@@ -346,7 +596,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge teal">MODULE 05</span>
+            <span class="module-seq-badge">MODULE 05</span>
             <span>VIBHED-NETRA (विभेद-नेत्र)</span>
             <span class="feature-type-pill">12-Dimensional Isolation Forest Outlier Sentry</span>
           </div>
@@ -360,28 +610,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val" style="color:#0f766e;">37,391</span>
-            <span class="sentinel-stat-lbl">High-Dimensional Outliers</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">37,391</span>
+                <span class="bento-metric-tag tag-warning">OUTLIERS</span>
+              </div>
+              <span class="bento-metric-lbl">High-Dimensional Outliers</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">7,780</span>
+                <span class="bento-metric-tag tag-danger">CRITICAL ML</span>
+              </div>
+              <span class="bento-metric-lbl">Critical Multivariate Anomalies</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">12</span>
+                <span class="bento-metric-tag tag-neutral">VECTORS</span>
+              </div>
+              <span class="bento-metric-lbl">Orthogonal Feature Dimensions</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">&lt;15ms</span>
+                <span class="bento-metric-tag tag-success">REAL-TIME</span>
+              </div>
+              <span class="bento-metric-lbl">Inference Latency (All Works)</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">7,780</span>
-            <span class="sentinel-stat-lbl">Critical Multivariate Anomalies</span>
+          <div class="sentinel-statutory-clause">
+            <strong>ML Anomaly Modeling:</strong> Evaluates delay probability, disbursement velocity, cost variance, and geographic isolation depth without relying on static heuristics.
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">12</span>
-            <span class="sentinel-stat-lbl">Orthogonal Feature Dimensions</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">&lt;15ms</span>
-            <span class="sentinel-stat-lbl">Inference Latency (All Works)</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('vibhed-netra'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-05 ML Outliers
+            </button>
+            <a href="vibhed-netra.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('vibhed-netra'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #0f766e;">
-          Filter Ledger for S-05 ML Outliers
-        </button>
       </div>
     </section>
 
@@ -390,7 +663,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge indigo">MODULE 06</span>
+            <span class="module-seq-badge">MODULE 06</span>
             <span>SANKHYA-SATYA (संख्या-सत्य)</span>
             <span class="feature-type-pill">Benford's Law Digital &amp; Tender-Splitting Sentry</span>
           </div>
@@ -404,28 +677,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val" style="color:#4338ca;">7,710</span>
-            <span class="sentinel-stat-lbl">Sub-Ceiling Threshold Splits</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">7,710</span>
+                <span class="bento-metric-tag tag-warning">SPLITS</span>
+              </div>
+              <span class="bento-metric-lbl">Sub-Ceiling Threshold Splits</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">13,917.59</span>
+                <span class="bento-metric-tag tag-danger">p &lt; 0.001</span>
+              </div>
+              <span class="bento-metric-lbl">Chi-Square Anomaly Statistic</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">13.79%</span>
+                <span class="bento-metric-tag tag-danger">DIGIT 5</span>
+              </div>
+              <span class="bento-metric-lbl">Observed Digit 5 (Expected 7.9%)</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">24.28%</span>
+                <span class="bento-metric-tag tag-warning">DIGIT 2</span>
+              </div>
+              <span class="bento-metric-lbl">Observed Digit 2 (Expected 17.6%)</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">13,917.59</span>
-            <span class="sentinel-stat-lbl">Chi-Square Anomaly Statistic</span>
+          <div class="sentinel-statutory-clause">
+            <strong>Digital Forensics:</strong> Flags artificial quotation splitting deliberately designed to fall under GFR Rule 149 mandatory e-tendering limits (₹5 Lakhs and ₹10 Lakhs).
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">13.79%</span>
-            <span class="sentinel-stat-lbl">Observed Digit 5 (Exp: 7.9%)</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">24.28%</span>
-            <span class="sentinel-stat-lbl">Observed Digit 2 (Exp: 17.6%)</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('sankhya-satya'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-06 Benford Splits
+            </button>
+            <a href="sankhya-satya.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('sankhya-satya'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #4338ca;">
-          Filter Ledger for S-06 Benford Splits
-        </button>
       </div>
     </section>
 
@@ -434,7 +730,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge emerald">MODULE 07</span>
+            <span class="module-seq-badge">MODULE 07</span>
             <span>BHU-DRISHTI (भूर-दृष्टि)</span>
             <span class="feature-type-pill">Geospatial Remote Sensing &amp; GPS Sentry</span>
           </div>
@@ -448,28 +744,51 @@
           </a>
         </div>
       </div>
-      <div class="sentinel-showcase-body">
-        <div class="sentinel-stat-box">
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-red">8,419</span>
-            <span class="sentinel-stat-lbl">Ghost Assets (No GPS Geotag)</span>
+      <div class="sentinel-bento-grid">
+        <div class="sentinel-bento-info">
+          <div class="bento-metrics-grid">
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-red">8,419</span>
+                <span class="bento-metric-tag tag-danger">GHOST ASSETS</span>
+              </div>
+              <span class="bento-metric-lbl">Ghost Assets (No GPS Geotag)</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-amber">12,305</span>
+                <span class="bento-metric-tag tag-warning">GPS DRIFT</span>
+              </div>
+              <span class="bento-metric-lbl">Out-of-Constituency GPS Drifts</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val">3</span>
+                <span class="bento-metric-tag tag-neutral">SATELLITE</span>
+              </div>
+              <span class="bento-metric-lbl">HD Satellite Basemap Engines</span>
+            </div>
+            <div class="bento-metric-cell">
+              <div class="bento-metric-top">
+                <span class="bento-metric-val text-green">100%</span>
+                <span class="bento-metric-tag tag-success">GIS MESH</span>
+              </div>
+              <span class="bento-metric-lbl">Nationwide Constituency Mesh</span>
+            </div>
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-amber">12,305</span>
-            <span class="sentinel-stat-lbl">Out-of-Constituency GPS Drifts</span>
+          <div class="sentinel-statutory-clause">
+            <strong>Geospatial Sentry:</strong> Cross-references physical asset coordinates with ISRO Bhuvan satellite polygons to prevent billing for non-existent or displaced infrastructure.
           </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val">3</span>
-            <span class="sentinel-stat-lbl">HD Satellite Basemap Engines</span>
-          </div>
-          <div class="sentinel-stat-pill">
-            <span class="sentinel-stat-val text-green">100%</span>
-            <span class="sentinel-stat-lbl">Nationwide GIS Mesh</span>
+          <div class="sentinel-action-row">
+            <button type="button" class="btn-primary sentinel-filter-btn" onclick="setFeatureMode('bhu-drishti'); jumpToSection('satark-karyaa-section');">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              Filter Ledger for S-07 GIS Works
+            </button>
+            <a href="bhu-drishti.html" class="sentinel-secondary-link">
+              Deep Dive Analytics <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-primary" onclick="setFeatureMode('bhu-drishti'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #059669;">
-          Filter Ledger for S-07 GIS Works
-        </button>
       </div>
     </section>
 
@@ -482,7 +801,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge gold">MODULE 08</span>
+            <span class="module-seq-badge">MODULE 08</span>
             <span>SATARK-DRISHTI (सतर्क दृष्टि)</span>
             <span class="feature-type-pill">Unified Risk Intelligence &amp; Overview</span>
           </div>
@@ -553,7 +872,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge blue">MODULE 09</span>
+            <span class="module-seq-badge">MODULE 09</span>
             <span>SATARK-SAMVAAD (सतर्क संवाद)</span>
             <span class="feature-type-pill">GenAI Natural Language Audit Copilot</span>
           </div>
@@ -564,7 +883,7 @@
 
       <div class="samvaad-search-box">
         <input type="text" id="samvaad-input" class="samvaad-input" placeholder="Query SATARK: e.g. 'Show high-risk projects in Bihar under 5 lakh' or 'Find contractors connected to cartels'..." onkeyup="if(event.key==='Enter') executeSamvaadQuery()">
-        <button class="btn-primary" id="btn-ask-samvaad" onclick="executeSamvaadQuery()" style="padding:10px 20px; font-weight:700; background:var(--gov-navy);">
+        <button class="btn-primary" id="btn-ask-samvaad" onclick="executeSamvaadQuery()" style="padding:10px 20px; font-weight:700; color:#ffffff; background:var(--gov-navy);">
           Query Copilot
         </button>
       </div>
@@ -589,7 +908,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge rose">MODULE 10</span>
+            <span class="module-seq-badge">MODULE 10</span>
             <span>PRASHNA-KAVACH (प्रश्न कवच)</span>
             <span class="feature-type-pill">Explainable AI &amp; Evidence Shield</span>
           </div>
@@ -624,7 +943,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge cyan">MODULE 11</span>
+            <span class="module-seq-badge">MODULE 11</span>
             <span>SATARK-SIMULATION (सतर्क सिमुलेशन)</span>
             <span class="feature-type-pill">Pre-Sanction Proposal Sandbox (&lt;50ms)</span>
           </div>
@@ -632,7 +951,7 @@
           <p class="core-section-desc">Instantaneous multi-model risk audit for proposed works before statutory sanction and fund release to intercept fraudulent allocations at entry.</p>
         </div>
         <div class="core-section-actions">
-          <button class="btn-primary" onclick="openSimulator()" style="background:var(--gov-navy);">
+          <button class="btn-primary" onclick="openSimulator()" style="color:#ffffff; background:var(--gov-navy);">
             Open Enlarged Modal Sandbox
           </button>
         </div>
@@ -725,7 +1044,7 @@
               </label>
             </div>
 
-            <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-opsim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; background:var(--gov-navy);">
+            <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-opsim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; color:#ffffff; background:var(--gov-navy);">
               Run Real-Time Forensic Simulation (&lt;50ms)
             </button>
           </form>
@@ -743,7 +1062,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge amber">MODULE 12</span>
+            <span class="module-seq-badge">MODULE 12</span>
             <span>BHAVISHYA-REKHA (भविष्य रेखा)</span>
             <span class="feature-type-pill">Expenditure Velocity &amp; March Rush Trends</span>
           </div>
@@ -778,7 +1097,7 @@
       <div class="core-section-header">
         <div class="core-section-title-wrap">
           <div class="core-module-tag">
-            <span class="module-seq-badge emerald">MODULE 13</span>
+            <span class="module-seq-badge">MODULE 13</span>
             <span>SATARK-KARYAA (सतर्क कार्या)</span>
             <span class="feature-type-pill">Project Explorer &amp; Action Ledger</span>
           </div>
@@ -1065,7 +1384,7 @@
         </div>
       </div>
       <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <button class="btn-primary" id="modal-gen-dossier-btn" style="background:var(--gov-navy); font-weight:600; padding:8px 16px; border-radius:6px;">
+        <button class="btn-primary" id="modal-gen-dossier-btn" style="color:#ffffff; background:var(--gov-navy); font-weight:600; padding:8px 16px; border-radius:6px;">
           Generate Official Vigilance Memorandum
         </button>
         <button class="btn-secondary" id="modal-dismiss-btn" onclick="closeModal()">Close</button>
@@ -1172,7 +1491,7 @@
                 </label>
               </div>
 
-              <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-sim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; background:var(--gov-navy);">
+              <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-sim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; color:#ffffff; background:var(--gov-navy);">
                 Run Real-Time Forensic Simulation (&lt;50ms)
               </button>
             </form>
@@ -1562,7 +1881,7 @@
         </details>
       </div>
       <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <button class="btn-primary" onclick="generateCaseFileFromPrashna()" style="background:var(--gov-navy); font-weight:600;">
+        <button class="btn-primary" onclick="generateCaseFileFromPrashna()" style="color:#ffffff; background:var(--gov-navy); font-weight:600;">
           Generate Case File (Form GFR-19A)
         </button>
         <button class="btn-secondary" onclick="closePrashnaModal()">Close</button>

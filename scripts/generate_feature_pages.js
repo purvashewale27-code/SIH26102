@@ -13,13 +13,8 @@ const stickyNavStart = indexHtml.indexOf('<!-- UNIFIED STICKY EXECUTIVE NAVIGATI
 const masthead = indexHtml.substring(mastheadStart, stickyNavStart).trim();
 
 // 4. Unified Sticky Executive Navigation Header (Primary Nav + Sentinel Directory)
-const breadcrumbStart = indexHtml.indexOf('<!-- PAGE IDENTITY BREADCRUMB BAR -->');
 const mainContentStart = indexHtml.indexOf('<!-- Main Content Container -->');
-const stickyNavHeader = indexHtml.substring(stickyNavStart, breadcrumbStart).trim();
-
-// 5. Sentinel Directory Bar (preserved for backward-compat test scripts)
-const sentinelNavStart = indexHtml.indexOf('<!-- 3B. INDEPENDENT SENTINEL DIRECTORY BAR');
-const sentinelNavStrip = indexHtml.substring(sentinelNavStart, breadcrumbStart).trim();
+const stickyNavHeader = indexHtml.substring(stickyNavStart, mainContentStart).trim();
 
 // 6. Shared KPI Section
 const kpiStart = indexHtml.indexOf('<!-- Dynamic 4 Summary KPI Cards');
@@ -73,6 +68,10 @@ function getStickyNavHeader(activeView, activeNav) {
   nav = nav.replace(`class="main-nav-btn" data-view="${activeView}"`, `class="main-nav-btn active" data-view="${activeView}"`);
   nav = nav.replace(/class="s-nav-tab active"/g, 'class="s-nav-tab"');
   nav = nav.replace(`class="s-nav-tab" data-nav="${activeNav}"`, `class="s-nav-tab active" data-nav="${activeNav}"`);
+  const engineNavs = ['vidhi-kavach', 'punar-drishti', 'artha-darpan', 'chakra-vyuh', 'vibhed-netra', 'sankhya-satya', 'bhu-drishti'];
+  if (engineNavs.includes(activeNav)) {
+    nav = nav.replace('class="s-nav-tab s-dropdown-trigger"', 'class="s-nav-tab s-dropdown-trigger active"');
+  }
   return nav;
 }
 
@@ -83,18 +82,18 @@ const pages = [
     pageId: 'vidhi-kavach',
     mainView: 'overview',
     sentinelCode: 'S-01',
-    chipClass: 'red',
+    chipClass: 'gov',
     shortTitle: 'VIDHI-KAVACH (विधि-कवच)',
     title: 'VIDHI-KAVACH (विधि-कवच) · Statutory Compliance & Negative List Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-01: VIDHI-KAVACH (विधि-कवच — STATUTORY POLICY SHIELD)',
-    tagColor: '#fee2e2',
-    tagTextColor: '#b91c1c',
-    tagBorder: '#fca5a5',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: 'Statutory Rule Compliance & Negative List Sentry',
     subheading: 'Auditing 176,925 works strictly against MoSPI MPLADS Guidelines 2023 (Annexure-I Prohibited Works) & GFR Rule 62',
     badgeVal: '23,722',
     badgeLbl: 'Statutory Breaches Flagged',
-    badgeColor: '#b91c1c',
+    badgeColor: '#0c2340',
     visualizer: ''
   },
   {
@@ -102,18 +101,18 @@ const pages = [
     pageId: 'punar-drishti',
     mainView: 'overview',
     sentinelCode: 'S-02',
-    chipClass: 'purple',
+    chipClass: 'gov',
     shortTitle: 'PUNAR-DRISHTI (पुनर्दृष्टि)',
     title: 'PUNAR-DRISHTI (पुनर्दृष्टि) · NLP Duplicate Claims & Twin Works Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-02: PUNAR-DRISHTI (पुनर्दृष्टि — NLP DUPLICATE SENTRY)',
-    tagColor: '#f3e8ff',
-    tagTextColor: '#6b21a8',
-    tagBorder: '#d8b4fe',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: 'Cross-Work Lexical NLP Twin Work & Double-Billing Sentry',
     subheading: "Vaibhav's TF-IDF & Cosine Similarity Engine identifying identical work descriptions and duplicate billing claims across India",
     badgeVal: '10,204',
     badgeLbl: 'Duplicate Claims (6,965 Clones)',
-    badgeColor: '#6b21a8',
+    badgeColor: '#0c2340',
     visualizer: ''
   },
   {
@@ -121,18 +120,18 @@ const pages = [
     pageId: 'artha-darpan',
     mainView: 'overview',
     sentinelCode: 'S-03',
-    chipClass: 'amber',
+    chipClass: 'gov',
     shortTitle: 'ARTHA-DARPAN (अर्थ-दर्पण)',
     title: 'ARTHA-DARPAN (अर्थ-दर्पण) · CPWD DSR Benchmark & Price Inflation Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-03: ARTHA-DARPAN (अर्थ-दर्पण — COST INTEGRITY SENTRY)',
-    tagColor: '#fef3c7',
-    tagTextColor: '#b45309',
-    tagBorder: '#fde68a',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: 'CPWD Schedule of Rates Benchmark & Cost Inflation Sentry',
     subheading: 'Calibrated with 108 State-Category CPWD Delhi Schedule of Rates (DSR 2023-24) to flag unjustified cost escalations',
     badgeVal: '₹3,639.9 Cr',
     badgeLbl: 'Flagged Excess Overrun Risk',
-    badgeColor: '#b45309',
+    badgeColor: '#0c2340',
     visualizer: ''
   },
   {
@@ -140,18 +139,18 @@ const pages = [
     pageId: 'chakra-vyuh',
     mainView: 'networks',
     sentinelCode: 'S-04',
-    chipClass: 'crimson',
+    chipClass: 'gov',
     shortTitle: 'CHAKRA-VYUH (चक्रव्यूह)',
     title: 'CHAKRA-VYUH (चक्रव्यूह) · Contractor Cartel & Vendor Nexus Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-04: CHAKRA-VYUH (चक्रव्यूह — CARTEL NEXUS SENTRY)',
-    tagColor: '#ffe4e6',
-    tagTextColor: '#be123c',
-    tagBorder: '#fecdd3',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: 'Contractor Cartel & Vendor Nexus Forensic Sentry',
     subheading: 'Herfindahl-Hirschman Index (HHI) concentration audit over 109,475 payment vouchers mapping MP-to-Agency-to-Vendor flows',
     badgeVal: '47,302',
     badgeLbl: 'Cartel Risk Works (1,248 Monopolies)',
-    badgeColor: '#be123c',
+    badgeColor: '#0c2340',
     visualizer: chakraSection
   },
   {
@@ -159,18 +158,18 @@ const pages = [
     pageId: 'vibhed-netra',
     mainView: 'overview',
     sentinelCode: 'S-05',
-    chipClass: 'teal',
+    chipClass: 'gov',
     shortTitle: 'VIBHED-NETRA (विभेद-नेत्र)',
     title: 'VIBHED-NETRA (विभेद-नेत्र) · 12-Dimensional Isolation Forest Anomaly Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-05: VIBHED-NETRA (विभेद-नेत्र — ML ANOMALY SENTRY)',
-    tagColor: '#ccfbf1',
-    tagTextColor: '#0f766e',
-    tagBorder: '#99f6e4',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: '12-Dimensional Isolation Forest Multivariate Outlier Sentry',
     subheading: 'Unsupervised Machine Learning anomaly detector calibrated in <15ms across 176,925 works evaluating efficiency and delay vectors',
     badgeVal: '37,391',
     badgeLbl: 'High-Dimensional Outliers (7,780 Critical)',
-    badgeColor: '#0f766e',
+    badgeColor: '#0c2340',
     visualizer: ''
   },
   {
@@ -178,18 +177,18 @@ const pages = [
     pageId: 'sankhya-satya',
     mainView: 'overview',
     sentinelCode: 'S-06',
-    chipClass: 'indigo',
+    chipClass: 'gov',
     shortTitle: 'SANKHYA-SATYA (संख्या-सत्य)',
     title: 'SANKHYA-SATYA (संख्या-सत्य) · Benford Forensic Digit & Tender-Splitting Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-06: SANKHYA-SATYA (संख्या-सत्य — MATHEMATICAL FORENSIC SENTRY)',
-    tagColor: '#e0e7ff',
-    tagTextColor: '#4338ca',
-    tagBorder: '#c7d2fe',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: "Benford's Law Digit Sentry & GFR Tender-Splitting Sentry",
     subheading: 'Forensic logarithmic first-digit analysis & threshold evasion detection (works clustered below ₹5,00,000 to bypass tenders)',
     badgeVal: '7,710',
     badgeLbl: 'Threshold Splits (Chi-Sq: 68.4)',
-    badgeColor: '#4338ca',
+    badgeColor: '#0c2340',
     visualizer: benfordSection
   },
   {
@@ -197,18 +196,18 @@ const pages = [
     pageId: 'bhu-drishti',
     mainView: 'map',
     sentinelCode: 'S-07',
-    chipClass: 'emerald',
+    chipClass: 'gov',
     shortTitle: 'BHU-DRISHTI (भू-दृष्टि)',
     title: 'BHU-DRISHTI (भू-दृष्टि) · Geospatial Satellite Sentry & Ghost Asset Radar | MPLADS-SATARK',
     tag: 'SENTINEL S-07: BHU-DRISHTI (भू-दृष्टि — GEOSPATIAL SATELLITE RADAR)',
-    tagColor: '#d1fae5',
-    tagTextColor: '#065f46',
-    tagBorder: '#a7f3d0',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: 'Geospatial Satellite Sentry & Ghost Asset Radar',
     subheading: 'Satellite coordinate verification & spatial proximity clustering auditing 176,925 works for physical existence',
     badgeVal: '3,031',
     badgeLbl: 'Ghost Assets (Disbursed Without Geotag)',
-    badgeColor: '#065f46',
+    badgeColor: '#0c2340',
     visualizer: bhuSection
   },
   {
@@ -216,18 +215,18 @@ const pages = [
     pageId: 'samvaad',
     mainView: 'investigate',
     sentinelCode: 'AI',
-    chipClass: 'blue',
+    chipClass: 'gov',
     shortTitle: 'SATARK-SAMVAAD (सतर्क संवाद)',
     title: 'SATARK-SAMVAAD (सतर्क संवाद) · GenAI Natural Language Audit Copilot | MPLADS-SATARK',
     tag: 'SATARK-SAMVAAD (सतर्क संवाद) — GENAI AUDIT COPILOT',
-    tagColor: '#dbeafe',
-    tagTextColor: '#1d4ed8',
-    tagBorder: '#bfdbfe',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
     heading: 'Real-Time Conversational Forensic Copilot over 176,925 MoSPI Works',
     subheading: 'Ask natural language queries in English or Hindi to synthesize cross-sentinel evidence and generate printable vigilance memorandums',
     badgeVal: '176,925',
     badgeLbl: 'Records Indexed in Real Time',
-    badgeColor: '#1d4ed8',
+    badgeColor: '#0c2340',
     visualizer: samvaadSection
   }
 ];
@@ -257,29 +256,6 @@ pages.forEach(p => {
     </section>
   `;
 
-  const breadcrumbBar = `
-  <!-- PAGE IDENTITY BREADCRUMB BAR -->
-  <nav class="page-breadcrumb-bar" aria-label="Breadcrumb">
-    <div class="breadcrumb-container">
-      <div class="breadcrumb-trail">
-        <a href="index.html" class="bc-root" title="National Risk Overview">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span>MPLADS-SATARK</span>
-        </a>
-        <span class="bc-sep">/</span>
-        <span class="bc-current" id="bc-current-page">
-          <span class="bc-sentinel-chip ${p.chipClass}">${p.sentinelCode}</span>
-          <span><b>${p.shortTitle}</b></span>
-        </span>
-      </div>
-      <div class="breadcrumb-context-badge" id="bc-context-badge">
-        <span class="bc-pulse-dot"></span>
-        <span id="bc-status-text">Dedicated Sentinel Mode · MoSPI eSAKSHI Verified</span>
-      </div>
-    </div>
-  </nav>
-  `;
-
   const pageHtml = `<!DOCTYPE html>
 <html lang="en">
 ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
@@ -288,8 +264,6 @@ ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
   ${masthead}
 
   ${currentStickyNav}
-
-  ${breadcrumbBar}
 
   <!-- Main Content Container -->
   <main class="page-container">
@@ -315,6 +289,17 @@ ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
 
   <!-- SCRIPTS -->
   <script src="app.js"></script>
+  ${p.pageId === 'bhu-drishti' ? `
+  <!-- BHU-DRISHTI: Direct fallback map initializer for independent page -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (typeof initOrUpdateBhuMap === 'function') {
+          try { initOrUpdateBhuMap(); } catch(e) { console.error('[BHU-DRISHTI] Map init error:', e); }
+        }
+      }, 200);
+    });
+  </script>` : ''}
 </body>
 </html>`;
 

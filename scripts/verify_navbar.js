@@ -33,10 +33,10 @@ const hasGovIndia = html.includes('GOVERNMENT OF INDIA');
 const hasLiveStatus = html.includes('LIVE FORENSIC SENTINEL');
 console.log('Ashoka Chakra emblem present:', hasAshokaChakra);
 console.log('Government of India hierarchy present:', hasGovIndia);
-console.log('Live status sentinel present:', hasLiveStatus);
+console.log('Live status sentinel cleanly removed:', !hasLiveStatus);
 
-if (!hasAshokaChakra || !hasGovIndia || !hasLiveStatus) {
-  console.error('FAIL: Missing ministerial masthead components!');
+if (!hasAshokaChakra || !hasGovIndia || hasLiveStatus) {
+  console.error('FAIL: Ministerial masthead validation failed (emblem missing or status badge still present)!');
   process.exit(1);
 }
 
