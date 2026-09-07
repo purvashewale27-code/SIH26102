@@ -67,6 +67,7 @@ class ChakraVyuhEngine {
           totalDisbursed: 0,
           vendors: new Map(),
           agencies: new Map(),
+          vendorAgencies: new Map(),
           hhi: 0,
           topVendorShare: 0,
           topVendor: '',
@@ -77,6 +78,10 @@ class ChakraVyuhEngine {
       mpRecord.totalDisbursed += amount;
       mpRecord.vendors.set(vendor, (mpRecord.vendors.get(vendor) || 0) + amount);
       mpRecord.agencies.set(agency, (mpRecord.agencies.get(agency) || 0) + amount);
+      if (!mpRecord.vendorAgencies) mpRecord.vendorAgencies = new Map();
+      const vAgMap = mpRecord.vendorAgencies.get(vendor) || new Map();
+      vAgMap.set(agency, (vAgMap.get(agency) || 0) + amount);
+      mpRecord.vendorAgencies.set(vendor, vAgMap);
 
       // 2. Vendor Ledger
       if (!this.vendorStats.has(vendor)) {
@@ -263,10 +268,26 @@ class ChakraVyuhEngine {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6);
 
-    sortedVendors.forEach(([vendorName, amount]) => {
+    sortedVendors.forEach(([vendorName, amount], vIdx) => {
       const share = Math.round((amount / mpRec.totalDisbursed) * 100);
       const isMonopoly = share >= 40;
       const shortVendor = vendorName.length > 22 ? vendorName.substring(0, 20) + '...' : vendorName;
+
+      // Identify primary awarding agency for this vendor
+      let awardingAgency = null;
+      if (mpRec.vendorAgencies && mpRec.vendorAgencies.has(vendorName)) {
+        const agMap = mpRec.vendorAgencies.get(vendorName);
+        let maxAmt = -1;
+        agMap.forEach((amt, ag) => {
+          if (amt > maxAmt) {
+            maxAmt = amt;
+            awardingAgency = ag;
+          }
+        });
+      }
+      if (!awardingAgency && sortedAgencies.length > 0) {
+        awardingAgency = sortedAgencies[Math.min(vIdx, sortedAgencies.length - 1)][0];
+      }
 
       if (!visited.has(vendorName)) {
         visited.add(vendorName);
@@ -276,11 +297,12 @@ class ChakraVyuhEngine {
           full_name: vendorName,
           type: 'vendor',
           size: isMonopoly ? 22 : 14,
-          color: isMonopoly ? '#dc2626' : '#10b981'
+          color: isMonopoly ? '#dc2626' : '#10b981',
+          awardingAgency: awardingAgency
         });
       }
       links.push({
-        source: mpRec.mpName,
+        source: awardingAgency || mpRec.mpName,
         target: vendorName,
         amount: `₹${(amount / 1e5).toFixed(1)} Lakhs (${share}%)`,
         color: isMonopoly ? '#ef4444' : '#cbd5e1'

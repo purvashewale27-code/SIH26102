@@ -1,0 +1,171 @@
+const fs = require('fs');
+
+let code = fs.readFileSync('frontend/app.js', 'utf8');
+
+// List of exact emoji replacements in app.js
+const replacements = [
+  // Mode headers
+  ['🛡️ FEATURE 1: VIDHI-KAVACH (विधि-कवच — Statutory Policy Shield)', 'SENTINEL S-01: VIDHI-KAVACH (विधि-कवच — Statutory Policy Shield)'],
+  ['🛡️ Feature 1: VIDHI-KAVACH (विधि-कवच) Live in Action', 'VIDHI-KAVACH (विधि-कवच) Live in Action'],
+  ['🔍 FEATURE 2: PUNAR-DRISHTI (पुनर्दृष्टि — NLP Duplicate Sentry)', 'SENTINEL S-02: PUNAR-DRISHTI (पुनर्दृष्टि — NLP Duplicate Sentry)'],
+  ['🔍 Feature 2: PUNAR-DRISHTI (पुनर्दृष्टि) Live in Action', 'PUNAR-DRISHTI (पुनर्दृष्टि) Live in Action'],
+  ['💰 FEATURE 3: ARTHA-DARPAN (अर्थ-दर्पण — AI Cost Benchmark & Overpricing Sentry)', 'SENTINEL S-03: ARTHA-DARPAN (अर्थ-दर्पण — AI Cost Benchmark & Overpricing Sentry)'],
+  ['💰 Feature 3: ARTHA-DARPAN (अर्थ-दर्पण) Live in Action', 'ARTHA-DARPAN (अर्थ-दर्पण) Live in Action'],
+  ['🕸️ FEATURE 4: CHAKRA-VYUH (चक्रव्यूह — Contractor Cartel & Vendor Nexus Graph)', 'SENTINEL S-04: CHAKRA-VYUH (चक्रव्यूह — Contractor Cartel & Vendor Nexus Graph)'],
+  ['🕸️ Feature 4: CHAKRA-VYUH (चक्रव्यूह) Live in Action', 'CHAKRA-VYUH (चक्रव्यूह) Live in Action'],
+  ['🌲 FEATURE 5: VIBHED-NETRA (विभेद-नेत्र — 12D Isolation Forest Anomaly Sentry)', 'SENTINEL S-05: VIBHED-NETRA (विभेद-नेत्र — 12D Isolation Forest Anomaly Sentry)'],
+  ['🌲 Feature 5: VIBHED-NETRA (विभेद-नेत्र) Live in Action', 'VIBHED-NETRA (विभेद-नेत्र) Live in Action'],
+  ['🔢 FEATURE 6: SANKHYA-SATYA (संख्या-सत्य — Forensic Digit & Tender-Splitting Sentry)', 'SENTINEL S-06: SANKHYA-SATYA (संख्या-सत्य — Forensic Digit & Tender-Splitting Sentry)'],
+  ['🔢 Feature 6: SANKHYA-SATYA (संख्या-सत्य) Live in Action', 'SANKHYA-SATYA (संख्या-सत्य) Live in Action'],
+  ['🛰️ FEATURE 7: BHU-DRISHTI (भू-दृष्टि — Geospatial Satellite Sentry & Ghost Asset Radar)', 'SENTINEL S-07: BHU-DRISHTI (भू-दृष्टि — Geospatial Satellite Sentry & Ghost Asset Radar)'],
+  ['🛰️ Feature 7: BHU-DRISHTI (भू-दृष्टि) Live in Action', 'BHU-DRISHTI (भू-दृष्टि) Live in Action'],
+  ['🇮🇳 ALL-INDIA REPOSITORY (Master MoSPI Explorer)', 'ALL-INDIA REPOSITORY (Master MoSPI Explorer)'],
+  ['🇮🇳 SATARK Unified All-India Multi-Engine Sentry', 'SATARK Unified All-India Multi-Engine Sentry'],
+  ['<option value="all">🇮🇳 All 36 States & UTs (All-India)</option>', '<option value="all">All 36 States & UTs (All-India)</option>'],
+
+  // Filter tabs
+  ['🚨 All Statutory Red Flags', 'All Statutory Red Flags'],
+  ['🛑 Negative List Breaches', 'Negative List Breaches'],
+  ['⏳ March Rush (GFR 62)', 'March Rush (GFR 62)'],
+  ['✅ Statutorily Compliant Works', 'Statutorily Compliant Works'],
+  ['📋 All 176,925 Works', 'All 176,925 Works'],
+  ['🔍 All Duplicate Claims', 'All Duplicate Claims'],
+  ['⚠️ 100% Exact Title Clones', '100% Exact Title Clones'],
+  ['⚡ Near-Clones (85%–99%)', 'Near-Clones (85%–99%)'],
+  ['📋 All 176,925 Scanned Works', 'All 176,925 Scanned Works'],
+  ['💰 All Cost Anomalies', 'All Cost Anomalies'],
+  ['🚨 Critical Inflation (+100% to +400%)', 'Critical Inflation (+100% to +400%)'],
+  ['⚠️ Moderate Inflation (+50% to +100%)', 'Moderate Inflation (+50% to +100%)'],
+  ['📉 Unviable Under-Bids (<-40%)', 'Unviable Under-Bids (<-40%)'],
+  ['✅ Fair Market Pricing', 'Fair Market Pricing'],
+  ['🕸️ All Cartel & Monopoly Risks', 'All Cartel & Monopoly Risks'],
+  ['🚨 Single-Vendor Monopolies (≥60% Funds)', 'Single-Vendor Monopolies (≥60% Funds)'],
+  ['⚠️ Elevated Concentration (HHI > 2200)', 'Elevated Concentration (HHI > 2200)'],
+  ['✅ Competitive Bidding Allocation', 'Competitive Bidding Allocation'],
+  ['🌲 All ML Anomalies', 'All ML Anomalies'],
+  ['🚨 Critical Outliers (Score ≥ 70)', 'Critical Outliers (Score ≥ 70)'],
+  ['⚠️ Elevated Outliers (55–69)', 'Elevated Outliers (55–69)'],
+  ['✅ Normal Inliers (Conforming)', 'Normal Inliers (Conforming)'],
+  ['🚨 All Forensic Red Flags', 'All Forensic Red Flags'],
+  ['✂️ Tender-Splitting (<₹5L / <₹10L)', 'Tender-Splitting (<₹5L / <₹10L)'],
+  ['🎯 Artificial Round-Number Sanctions', 'Artificial Round-Number Sanctions'],
+  ['✅ Natural Benford Inliers', 'Natural Benford Inliers'],
+  ['🌐 All Geocoded Works', 'All Geocoded Works'],
+  ['👻 Ghost Assets (No Geotag)', 'Ghost Assets (No Geotag)'],
+  ['📍 Spatial Clusters (<250m)', 'Spatial Clusters (<250m)'],
+  ['✅ Verified Physical Assets', 'Verified Physical Assets'],
+  ['🌐 All 176,925 Works', 'All 176,925 Works'],
+  ['🛡️ Feature 1 Violations', 'S-01 Policy Violations'],
+  ['🔍 Feature 2 Duplicates', 'S-02 Duplicate Claims'],
+  ['💰 Feature 3 Cost Anomalies', 'S-03 Cost Anomalies'],
+  ['🕸️ Feature 4 Cartel Risks', 'S-04 Cartel Risks'],
+  ['✅ Fully Compliant Works', 'Fully Compliant Works'],
+
+  // Badges in table
+  ['<span class="badge-tag">🚨 ${firstViol.ruleId} (+${firstViol.penalty} pts)</span>', '<span class="badge-tag">${firstViol.ruleId} (+${firstViol.penalty} pts)</span>'],
+  ['<span class="badge-tag">✅ COMPLIANT</span>', '<span class="badge-tag">COMPLIANT</span>'],
+  ["<span class=\"badge-tag\">${isExact ? '🔍 100% EXACT CLONE' : `⚡ ${dupe.similarityScore}% NEAR-CLONE`}</span>", "<span class=\"badge-tag\">${isExact ? '100% EXACT CLONE' : `${dupe.similarityScore}% NEAR-CLONE`}</span>"],
+  ['👁️ Inspect Twin Work', 'Inspect Twin Work'],
+  ['<span class="badge-tag">✅ UNIQUE ASSET</span>', '<span class="badge-tag">UNIQUE ASSET</span>'],
+  ["<span class=\"badge-tag\">${isCrit ? '🚨 CRITICAL INFLATION' : (isUnder ? '📉 UNVIABLE BID' : '⚠️ PRICE PADDING')} (+${artha.costDeviationPct}%)</span>", "<span class=\"badge-tag\">${isCrit ? 'CRITICAL INFLATION' : (isUnder ? 'UNVIABLE BID' : 'PRICE PADDING')} (+${artha.costDeviationPct}%)</span>"],
+  ['📊 View CPWD Rate Audit', 'View CPWD Rate Audit'],
+  ['<span class="badge-tag">✅ FAIR PRICING</span>', '<span class="badge-tag">FAIR PRICING</span>'],
+  ["<span class=\"badge-tag\">${isMonopoly ? '🚨 VENDOR MONOPOLY' : '⚠️ HIGH CONCENTRATION'} (${chakra.topVendorShare}%)</span>", "<span class=\"badge-tag\">${isMonopoly ? 'VENDOR MONOPOLY' : 'HIGH CONCENTRATION'} (${chakra.topVendorShare}%)</span>"],
+  ['🕸️ Trace Cartel Network', 'Trace Cartel Network'],
+  ['<span class="badge-tag">✅ OPEN PROCUREMENT</span>', '<span class="badge-tag">OPEN PROCUREMENT</span>'],
+  ["<span class=\"badge-tag\">${isCrit ? '🚨 CRITICAL OUTLIER' : '🌲 ML ANOMALY'} (${ml.anomalyScore}/100)</span>", "<span class=\"badge-tag\">${isCrit ? 'CRITICAL OUTLIER' : 'ML ANOMALY'} (${ml.anomalyScore}/100)</span>"],
+  ['👁️ Explain My Score (4-Q XAI)', 'Explain Score (4-Q XAI)'],
+  ['<span class="badge-tag">✅ INLIER (SCORE ${ml.anomalyScore || 18})</span>', '<span class="badge-tag">INLIER (SCORE ${ml.anomalyScore || 18})</span>'],
+  ['<span class="badge-tag">🚨 TENDER-SPLIT EVASION</span>', '<span class="badge-tag">TENDER-SPLIT EVASION</span>'],
+  ['🔍 GFR Rule 149 Audit', 'GFR Rule 149 Audit'],
+  ['<span class="badge-tag">🎯 ROUND INTEGER ESTIMATE</span>', '<span class="badge-tag">ROUND INTEGER ESTIMATE</span>'],
+  ['📊 Check Rate Analysis', 'Check Rate Analysis'],
+  ['<span class="badge-tag">✅ NATURAL INLIER</span>', '<span class="badge-tag">NATURAL INLIER</span>'],
+  ['<span class="badge-tag">🚨 GHOST ASSET (NO GEOTAG)</span>', '<span class="badge-tag">GHOST ASSET (NO GEOTAG)</span>'],
+  ['📍 Locate on Map', 'Locate on Map'],
+  ['<span class="badge-tag">📍 SPATIAL CLUSTER (${bhu.clusterCount} works)</span>', '<span class="badge-tag">SPATIAL CLUSTER (${bhu.clusterCount} works)</span>'],
+  ['<span class="badge-tag">✅ VERIFIED GEOTAG</span>', '<span class="badge-tag">VERIFIED GEOTAG</span>'],
+  ['<span class="badge-tag">🔍 DUPLICATE CLONE</span>', '<span class="badge-tag">DUPLICATE CLONE</span>'],
+  ['<span class="badge-tag">💰 INFLATED (+${artha.costDeviationPct}%)</span>', '<span class="badge-tag">INFLATED (+${artha.costDeviationPct}%)</span>'],
+  ['<span class="badge-tag">🕸️ MONOPOLY (${chakra.topVendorShare}%)</span>', '<span class="badge-tag">MONOPOLY (${chakra.topVendorShare}%)</span>'],
+  ['<span class="badge-tag">🌲 ML OUTLIER (${p.vibhed.anomalyScore})</span>', '<span class="badge-tag">ML OUTLIER (${p.vibhed.anomalyScore})</span>'],
+  ['<span class="badge-tag">🔢 TENDER-SPLIT (${p.costFormatted})</span>', '<span class="badge-tag">TENDER-SPLIT (${p.costFormatted})</span>'],
+  ['<span class="badge-tag">🛰️ GHOST ASSET</span>', '<span class="badge-tag">GHOST ASSET</span>'],
+  ['<span class="badge-tag">🚨 ${firstViol.ruleId}</span>', '<span class="badge-tag">${firstViol.ruleId}</span>'],
+  ['<span class="badge-tag">✅ ALL CLEAR</span>', '<span class="badge-tag">ALL CLEAR</span>'],
+
+  // Modals & Details
+  ["• Statutory Audit Verdict: <b>${audit.isCompliant ? '✅ Statutorily Compliant' : '🚨 Rule Breaches Detected'}</b>", "• Statutory Audit Verdict: <b>${audit.isCompliant ? 'Statutorily Compliant' : 'Rule Breaches Detected'}</b>"],
+  ['🚨 WHY WAS THIS FLAGGED?', 'WHY WAS THIS FLAGGED?'],
+  ['<span>🛡️ PRASHNA-KAVACH Forensic Audit Trail &amp; Legal Citations</span>', '<span>PRASHNA-KAVACH Forensic Audit Trail &amp; Legal Citations</span>'],
+  ["stackedHeader.innerText = '🛡️ Consolidated 7-Sentinel Audit Stack';", "stackedHeader.innerText = 'Consolidated 7-Sentinel Audit Stack';"],
+  ["'🛡️ VIDHI-KAVACH'", "'S-01: VIDHI-KAVACH'"],
+  ["vPass ? '✅ COMPLIANT' : `🚨 ${audit.violations.length} VIOLATION(S)`", "vPass ? 'COMPLIANT' : `${audit.violations.length} VIOLATION(S)`"],
+  ["'🔍 PUNAR-DRISHTI'", "'S-02: PUNAR-DRISHTI'"],
+  ["pPass ? '✅ UNIQUE WORK' : `🚨 ${dupe.similarityScore}% DUPLICATE CLONE`", "pPass ? 'UNIQUE WORK' : `${dupe.similarityScore}% DUPLICATE CLONE`"],
+  ["'💰 ARTHA-DARPAN'", "'S-03: ARTHA-DARPAN'"],
+  ["aPass ? '✅ FAIR PRICING' : `⚠️ COST ANOMALY (+${artha.costDeviationPct}%)`", "aPass ? 'FAIR PRICING' : `COST ANOMALY (+${artha.costDeviationPct}%)`"],
+  ["'🕸️ CHAKRA-VYUH'", "'S-04: CHAKRA-VYUH'"],
+  ["cPass ? '✅ COMPETITIVE BIDDING' : `🚨 CARTEL RISK (HHI ${chakra.hhiIndex})`", "cPass ? 'COMPETITIVE BIDDING' : `CARTEL RISK (HHI ${chakra.hhiIndex})`"],
+  ["'🌲 VIBHED-NETRA'", "'S-05: VIBHED-NETRA'"],
+  ["mPass ? '✅ NORMAL INLIER' : `⚡ ${ml.status || 'ML OUTLIER'} (${ml.anomalyScore}/100)`", "mPass ? 'NORMAL INLIER' : `${ml.status || 'ML OUTLIER'} (${ml.anomalyScore}/100)`"],
+  ["'🔢 SANKHYA-SATYA'", "'S-06: SANKHYA-SATYA'"],
+  ["sPass ? '✅ BENFORD CONFORMING' : (sankhya.isThresholdSplit ? '🚨 TENDER-SPLITTING' : '⚠️ ROUND ESTIMATE')", "sPass ? 'BENFORD CONFORMING' : (sankhya.isThresholdSplit ? 'TENDER-SPLITTING' : 'ROUND ESTIMATE')"],
+  ["'🛰️ BHU-DRISHTI'", "'S-07: BHU-DRISHTI'"],
+  ["bPass ? '✅ VERIFIED GEOTAG' : (bhu.isGhostAsset ? '👻 GHOST ASSET' : '📍 SPATIAL CLUSTER')", "bPass ? 'VERIFIED GEOTAG' : (bhu.isGhostAsset ? 'GHOST ASSET' : 'SPATIAL CLUSTER')"],
+  ['🕸️ CHAKRA-VYUH Relationship Network', 'CHAKRA-VYUH Relationship Network'],
+  ['🛰️ BHU-DRISHTI Geospatial Location', 'BHU-DRISHTI Geospatial Location'],
+  ["modalFooterBtn.innerHTML = '📋 GENERATE CASE FILE (Form GFR-19A)';", "modalFooterBtn.innerHTML = 'GENERATE CASE FILE (Form GFR-19A)';"],
+  ['🔍 Inspect 4-Q XAI Details', 'Inspect 4-Q XAI Details'],
+
+  // Simulator
+  ["if (btn) btn.innerHTML = '<span>⚡ Evaluating 7 Sentinels...</span>';", "if (btn) btn.innerHTML = '<span>Evaluating 7 Sentinels...</span>';"],
+  ["if (btn) btn.innerHTML = '<span>⚡ Run Real-Time Forensic Simulation (&lt;50ms)</span>';", "if (btn) btn.innerHTML = '<span>Run Real-Time Forensic Simulation (&lt;50ms)</span>';"],
+  ["engine: '🛡️ VIDHI-KAVACH'", "engine: 'S-01: VIDHI-KAVACH'"],
+  ["engine: '🔢 SANKHYA-SATYA'", "engine: 'S-06: SANKHYA-SATYA'"],
+  ["engine: '🛰️ BHU-DRISHTI'", "engine: 'S-07: BHU-DRISHTI'"],
+  ["engine: '💰 ARTHA-DARPAN'", "engine: 'S-03: ARTHA-DARPAN'"],
+  ["if (latBadge) latBadge.innerText = `⚡ Executed in ${data.executionTimeMs || 12}ms`;", "if (latBadge) latBadge.innerText = `Execution: ${data.executionTimeMs || 12}ms`;"],
+  ["tierBadge.innerText = `${comp.tier === 'CRITICAL' ? '🚨' : (comp.tier === 'HIGH' ? '⚠️' : (comp.tier === 'ELEVATED' ? '⚡' : '✅'))} ${comp.tier} RISK`;", "tierBadge.innerText = `${comp.tier} RISK`;"],
+  ["tierDesc.innerText = '🚨 Immediate Field Vigilance Inquiry Mandated before fund release. Multiple statutory breaches flagged.';", "tierDesc.innerText = 'Immediate Field Vigilance Inquiry Mandated before fund release. Multiple statutory breaches flagged.';"],
+  ["tierDesc.innerText = '⚠️ Detailed Technical & Rate Audit Required. Schedule of rate discrepancy detected.';", "tierDesc.innerText = 'Detailed Technical & Rate Audit Required. Schedule of rate discrepancy detected.';"],
+  ["tierDesc.innerText = '⚡ Routine Sample Verification by District Assistant Engineer.';", "tierDesc.innerText = 'Routine Sample Verification by District Assistant Engineer.';"],
+  ["tierDesc.innerText = '✅ Statutorily Compliant & Low Risk. Admissible under MPLADS 2023 Guidelines.';", "tierDesc.innerText = 'Statutorily Compliant & Low Risk. Admissible under MPLADS 2023 Guidelines.';"],
+  ["name: '🛡️ VIDHI-KAVACH'", "name: 'S-01: VIDHI-KAVACH'"],
+  ["name: '🔍 PUNAR-DRISHTI'", "name: 'S-02: PUNAR-DRISHTI'"],
+  ["name: '💰 ARTHA-DARPAN'", "name: 'S-03: ARTHA-DARPAN'"],
+  ["name: '🕸️ CHAKRA-VYUH'", "name: 'S-04: CHAKRA-VYUH'"],
+  ["name: '🌲 VIBHED-NETRA'", "name: 'S-05: VIBHED-NETRA'"],
+  ["name: '🔢 SANKHYA-SATYA'", "name: 'S-06: SANKHYA-SATYA'"],
+  ["name: '🛰️ BHU-DRISHTI'", "name: 'S-07: BHU-DRISHTI'"],
+
+  // Memo & Hash
+  ["document.getElementById('memo-tier-val').innerText = `${assess.riskTier === 'CRITICAL' ? '🚨 CRITICAL' : (assess.riskTier === 'HIGH' ? '⚠️ HIGH' : '✅ LOW')} RISK`;", "document.getElementById('memo-tier-val').innerText = `${assess.riskTier} RISK`;"],
+  ['violTbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#16a34a; font-weight:700;">✅ ZERO STATUTORY VIOLATIONS DETECTED — COMPLIANT WORK</td></tr>`;', 'violTbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#16a34a; font-weight:700;">ZERO STATUTORY VIOLATIONS DETECTED — COMPLIANT WORK</td></tr>`;'],
+  ["btn.innerText = '✅ Copied!';", "btn.innerText = 'Copied!';"],
+  ["setTimeout(() => { btn.innerText = '📋 Copy Hash'; }, 2000);", "setTimeout(() => { btn.innerText = 'Copy Hash'; }, 2000);"],
+
+  // Samvaad & Search
+  ['summary.innerText = `🔍 Querying 176,925 MoSPI records for: "${q}"...`;', 'summary.innerText = `Querying 176,925 MoSPI records for: "${q}"...`;'],
+  ['summary.innerHTML = `✅ <b>${data.summary}</b> (Matched ${data.totalMatches} Projects · Total Exposure: ${data.financialExposureFormatted})`;', 'summary.innerHTML = `<b>${data.summary}</b> (Matched ${data.totalMatches} Projects · Total Exposure: ${data.financialExposureFormatted})`;'],
+  ['summary.innerText = `❌ Failed to execute query: ${err.message}`;', 'summary.innerText = `Failed to execute query: ${err.message}`;'],
+  ['🚨 <b>Composite Risk Verdict: ${score} / 100 (${tier})</b><br>', '<b>Composite Risk Verdict: ${score} / 100 (${tier})</b><br>'],
+  ['<span class="prashna-sentinel-tag tag-vidhi">🛡️ VIDHI-KAVACH</span>', '<span class="prashna-sentinel-tag tag-vidhi">S-01: VIDHI-KAVACH</span>'],
+  ['<span class="prashna-sentinel-tag tag-sankhya">🔢 SANKHYA-SATYA</span>', '<span class="prashna-sentinel-tag tag-sankhya">S-06: SANKHYA-SATYA</span>'],
+  ['<span class="prashna-sentinel-tag tag-chakra">🕸️ CHAKRA-VYUH</span>', '<span class="prashna-sentinel-tag tag-chakra">S-04: CHAKRA-VYUH</span>'],
+  ['📌 VIEW EVIDENCE', 'VIEW EVIDENCE'],
+  ['⚡ <b>March Rush Risk Ratio: 3.65x</b>', '<b>March Rush Risk Ratio: 3.65x</b>'],
+  ['🔮 <b>1-2 Quarter Linear Risk Projection:</b>', '<b>1-2 Quarter Linear Risk Projection:</b>']
+];
+
+let replaced = 0;
+for (const [target, replacement] of replacements) {
+  if (code.includes(target)) {
+    code = code.split(target).join(replacement);
+    replaced++;
+  } else {
+    console.log('Missed:', target);
+  }
+}
+fs.writeFileSync('frontend/app.js', code, 'utf8');
+console.log('Replaced successfully:', replaced, 'patterns');

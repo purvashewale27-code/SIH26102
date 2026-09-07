@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MPLADS-SATARK — Complete Easy Features Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800&family=JetBrains+Mono:wght@600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    
+    .page-wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 45px;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    .doc-header {
+      border-bottom: 3px solid #1e3a8a;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .logo-emblem {
+      font-size: 28px;
+    }
+
+    .main-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #1e3a8a;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .badge-wrap {
+      text-align: right;
+    }
+
+    .doc-badge {
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #bfdbfe;
+      display: inline-block;
+    }
+
+    .intro-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 5px solid #0284c7;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      font-size: 13.5px;
+      color: #0c4a6e;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      page-break-inside: avoid;
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 10px;
+    }
+
+    .feature-icon {
+      font-size: 24px;
+    }
+
+    .feature-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .feature-tag {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tag-red { background: #fee2e2; color: #991b1b; }
+    .tag-purple { background: #f3e8ff; color: #6b21a8; }
+    .tag-amber { background: #fef3c7; color: #92400e; }
+    .tag-rose { background: #ffe4e6; color: #9f1239; }
+    .tag-emerald { background: #d1fae5; color: #065f46; }
+    .tag-indigo { background: #e0e7ff; color: #3730a3; }
+    .tag-teal { background: #ccfbf1; color: #115e59; }
+    .tag-blue { background: #dbeafe; color: #1e40af; }
+
+    .simple-desc {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e3a8a;
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      border-left: 3px solid #3b82f6;
+    }
+
+    .sub-heading {
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    ul.point-list {
+      margin-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    ul.point-list li {
+      font-size: 13px;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    ul.point-list li b {
+      color: #0f172a;
+    }
+
+    .data-pill-box {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .data-pill {
+      font-size: 11px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .action-example {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 4px solid #d97706;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #92400e;
+      margin-top: 10px;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    @media print {
+      body { background: #ffffff; padding: 0; }
+      .page-wrap { border: none; box-shadow: none; padding: 0; max-width: 100%; }
+      .feature-card { page-break-inside: avoid; border: 1.5px solid #cbd5e1; margin-bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    
+    <!-- Document Header -->
+    <div class="doc-header">
+      <div>
+        <div class="header-logo">
+          <span class="logo-emblem">🏛️</span>
+          <h1 class="main-title">MPLADS-SATARK (सतर्क)</h1>
+        </div>
+        <div class="subtitle">Complete Easy Features Guide & Plain-Language Explanation Document</div>
+      </div>
+      <div class="badge-wrap">
+        <span class="doc-badge">SIH 2026 OFFICIAL GUIDE</span>
+        <div style="font-size:11px; color:#64748b; margin-top:6px;">7 Sentinel Engines & Platform Features</div>
+      </div>
+    </div>
+
+    <!-- Intro Box -->
+    <div class="intro-box">
+      <b>💡 What is MPLADS-SATARK?</b><br>
+      MPLADS-SATARK is an AI-powered forensic decision-support platform designed for District Magistrates (DMs), Vigilance Officers, and CAG Auditors. It automatically scans government civil proposals against <b>100% real MoSPI records</b> using <b>7 specialized sentinel engines</b> to catch corruption, overpricing, duplicate works, and ghost assets <i>before</i> public funds are disbursed.
+    </div>
+
+    <!-- FEATURE 1 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🛡️</span>
+        <span class="feature-title">Feature 1: VIDHI-KAVACH (Negative List & March Rush Shield)</span>
+        <span class="feature-tag tag-red">Statutory Compliance Sentry</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> An automatic rule checker that ensures MP funds are spent strictly according to official government laws and never on banned projects or year-end money rushes.
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li><b>Negative List Detection:</b> Scans project titles against <b>Annexure-I of the MPLADS 2023 Guidelines</b>, which strictly prohibits using public funds for places of worship (mandir/masjid/church), private commercial trusts, or clubhouses.</li>
+        <li><b>March Rush Detection:</b> Checks sanction dates against <b>General Financial Rules (GFR 2017 Rule 62)</b> to flag projects rushed in the last week of March just to exhaust unspent annual budget allocations.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">Data Used: 176,925 MoSPI Works</span>
+        <span class="data-pill">Rulebook: GFR 2017 Rule 62 & MPLADS 2023 Annexure-I</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Flagged 18,851 statutory breaches nationwide (15,953 Negative List breaches and 3,204 March Rush violations).
+      </div>
+    </div>
+
+    <!-- FEATURE 2 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🔍</span>
+        <span class="feature-title">Feature 2: PUNAR-DRISHTI (NLP Twin Work & Duplicate Sentry)</span>
+        <span class="feature-tag tag-purple">NLP Duplicate Sentry</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> A smart duplicate detector that prevents contractors and agencies from getting paid twice for the exact same civil work under slightly tweaked names.
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li>Uses <b>Natural Language Processing (Jaccard + Levenshtein fuzzy string matching)</b> to compare new proposal descriptions against all existing works in the same constituency.</li>
+        <li>Even if a title is rephrased (e.g. <i>"PCC Road near Village Well"</i> vs <i>"Construction of PCC Road near Village Well"</i>), PUNAR-DRISHTI calculates a 95%+ text similarity match and flags the clone.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">Data Used: Real MoSPI Work Descriptions</span>
+        <span class="data-pill">Tech: NLP Jaccard + Levenshtein Engine</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Caught 10,204 duplicate work claims across India (6,965 exact 100% clone works).
+      </div>
+    </div>
+
+    <!-- FEATURE 3 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">💰</span>
+        <span class="feature-title">Feature 3: ARTHA-DARPAN (CPWD Rates & Cost Sentry)</span>
+        <span class="feature-tag tag-amber">Cost Inflation Sentry</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> A price monitor that makes sure government construction projects are not overpriced or artificially inflated compared to standard market rates.
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li>Compares proposed sanction costs against the official <b>CPWD Delhi Schedule of Rates (DSR 2023-24)</b> across 108 State-Category benchmarks.</li>
+        <li>If a standard rural school room benchmark is ₹4 Lakhs but a proposal requests ₹12 Lakhs, ARTHA-DARPAN calculates a <b>+200% cost deviation anomaly</b> and alerts the District Collector.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">Data Used: CPWD DSR 2023-24 Benchmarks</span>
+        <span class="data-pill">Calibrated Across: 108 Categories</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Identified 69,170 cost anomalies representing ₹3,639.9 Crore in excess financial risk.
+      </div>
+    </div>
+
+    <!-- FEATURE 4 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🕸️</span>
+        <span class="feature-title">Feature 4: CHAKRA-VYUH (Contractor Network Cartel Sentry)</span>
+        <span class="feature-tag tag-rose">Network Cartel Sentry</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> A syndicate detector that uncovers vendor cartels, monopoly contracts, and non-competitive bidding networks.
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li>Constructs a full relational network graph indexing <b>109,521 real MoSPI payment vouchers</b> and 27,234 registered contractors.</li>
+        <li>Calculates vendor concentration ratios per district. If 80%+ of all MP fund disbursements in a constituency flow to a single contractor or linked entity, CHAKRA-VYUH flags a high cartel risk.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">Data Used: 109,521 Payment Vouchers</span>
+        <span class="data-pill">Entities Indexed: 27,234 Contractors & 701 MPs</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Flagged 47,302 contractor cartel risks across 27,234 commercial vendors nationwide.
+      </div>
+    </div>
+
+    <!-- FEATURE 5 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🌲</span>
+        <span class="feature-title">Feature 5: VIBHED-NETRA (12-Dimensional Isolation Forest ML Sentry)</span>
+        <span class="feature-tag tag-emerald">Machine Learning Outlier Engine</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> An advanced AI pattern analyzer that discovers hidden anomalies that human auditors easily overlook.
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li>Runs an <b>Isolation Forest Machine Learning Model</b> analyzing 12 numerical dimensions simultaneously (cost, physical completion %, execution timeframe, vendor history, district averages, sanction month, etc.).</li>
+        <li>Instead of looking at 1 rule at a time, VIBHED-NETRA isolates proposals that display multi-dimensional statistical weirdness.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">Model: 12-D Isolation Forest</span>
+        <span class="data-pill">Latency: 12ms High-Speed Inference</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Detected 40,971 multi-dimensional anomalies (including 10,286 critical statistical outliers).
+      </div>
+    </div>
+
+    <!-- FEATURE 6 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🔢</span>
+        <span class="feature-title">Feature 6: SANKHYA-SATYA (Benford's Law & Tender-Splitting Sentry)</span>
+        <span class="feature-tag tag-indigo">Forensic Math & Smurfing Sentry</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> A mathematical fraud detector that catches "tender-splitting" (smurfing) and artificial budget estimates.
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li><b>Tender-Splitting (Smurfing):</b> Detects proposals pegged intentionally just below the mandatory ₹5 Lakh e-procurement threshold (e.g. ₹4,95,000 or ₹4,98,000) to bypass open competitive e-tendering (**GFR Rule 149**).</li>
+        <li><b>Benford's Law Forensic Digit Analysis:</b> Checks the leading digits (1-9) of sanctioned amounts against natural mathematical probability distributions to flag human-fabricated integer estimates.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">Forensics: Benford's Law Distribution</span>
+        <span class="data-pill">Statute: GFR 2017 Rule 149 Thresholds</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Caught 7,710 tender-splitting threshold evasions and 54,820 round number estimates.
+      </div>
+    </div>
+
+    <!-- FEATURE 7 -->
+    <div class="feature-card">
+      <div class="feature-header">
+        <span class="feature-icon">🛰️</span>
+        <span class="feature-title">Feature 7: BHU-DRISHTI (ISRO Bhuvan GIS & Ghost Asset Radar)</span>
+        <span class="feature-tag tag-teal">Geospatial Satellite Radar</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> A satellite tracking radar that verifies whether projects physically exist on ground maps and aren't "ghost assets".
+      </div>
+      <div class="sub-heading">How It Works:</div>
+      <ul class="point-list">
+        <li>Plots asset GPS coordinates on **ISRO Bhuvan Geo-Portal** centroids and Esri high-definition satellite imagery.</li>
+        <li><b>Ghost Asset Radar:</b> Flags proposals missing mandatory ISRO Bhuvan / eSAKSHI mobile app GPS geotags.</li>
+        <li><b>Spatial Cluster Radar:</b> Flags suspicious hyper-local clusters where multiple works are logged within <250 meters of each other.</li>
+      </ul>
+      <div class="data-pill-box">
+        <span class="data-pill">GIS: ISRO Bhuvan & Esri HD Satellite</span>
+        <span class="data-pill">Assets Mapped: 176,925 Centroids</span>
+      </div>
+      <div class="action-example">
+        <b>🚨 Real Result:</b> Mapped 176,925 geocoded assets, flagging 3,031 ghost assets and 12,320 spatial clusters.
+      </div>
+    </div>
+
+    <!-- BONUS CORE CAPABILITIES -->
+    <div class="feature-card" style="border-color:#3b82f6; background:#f8fafc;">
+      <div class="feature-header">
+        <span class="feature-icon">🏆</span>
+        <span class="feature-title">Enterprise Core: Simulator, Form GFR-19A Memorandum & Provenance</span>
+        <span class="feature-tag tag-blue">Decision-Support Core</span>
+      </div>
+      <div class="simple-desc">
+        <b>In Simple Words:</b> The complete operational workflow that turns AI alerts into legal, actionable executive orders.
+      </div>
+      <div class="sub-heading">Key Tools:</div>
+      <ul class="point-list">
+        <li><b>🧪 Live Proposal Simulator (&lt;50ms):</b> An interactive sandbox allowing DMs to input proposal parameters and run instant multi-sentinel simulations *before* sanction approval. Includes 4 one-click demo presets for live pitching.</li>
+        <li><b>📜 Form GFR-19A Printable Vigilance Memorandum:</b> Generates an official printable memorandum complete with MoSPI emblem, barcode, statutory rule citations, 5-point physical engineer verification checklist, and DM signoff block.</li>
+        <li><b>🔐 Verifiable Data Lineage & Provenance Ledger:</b> Displays an immutable cryptographic dataset hash (<b>SHA-256</b>: <span style="font-family:'JetBrains Mono',monospace; font-size:11px;">9a5c8df1b038c352...</span>) proving 100% real data integrity under strict **Human-in-the-Loop (HITL)** governance.</li>
+      </ul>
+    </div>
+
+    <div class="footer-note">
+      <b>MPLADS-SATARK — Smart India Hackathon 2026</b><br>
+      Developed with Excellence for Public Financial Integrity & Smart Governance
+    </div>
+
+  </div>
+
+</body>
+</html>

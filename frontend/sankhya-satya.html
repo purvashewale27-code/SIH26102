@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MPLADS-SATARK (सतर्क) — SIH 2026</title>
+  <title>SANKHYA-SATYA (संख्या-सत्य) · Benford Forensic Digit & Tender-Splitting Sentry | MPLADS-SATARK</title>
   
   <!-- Official Government Typography: Lora (Serif) + Plus Jakarta Sans (Grotesque) + IBM Plex Mono & JetBrains Mono (Tabular Numerals) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
   <!-- Three.js 3D WebGL Constellation Engine -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body data-page="overview">
+<body data-page="sankhya-satya">
 
   <!-- 1. OFFICIAL NATIONAL PORTAL UTILITY STRIP (GIGW Compliant Sovereign Strip) -->
   <div class="national-utility-bar">
@@ -132,7 +132,7 @@
     <!-- 3B. INDEPENDENT SENTINEL DIRECTORY BAR -->
     <div class="sentinel-nav-strip">
       <div class="sentinel-nav-container">
-        <a href="index.html" class="s-nav-tab active" data-nav="overview">
+        <a href="index.html" class="s-nav-tab" data-nav="overview">
           <span class="s-nav-badge">OVERVIEW</span>
           <span class="s-nav-title">National Dashboard</span>
         </a>
@@ -156,7 +156,7 @@
           <span class="s-nav-badge teal">S-05</span>
           <span class="s-nav-title">VIBHED-NETRA</span>
         </a>
-        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya">
+        <a href="sankhya-satya.html" class="s-nav-tab active" data-nav="sankhya-satya">
           <span class="s-nav-badge indigo">S-06</span>
           <span class="s-nav-title">SANKHYA-SATYA</span>
         </a>
@@ -175,156 +175,22 @@
   <!-- Main Content Container -->
   <main class="page-container">
 
-    <!-- 1. OVERVIEW HERO SECTION (SATARK-DRISHTI Unified Risk Summary) -->
-    <section class="overview-hero-section" id="overview-hero-section">
-      <div class="hero-main-card">
-        <!-- Three.js 3D Forensic Sentinel Constellation Canvas -->
-        <canvas id="hero-sentinel-canvas" class="hero-threejs-canvas"></canvas>
-
-        <div class="hero-left">
-          <div class="hero-tag">SATARK-DRISHTI UNIFIED RISK INTELLIGENCE</div>
-          <h2 class="hero-title">Nationwide Public Fund Risk Overview</h2>
-          <p class="hero-desc">Auditing 176,925 MoSPI eSAKSHI works across 36 States/UTs using 7 unified forensic sentinels</p>
-          <div class="hero-metrics-grid">
-            <div class="hero-metric">
-              <span class="m-val" id="hero-total-works">1,76,925</span>
-              <span class="m-lbl">Total Scanned Works</span>
-            </div>
-            <div class="hero-metric danger">
-              <span class="m-val text-red" id="hero-critical-count">10,773</span>
-              <span class="m-lbl">Critical Risk Works</span>
-            </div>
-            <div class="hero-metric warning">
-              <span class="m-val text-amber" id="hero-high-count">16,348</span>
-              <span class="m-lbl">High Risk Works</span>
-            </div>
-            <div class="hero-metric danger">
-              <span class="m-val text-red" id="hero-excess-cr">₹3,639.86 Cr</span>
-              <span class="m-lbl">Cost Overrun Risk</span>
-            </div>
-          </div>
+    
+    <!-- Dedicated Feature Hero Card -->
+    <section class="feature-hero-card">
+      <div class="feature-hero-left">
+        <div class="feature-hero-tag" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">
+          SENTINEL S-06: SANKHYA-SATYA (संख्या-सत्य — MATHEMATICAL FORENSIC SENTRY)
         </div>
-        <div class="hero-right-dial">
-          <div class="dial-score-box">
-            <span class="dial-score" id="hero-avg-score">78</span>
-            <span class="dial-denom">/ 100</span>
-          </div>
-          <div class="dial-status">NATIONAL RISK PROFILE</div>
-          <div class="dial-badge">ELEVATED VIGILANCE</div>
-        </div>
+        <h1 class="feature-hero-title">Benford's Law Digit Sentry & GFR Tender-Splitting Sentry</h1>
+        <p class="feature-hero-desc">Forensic logarithmic first-digit analysis & threshold evasion detection (works clustered below ₹5,00,000 to bypass tenders)</p>
       </div>
-
-      <!-- 2. SHARED PANEL: BHAVISHYA-REKHA Trend Snapshot + Top Districts & Cartels Summary -->
-      <div class="overview-shared-panel">
-        <div class="overview-panel-card" id="bhavishya-trend-chart">
-          <div class="panel-header">
-            <span>BHAVISHYA-REKHA Expenditure Trend Snapshot</span>
-            <span class="panel-tag">March Rush Surge</span>
-          </div>
-          <div id="overview-trend-snapshot" style="height:110px; display:flex; align-items:flex-end; gap:8px; background:#f8fafc; padding:8px; border-radius:6px;"></div>
-        </div>
-
-        <div class="overview-panel-card">
-          <div class="panel-header">
-            <span>Top High-Exposure Districts &amp; Cartels</span>
-            <span class="panel-tag">MoSPI Records</span>
-          </div>
-          <div class="summary-list-wrap" id="overview-summary-list">
-            <div class="summary-item"><b>Attingal (Kerala)</b>: 97% Single-Vendor Monopoly (Adv Adoor Prakash)</div>
-            <div class="summary-item"><b>Darbhanga (Bihar)</b>: 95% Cartel Concentration (Mr Gopal Jee Thakur)</div>
-            <div class="summary-item"><b>Maharajganj (UP)</b>: 94% Single-Vendor Share (Pankaj Chowdhary)</div>
-            <div class="summary-item"><b>Hyderabad (Telangana)</b>: 92% Single-Vendor Monopoly (Asaduddin Owaisi)</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. SENTINEL ACTIVITY SUMMARY STRIP — ONE Compact Strip for All 7 Sentinels -->
-      <div class="sentinel-summary-strip" id="sentinel-summary-strip">
-        <div class="sentinel-strip-item" onclick="window.location.href='vidhi-kavach.html'" title="Open Sentinel S-01: VIDHI-KAVACH Dedicated Page">
-          <span class="s-code">S-01</span>
-          <div class="s-info">
-            <span class="s-title">VIDHI-KAVACH</span>
-            <span class="s-count text-red" id="strip-vidhi-count">23,722</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='punar-drishti.html'" title="Open Sentinel S-02: PUNAR-DRISHTI Dedicated Page">
-          <span class="s-code">S-02</span>
-          <div class="s-info">
-            <span class="s-title">PUNAR-DRISHTI</span>
-            <span class="s-count text-purple" id="strip-punar-count">10,204</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='artha-darpan.html'" title="Open Sentinel S-03: ARTHA-DARPAN Dedicated Page">
-          <span class="s-code">S-03</span>
-          <div class="s-info">
-            <span class="s-title">ARTHA-DARPAN</span>
-            <span class="s-count text-amber" id="strip-artha-count">69,170</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='chakra-vyuh.html'" title="Open Sentinel S-04: CHAKRA-VYUH Dedicated Page">
-          <span class="s-code">S-04</span>
-          <div class="s-info">
-            <span class="s-title">CHAKRA-VYUH</span>
-            <span class="s-count text-crimson" id="strip-chakra-count">47,302</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='vibhed-netra.html'" title="Open Sentinel S-05: VIBHED-NETRA Dedicated Page">
-          <span class="s-code">S-05</span>
-          <div class="s-info">
-            <span class="s-title">VIBHED-NETRA</span>
-            <span class="s-count text-teal" id="strip-vibhed-count">37,391</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='sankhya-satya.html'" title="Open Sentinel S-06: SANKHYA-SATYA Dedicated Page">
-          <span class="s-code">S-06</span>
-          <div class="s-info">
-            <span class="s-title">SANKHYA-SATYA</span>
-            <span class="s-count text-indigo" id="strip-sankhya-count">7,710</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='bhu-drishti.html'" title="Open Sentinel S-07: BHU-DRISHTI Dedicated Page">
-          <span class="s-code">S-07</span>
-          <div class="s-info">
-            <span class="s-title">BHU-DRISHTI</span>
-            <span class="s-count text-emerald" id="strip-bhu-count">3,031</span>
-          </div>
-        </div>
+      <div class="feature-hero-badge">
+        <span class="val" style="color:#4338ca;">7,710</span>
+        <span class="lbl">Threshold Splits (Chi-Sq: 68.4)</span>
       </div>
     </section>
-
-    <!-- 4. SATARK-SAMVAAD GenAI Investigation Copilot Card -->
-    <section class="samvaad-copilot-card" id="samvaad-copilot-card">
-      <div class="samvaad-header">
-        <div class="samvaad-title">
-          <span>SATARK-SAMVAAD (सतर्क संवाद)</span>
-          <span style="font-size:11px; font-weight:700; background:var(--gov-cobalt-light); color:var(--gov-navy); border:1px solid var(--gov-cobalt-border); padding:2px 8px; border-radius:4px;">GenAI Investigation Copilot</span>
-        </div>
-        <div style="font-size:12px; color:var(--gov-text-muted); font-weight:600;">
-          Querying 176,925 MoSPI eSAKSHI Records in Real Time
-        </div>
-      </div>
-
-      <div class="samvaad-search-box">
-        <input type="text" id="samvaad-input" class="samvaad-input" placeholder="Query SATARK: e.g. 'Show high-risk projects in Bihar under 5 lakh' or 'Find contractors connected to cartels'..." onkeyup="if(event.key==='Enter') executeSamvaadQuery()">
-        <button class="btn-primary" id="btn-ask-samvaad" onclick="executeSamvaadQuery()" style="padding:10px 20px; font-weight:700; background:var(--gov-navy);">
-          Query Data
-        </button>
-      </div>
-
-      <div class="samvaad-query-chips">
-        <span class="query-chip" onclick="setSamvaadQuery('Show me the top 10 highest-risk projects')">Top 10 High-Risk Projects</span>
-        <span class="query-chip" onclick="setSamvaadQuery('Show high-risk projects in Bihar where estimate is below 5 lakh')">High-Risk Bihar Projects &lt; ₹5L</span>
-        <span class="query-chip" onclick="setSamvaadQuery('Which contractors are connected to the most flagged projects?')">Flagged Contractor Networks</span>
-        <span class="query-chip" onclick="setSamvaadQuery('Find projects with March Rush violations')">March Rush Violations</span>
-        <span class="query-chip" onclick="setSamvaadQuery('Show duplicate works within distance threshold')">Duplicate Work Signals</span>
-        <span class="query-chip" onclick="setSamvaadQuery('Show ghost assets without verified geotags')">Ghost Asset Indicators</span>
-      </div>
-
-      <div class="samvaad-response-box" id="samvaad-response-box" style="display:none;">
-        <div class="samvaad-response-summary" id="samvaad-response-summary">...</div>
-        <div id="samvaad-results-table"></div>
-      </div>
-    </section>
+  
 
     <!-- Dynamic 4 Summary KPI Cards (Changes based on selected Feature) -->
     <section class="kpi-row" id="kpi-container">
@@ -353,13 +219,12 @@
       </div>
     </section>
 
-    <!-- Project Explorer Section -->
     <section class="table-section">
       <div class="table-header-bar">
         <div>
-          <div class="feature-tag" id="view-feature-tag">Sentinel S-01: VIDHI-KAVACH (Statutory Policy Shield)</div>
-          <h2 id="view-heading">Statutory Rule Compliance &amp; Negative List Sentry</h2>
-          <p class="section-desc" id="view-subheading">Auditing every project against MPLADS Guidelines 2023 Annexure-I and GFR Rules</p>
+          <div class="feature-tag" id="view-feature-tag">SENTINEL S-06: SANKHYA-SATYA (संख्या-सत्य — MATHEMATICAL FORENSIC SENTRY)</div>
+          <h2 id="view-heading">Benford's Law Digit Sentry & GFR Tender-Splitting Sentry</h2>
+          <p class="section-desc" id="view-subheading">Forensic logarithmic first-digit analysis & threshold evasion detection (works clustered below ₹5,00,000 to bypass tenders)</p>
         </div>
         
         <!-- Controls: State Dropdown + Search Input -->
@@ -384,103 +249,8 @@
         <!-- Will be populated dynamically by current feature mode -->
       </div>
 
-      <!-- BHAVISHYA-REKHA Trend & Forecast Sentinel Section (Visible in TRENDS mode) -->
-      <div id="bhavishya-trends-section" class="trend-card-grid" style="display: none;">
-        <div class="trend-card">
-          <div class="trend-title">
-            <span>Fund Utilization &amp; Expenditure Velocity</span>
-            <span class="forecast-badge">MoSPI eSAKSHI Repository</span>
-          </div>
-          <p style="font-size: 11.5px; color: var(--gov-text-muted); margin-bottom: 10px;">Nationwide annual expenditure velocity and total works sanctioned across fiscal years.</p>
-          <div id="trend-expenditure-chart" style="width:100%; height:200px; background:var(--gov-surface-subtle); border-radius:6px; padding:10px; display:flex; align-items:flex-end; gap:12px;"></div>
-        </div>
-
-        <div class="trend-card">
-          <div class="trend-title">
-            <span>March Rush Surge &amp; Predictive Risk Trajectory</span>
-            <span class="forecast-badge">1-2 Qtr Linear Projection</span>
-          </div>
-          <p style="font-size: 11.5px; color: var(--gov-text-muted); margin-bottom: 10px;">March sanction surge vs. non-March baseline with forward-looking risk trajectory.</p>
-          <div id="trend-march-spike-chart" style="width:100%; height:200px; background:var(--gov-surface-subtle); border-radius:6px; padding:10px; display:flex; align-items:flex-end; gap:12px;"></div>
-        </div>
-      </div>
-
-      <!-- Feature 4 Dedicated Interactive Network Ego-Graph (Visible only in CHAKRA-VYUH mode) -->
-      <div id="chakra-graph-section" class="network-graph-card" style="display: none;">
-        <div class="graph-header">
-          <div class="graph-header-left">
-            <div class="graph-tag">CHAKRA-VYUH (चक्रव्यूह) · PROCUREMENT NEXUS &amp; CARTEL VISUALIZER</div>
-            <h3 class="graph-main-title" id="graph-title">Constituency Procurement Nexus &amp; Allocation Flow</h3>
-          </div>
-          <div class="graph-controls-right">
-            <div class="graph-view-switcher">
-              <button type="button" id="btn-graph-flow" class="graph-view-btn active" onclick="setGraphLayout('flow')">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                Tri-Tier Flow
-              </button>
-              <button type="button" id="btn-graph-radar" class="graph-view-btn" onclick="setGraphLayout('radar')">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                Orbital Radar
-              </button>
-            </div>
-            <div class="graph-select-wrap">
-              <label for="cartel-mp-select" class="graph-select-label">Select Constituency:</label>
-              <select id="cartel-mp-select" class="graph-select">
-                <option value="Adv Adoor Prakash">Attingal (Adv Adoor Prakash — 97% Single-Vendor)</option>
-                <option value="Mr Gopal Jee Thakur">Darbhanga (Mr Gopal Jee Thakur — 95% Single-Vendor)</option>
-                <option value="Pankaj Chowdhary">Maharajganj UP (Pankaj Chowdhary — 94% Single-Vendor)</option>
-                <option value="Asaduddin Owaisi">Hyderabad (Asaduddin Owaisi — 92% Single-Vendor)</option>
-                <option value="VIJAYLAKSHMI DEVI">Siwan (Vijaylakshmi Devi — 84% to Alam Brothers)</option>
-                <option value="SUDAMA PRASAD">Arrah (Sudama Prasad — LAEO-02 Agency Network)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Executive Stat Ribbon -->
-        <div class="graph-stat-ribbon" id="graph-stat-ribbon">
-          <div class="graph-stat-chip">
-            <span class="chip-label">Constituency</span>
-            <span class="chip-value" id="graph-chip-constituency">Attingal, Kerala</span>
-          </div>
-          <div class="graph-stat-chip">
-            <span class="chip-label">Recommending MP</span>
-            <span class="chip-value" id="graph-chip-mp">Adv Adoor Prakash</span>
-          </div>
-          <div class="graph-stat-chip danger">
-            <span class="chip-label">HHI Concentration</span>
-            <span class="chip-value text-red" id="graph-chip-hhi">9,363 · Severe Monopoly</span>
-          </div>
-          <div class="graph-stat-chip danger">
-            <span class="chip-label">Top Vendor Share</span>
-            <span class="chip-value text-red" id="graph-chip-share">97% of Funds</span>
-          </div>
-          <div class="graph-stat-chip">
-            <span class="chip-label">Total Disbursed</span>
-            <span class="chip-value" id="graph-chip-disbursed">₹2.86 Cr</span>
-          </div>
-        </div>
-
-        <div class="graph-canvas-box" id="graph-canvas-box">
-          <svg id="network-svg" class="network-svg" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet"></svg>
-          <div id="network-tooltip" class="network-tooltip" style="display:none;"></div>
-        </div>
-
-        <div class="graph-meta" id="graph-meta">
-          <div class="graph-legend">
-            <span class="legend-item"><span class="legend-dot dot-blue"></span> MP Recommender</span>
-            <span class="legend-item"><span class="legend-dot dot-amber"></span> Implementing Agency</span>
-            <span class="legend-item"><span class="legend-dot dot-red"></span> Dominant Cartel (≥40% Funds)</span>
-            <span class="legend-item"><span class="legend-dot dot-emerald"></span> Competitive Vendor</span>
-          </div>
-          <div class="graph-guidance">
-            <span>Hover over any entity card or link to inspect transactional audit trail · Click to focus</span>
-          </div>
-        </div>
-      </div>
-
       <!-- Feature 6 Dedicated Interactive Benford Forensic Digit Histogram (Visible only in SANKHYA-SATYA mode) -->
-      <div id="benford-histogram-section" class="benford-chart-card" style="display: none;">
+      <div id="benford-histogram-section" class="benford-chart-card" style="display: block;">
         <div class="benford-header">
           <div>
             <div style="font-size: 11px; font-weight: 700; color: var(--gov-navy); text-transform: uppercase; letter-spacing: 0.04em;">SANKHYA-SATYA · Forensic Digit Frequency Distribution</div>
@@ -511,40 +281,6 @@
         </div>
       </div>
 
-      <!-- Feature 7 Dedicated Interactive Geospatial Satellite Map (Visible only in BHU-DRISHTI mode) -->
-      <div id="bhu-drishti-map-section" class="bhu-map-card" style="display: none;">
-        <div class="bhu-map-header">
-          <div>
-            <div style="font-size: 11px; font-weight: 700; color: var(--gov-navy); text-transform: uppercase; letter-spacing: 0.04em;">BHU-DRISHTI · Geospatial Remote Sensing &amp; GPS Sentry</div>
-            <div style="font-size: 14px; font-weight: 800; color: var(--gov-text-primary); display: flex; align-items: center; gap: 8px; margin-top: 2px;">
-              <span>Interactive All-India Asset Radar &amp; Geotag Verification</span>
-              <span id="active-provider-badge" style="font-size: 10.5px; font-weight: 700; background: var(--gov-cobalt-light); color: var(--gov-navy); border: 1px solid var(--gov-cobalt-border); padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono);">
-                Esri Satellite HD (Free / Zero-Config)
-              </span>
-            </div>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="map-ctrl-btn active" id="btn-tile-satellite" onclick="switchBasemap('satellite')">
-              Satellite View
-            </button>
-            <button class="map-ctrl-btn" id="btn-tile-street" onclick="switchBasemap('street')">
-              Street / Cadastral
-            </button>
-            <button class="map-ctrl-btn" id="btn-tile-dark" onclick="switchBasemap('dark')">
-              High Contrast Canvas
-            </button>
-          </div>
-        </div>
-
-        <!-- Leaflet Map Container -->
-        <div id="bhu-drishti-map" style="width: 100%; height: 440px; min-height: 400px; border-radius: 8px; margin-top: 10px; border: 1px solid var(--gov-border-strong); z-index: 1; background: #0f172a; position: relative;"></div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11px; color: var(--gov-text-muted);">
-          <span>Marker Classification: Crimson: Unverified Geotag (Ghost Risk) &nbsp;|&nbsp; Purple: Hyper-Local Cluster (&lt;250m) &nbsp;|&nbsp; Emerald: Verified Physical Geotag</span>
-          <span id="map-point-count" style="font-weight: 700; color: var(--gov-navy);">Showing 400 Balanced Works</span>
-        </div>
-      </div>
-
       <!-- Real Data Table -->
       <div class="table-container">
         <table class="simple-table">
@@ -571,14 +307,6 @@
         <button id="prev-btn" class="nav-btn" disabled>← Previous</button>
         <span id="page-info" class="page-text">Page 1</span>
         <button id="next-btn" class="nav-btn">Next →</button>
-      </div>
-    </section>
-
-    <!-- Bottom Feature Roadmap Callout -->
-    <section class="roadmap-callout">
-      <div class="roadmap-content">
-        <h3 id="roadmap-title">VIDHI-KAVACH (विधि-कवच) · Statutory Audit Inspection</h3>
-        <p id="roadmap-desc">Auditing real keyword breaches directly from official MoSPI records against <b>Annexure-I Negative List</b> (e.g. places of worship, commercial trusts) and <b>March Rush GFR Rule 62</b>. Click any record row to inspect full statutory citations.</p>
       </div>
     </section>
 
@@ -1153,6 +881,7 @@
   <!-- ==========================================================
        NORMAL PROFESSIONAL SIMPLE FOOTER
        ========================================================== -->
+
   <footer class="site-footer" id="site-footer">
     <div class="footer-container">
       <div class="footer-main-row">
@@ -1213,6 +942,7 @@
     </div>
   </footer>
 
-  <script src="app.js?v=2.5"></script>
+  <!-- SCRIPTS -->
+  <script src="app.js"></script>
 </body>
 </html>

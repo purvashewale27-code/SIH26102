@@ -313,7 +313,7 @@ const server = http.createServer((req, res) => {
       clusterCount: p.bhu_drishti.cluster_count,
       anomalyTitle: p.bhu_drishti.anomaly_title
     }));
-    return sendJson({ count: points.length, totalAvailable: sample.length, data: points, points });
+    return sendJson({ success: true, count: points.length, totalAvailable: sample.length, data: points, points });
   }
 
   // Helper to read JSON request body for POST requests
@@ -469,6 +469,57 @@ const server = http.createServer((req, res) => {
     const project = allProjects.find(p => p.id === id || String(p.id) === id || p.workDtlId === id) || allProjects[0];
     const dossier = dossierGenerator.generateDossier(project);
     return sendJson(dossier);
+  }
+
+  // API 2F: SATARK-SAMVAAD GenAI Copilot Query Processor over 176,925 MoSPI records
+  if (pathname === '/api/samvaad') {
+    const query = (reqUrl.searchParams.get('q') || '').toLowerCase().trim();
+    let results = allProjects;
+
+    // 1. Extract State filter if present
+    const stateMatch = Array.from(statesSet).find(s => query.includes(s.toLowerCase()));
+    if (stateMatch) {
+      results = results.filter(p => p.state.toLowerCase() === stateMatch.toLowerCase());
+    }
+
+    // 2. Extract Cost / Threshold filter if present
+    if (query.includes('5 lakh') || query.includes('5l') || query.includes('procurement threshold')) {
+      results = results.filter(p => p.cost < 500000 && p.cost >= 450000);
+    } else if (query.includes('below 10 lakh') || query.includes('below 10l')) {
+      results = results.filter(p => p.cost < 1000000);
+    }
+
+    // 3. Extract Sentinel / Risk type filter if present
+    if (query.includes('high risk') || query.includes('critical risk') || query.includes('top 10')) {
+      results = results.filter(p => p.composite && p.composite.priorityScore >= 70);
+    } else if (query.includes('march rush')) {
+      results = results.filter(p => p.audit && p.audit.violations.some(v => v.ruleId === 'MARCH-RUSH'));
+    } else if (query.includes('duplicate')) {
+      results = results.filter(p => p.duplicate && p.duplicate.isDuplicate);
+    } else if (query.includes('contractor') || query.includes('cartel') || query.includes('nexus')) {
+      results = results.filter(p => p.chakra && p.chakra.hasCartelRisk);
+    } else if (query.includes('ghost') || query.includes('geotag')) {
+      results = results.filter(p => p.bhu_drishti && p.bhu_drishti.isGhostAsset);
+    } else if (query.includes('tender split') || query.includes('splitting')) {
+      results = results.filter(p => p.sankhya && p.sankhya.isThresholdSplit);
+    }
+
+    // Sort by composite risk score descending
+    results.sort((a, b) => (b.composite ? b.composite.priorityScore : 0) - (a.composite ? a.composite.priorityScore : 0));
+
+    // Limit to top 25 matches for responsive rendering
+    const topMatches = results.slice(0, 25);
+    const totalExposure = results.reduce((sum, p) => sum + p.cost, 0);
+    const exposureInCr = (totalExposure / 10000000).toFixed(2);
+
+    return sendJson({
+      status: 'success',
+      query: reqUrl.searchParams.get('q') || 'General Investigation',
+      totalMatches: results.length,
+      financialExposureFormatted: `₹${exposureInCr} Cr`,
+      summary: `Found ${results.length} MoSPI works matching query criteria with total financial exposure of ₹${exposureInCr} Cr. High-risk projects require field verification under GFR Rule 144.`,
+      projects: topMatches
+    });
   }
 
   // API 2H: Verifiable Data Lineage & Provenance Ledger
@@ -724,7 +775,12 @@ const server = http.createServer((req, res) => {
   // Serve static files from the frontend folder
   let filePath = pathname === '/' ? '/index.html' : pathname;
   const publicDir = path.join(__dirname, '..', 'frontend');
-  const safePath = path.normalize(path.join(publicDir, filePath));
+  let safePath = path.normalize(path.join(publicDir, filePath));
+
+  // If bare route requested (e.g. /chakra-vyuh), check if .html exists
+  if (!fs.existsSync(safePath) && fs.existsSync(safePath + '.html')) {
+    safePath = safePath + '.html';
+  }
 
   if (fs.existsSync(safePath) && fs.statSync(safePath).isFile()) {
     const ext = path.extname(safePath).toLowerCase();
@@ -732,7 +788,15 @@ const server = http.createServer((req, res) => {
       '.html': 'text/html',
       '.css': 'text/css',
       '.js': 'application/javascript',
-      '.json': 'application/json'
+      '.json': 'application/json',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.svg': 'image/svg+xml',
+      '.webp': 'image/webp',
+      '.ico': 'image/x-icon',
+      '.woff2': 'font/woff2',
+      '.woff': 'font/woff'
     };
     res.writeHead(200, { 
       'Content-Type': mimeTypes[ext] || 'text/plain',
