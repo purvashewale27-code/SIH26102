@@ -66,7 +66,7 @@
       <div class="sentinel-nav-container">
         
         <!-- 1. National Risk Overview -->
-        <a href="index.html#overview-hero-section" class="s-nav-tab" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="National Risk Intelligence &amp; Macro Overview">
+        <a href="index.html" class="s-nav-tab" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ window.scrollTo({top:0, behavior:'smooth'}); if(history.replaceState){history.replaceState(null,null,window.location.pathname);} return false; }" title="National Risk Intelligence &amp; Macro Overview">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span class="s-nav-title">National Overview</span>
         </a>
