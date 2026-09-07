@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('--- Verifying Step 5: Lenis Smooth Scroll & Three.js 3D Animations ---');
+console.log('--- Verifying Step 5: Lenis Smooth Scroll (Three.js Hero 3D Animation Removed) ---');
 
 const html = fs.readFileSync(path.join(__dirname, '../frontend/index.html'), 'utf8');
 const css = fs.readFileSync(path.join(__dirname, '../frontend/style.css'), 'utf8');
@@ -11,19 +11,19 @@ const js = fs.readFileSync(path.join(__dirname, '../frontend/app.js'), 'utf8');
 const hasLenisCdn = html.includes('lenis@1.1.18') || html.includes('lenis.min.js');
 const hasThreeCdn = html.includes('three.js/r128') || html.includes('three.min.js');
 console.log('Lenis CDN in index.html:', hasLenisCdn);
-console.log('Three.js CDN in index.html:', hasThreeCdn);
+console.log('Three.js CDN removed from index.html:', !hasThreeCdn);
 
-if (!hasLenisCdn || !hasThreeCdn) {
-  console.error('FAIL: Missing Lenis or Three.js CDN script tags in index.html!');
+if (!hasLenisCdn || hasThreeCdn) {
+  console.error('FAIL: Lenis CDN should be present and Three.js CDN should be removed!');
   process.exit(1);
 }
 
-// 2. Check hero canvas element
-const hasHeroCanvas = html.includes('id="hero-sentinel-canvas"') && html.includes('class="hero-threejs-canvas"');
-console.log('Hero sentinel canvas in index.html:', hasHeroCanvas);
+// 2. Check hero canvas element removed per user request
+const hasHeroCanvas = html.includes('id="hero-sentinel-canvas"');
+console.log('Hero sentinel canvas cleanly removed:', !hasHeroCanvas);
 
-if (!hasHeroCanvas) {
-  console.error('FAIL: Missing #hero-sentinel-canvas in index.html!');
+if (hasHeroCanvas) {
+  console.error('FAIL: #hero-sentinel-canvas still present in index.html!');
   process.exit(1);
 }
 

@@ -17,40 +17,8 @@
   
   <!-- Lenis Smooth Scroll Engine -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-  <!-- Three.js 3D WebGL Constellation Engine -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body data-page="overview">
-
-  <!-- 1. OFFICIAL NATIONAL PORTAL UTILITY STRIP (GIGW Compliant Sovereign Strip) -->
-  <div class="national-utility-bar">
-    <div class="national-tricolor-line"></div>
-    <div class="utility-container">
-      <div class="utility-left">
-        <span class="utility-seal">भारत सरकार | Government of India</span>
-        <span class="utility-sep">·</span>
-        <span class="utility-dept">सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय | Ministry of Statistics &amp; Programme Implementation</span>
-      </div>
-      <div class="utility-right">
-        <div class="utility-accessibility">
-          <span class="access-label">Text Size:</span>
-          <button class="access-btn" onclick="setPortalFontSize(-1)" title="Decrease font size">A-</button>
-          <button class="access-btn" onclick="setPortalFontSize(0)" title="Default font size">A</button>
-          <button class="access-btn" onclick="setPortalFontSize(1)" title="Increase font size">A+</button>
-        </div>
-        <span class="utility-sep">|</span>
-        <div class="utility-clock" id="ist-live-clock">
-          <svg class="clock-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span id="ist-clock-text">IST Loading...</span>
-        </div>
-        <span class="utility-sep">|</span>
-        <div class="utility-security-badge" title="Cryptographically verified e-SAKSHI data pipelines">
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#16a34a" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span>e-SAKSHI SECURE</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- 2. MINISTERIAL MASTHEAD -->
   <header class="top-header">
@@ -75,6 +43,10 @@
           </div>
         </div>
         <div class="header-action-buttons">
+          <button class="header-btn-search" id="btn-quick-search" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Jump to project search filter (Ctrl+K)">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Find Project <kbd class="nav-kbd">Ctrl+K</kbd>
+          </button>
           <button class="header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Simulate civil proposals with 7 sentinels (<50ms)">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
             Proposal Simulator
@@ -88,103 +60,440 @@
     </div>
   </header>
 
-  <!-- UNIFIED STICKY EXECUTIVE NAVIGATION HEADER (Primary Nav + Sentinel Directory) -->
+  <!-- UNIFIED STICKY EXECUTIVE NAVIGATION HEADER -->
   <div class="sticky-nav-header" id="sticky-nav-header">
-    <!-- 3. PRIMARY EXECUTIVE NAVIGATION BAR -->
-    <nav class="main-nav-bar" id="main-nav-bar">
-      <div class="nav-container">
-        <div class="nav-links-group">
-          <button class="main-nav-btn active" data-view="overview" onclick="switchMainView('overview')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-            Overview
-          </button>
-          <button class="main-nav-btn" data-view="investigate" onclick="switchMainView('investigate')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Investigate (Samvaad)
-          </button>
-          <button class="main-nav-btn" data-view="map" onclick="switchMainView('map')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-            Geospatial Risk (Bhu-Drishti)
-          </button>
-          <button class="main-nav-btn" data-view="networks" onclick="switchMainView('networks')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            Cartel Networks (Chakra-Vyuh)
-          </button>
-          <button class="main-nav-btn" data-view="trends" onclick="switchMainView('trends')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-            Expenditure Trends
-          </button>
-          <button class="main-nav-btn" data-view="reports" onclick="switchMainView('reports')">
-            <svg class="nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            Case Files &amp; Ledger
-          </button>
-        </div>
-        <div class="nav-actions-right">
-          <button class="nav-quick-search-btn" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Jump to project search filter">
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Find Project</span>
-            <kbd class="nav-kbd">Ctrl+K</kbd>
-          </button>
-        </div>
+    <nav class="sentinel-nav-strip" id="main-nav-bar" aria-label="Executive Portal Navigation">
+      <div class="sentinel-nav-container">
+        <!-- 1. VIDHI-KAVACH -->
+        <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="1. VIDHI-KAVACH: Statutory Compliance &amp; Negative List Sentry">
+          <span class="s-nav-badge red">01</span>
+          <span class="s-nav-title">VIDHI</span>
+        </a>
+        <!-- 2. PUNAR-DRISHTI -->
+        <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="2. PUNAR-DRISHTI: NLP Duplicate Claims &amp; Twin Works Sentry">
+          <span class="s-nav-badge purple">02</span>
+          <span class="s-nav-title">PUNAR</span>
+        </a>
+        <!-- 3. ARTHA-DARPAN -->
+        <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="3. ARTHA-DARPAN: CPWD Rate Benchmark &amp; Cost Inflation Sentry">
+          <span class="s-nav-badge amber">03</span>
+          <span class="s-nav-title">ARTHA</span>
+        </a>
+        <!-- 4. CHAKRA-VYUH -->
+        <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="4. CHAKRA-VYUH: Contractor Cartel &amp; Vendor Nexus Sentry">
+          <span class="s-nav-badge crimson">04</span>
+          <span class="s-nav-title">CHAKRA</span>
+        </a>
+        <!-- 5. VIBHED-NETRA -->
+        <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="5. VIBHED-NETRA: 12-Dimensional Isolation Forest Outlier Sentry">
+          <span class="s-nav-badge teal">05</span>
+          <span class="s-nav-title">VIBHED</span>
+        </a>
+        <!-- 6. SANKHYA-SATYA -->
+        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="6. SANKHYA-SATYA: Benford's Law Digital &amp; Tender-Splitting Sentry">
+          <span class="s-nav-badge indigo">06</span>
+          <span class="s-nav-title">SANKHYA</span>
+        </a>
+        <!-- 7. BHU-DRISHTI -->
+        <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="7. BHU-DRISHTI: Geospatial Remote Sensing &amp; GPS Geofencing Sentry">
+          <span class="s-nav-badge emerald">07</span>
+          <span class="s-nav-title">BHU</span>
+        </a>
+
+        <!-- Vertical Divider -->
+        <div class="nav-strip-divider"></div>
+
+        <!-- 8. SATARK-DRISHTI -->
+        <a href="index.html#overview-hero-section" class="s-nav-tab active" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="8. SATARK-DRISHTI: Unified National Risk Intelligence &amp; Macro Overview">
+          <span class="s-nav-badge gold">08</span>
+          <span class="s-nav-title">DRISHTI</span>
+        </a>
+        <!-- 9. SATARK-SAMVAAD -->
+        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="9. SATARK-SAMVAAD: GenAI Natural Language Audit Copilot">
+          <span class="s-nav-badge blue">09</span>
+          <span class="s-nav-title">SAMVAAD</span>
+        </a>
+        <!-- 10. PRASHNA-KAVACH -->
+        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="10. PRASHNA-KAVACH: Explainable AI &amp; Forensic Evidence Shield">
+          <span class="s-nav-badge rose">10</span>
+          <span class="s-nav-title">PRASHNA</span>
+        </a>
+        <!-- 11. SATARK-SIMULATION -->
+        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="11. SATARK-SIMULATION: Pre-Sanction Proposal Sandbox (&lt;50ms)">
+          <span class="s-nav-badge cyan">11</span>
+          <span class="s-nav-title">SIMULATION</span>
+        </a>
+        <!-- 12. BHAVISHYA-REKHA -->
+        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="12. BHAVISHYA-REKHA: Expenditure Velocity &amp; March Rush Trends">
+          <span class="s-nav-badge amber">12</span>
+          <span class="s-nav-title">BHAVISHYA</span>
+        </a>
+        <!-- 13. SATARK-KARYAA -->
+        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="13. SATARK-KARYAA: Project Explorer, Inspections &amp; Action Ledger">
+          <span class="s-nav-badge emerald">13</span>
+          <span class="s-nav-title">KARYAA</span>
+        </a>
       </div>
     </nav>
+  </div>
 
-    <!-- 3B. INDEPENDENT SENTINEL DIRECTORY BAR -->
-    <div class="sentinel-nav-strip">
-      <div class="sentinel-nav-container">
-        <a href="index.html" class="s-nav-tab active" data-nav="overview">
-          <span class="s-nav-badge">OVERVIEW</span>
-          <span class="s-nav-title">National Dashboard</span>
+  <!-- PAGE IDENTITY BREADCRUMB BAR -->
+  <nav class="page-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="breadcrumb-container">
+      <div class="breadcrumb-trail">
+        <a href="index.html" class="bc-root" title="National Risk Overview">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>MPLADS-SATARK</span>
         </a>
-        <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach">
-          <span class="s-nav-badge red">S-01</span>
-          <span class="s-nav-title">VIDHI-KAVACH</span>
-        </a>
-        <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti">
-          <span class="s-nav-badge purple">S-02</span>
-          <span class="s-nav-title">PUNAR-DRISHTI</span>
-        </a>
-        <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan">
-          <span class="s-nav-badge amber">S-03</span>
-          <span class="s-nav-title">ARTHA-DARPAN</span>
-        </a>
-        <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh">
-          <span class="s-nav-badge crimson">S-04</span>
-          <span class="s-nav-title">CHAKRA-VYUH</span>
-        </a>
-        <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra">
-          <span class="s-nav-badge teal">S-05</span>
-          <span class="s-nav-title">VIBHED-NETRA</span>
-        </a>
-        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya">
-          <span class="s-nav-badge indigo">S-06</span>
-          <span class="s-nav-title">SANKHYA-SATYA</span>
-        </a>
-        <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti">
-          <span class="s-nav-badge emerald">S-07</span>
-          <span class="s-nav-title">BHU-DRISHTI</span>
-        </a>
-        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad">
-          <span class="s-nav-badge blue">AI</span>
-          <span class="s-nav-title">SAMVAAD Copilot</span>
-        </a>
+        <span class="bc-sep">/</span>
+        <span class="bc-current" id="bc-current-page">
+          <span class="bc-sentinel-chip overview">NATIONAL</span>
+          <span>National Risk Overview Dashboard</span>
+        </span>
+      </div>
+      <div class="breadcrumb-context-badge" id="bc-context-badge">
+        <span class="bc-pulse-dot"></span>
+        <span id="bc-status-text">Live Sentinel Audit · 176,925 MoSPI Works · 36 States/UTs</span>
       </div>
     </div>
-  </div>
+  </nav>
 
   <!-- Main Content Container -->
   <main class="page-container">
 
-    <!-- 1. OVERVIEW HERO SECTION (SATARK-DRISHTI Unified Risk Summary) -->
-    <section class="overview-hero-section" id="overview-hero-section">
-      <div class="hero-main-card">
-        <!-- Three.js 3D Forensic Sentinel Constellation Canvas -->
-        <canvas id="hero-sentinel-canvas" class="hero-threejs-canvas"></canvas>
+    <!-- ==========================================================================
+         PART 1: THE 7 SENTINEL ENGINES (MODULES 01 - 07)
+         ========================================================================== -->
 
+    <!-- 01. SENTINEL MODULE 01: VIDHI-KAVACH (Statutory Compliance & Negative List Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-01" id="vidhi-kavach-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge red">MODULE 01</span>
+            <span>VIDHI-KAVACH (विधि-कवच)</span>
+            <span class="feature-type-pill">Statutory Compliance &amp; Negative List Sentry</span>
+          </div>
+          <h2 class="core-section-heading">Statutory Rule Compliance &amp; Negative List Sentry</h2>
+          <p class="core-section-desc">Continuous real-time auditing of 176,925 MoSPI works against MPLADS Guidelines 2023 Annexure-I (Prohibited Negative List) &amp; GFR Rule 62.</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="vidhi-kavach.html" class="sentinel-deepdive-btn">
+            Open Dedicated Vidhi-Kavach Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">23,722</span>
+            <span class="sentinel-stat-lbl">Statutory Breaches Flagged</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">15,953</span>
+            <span class="sentinel-stat-lbl">Places of Worship / Trusts (Annexure-I)</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-amber">3,204</span>
+            <span class="sentinel-stat-lbl">March Rush Surges (GFR 62)</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-amber">4,565</span>
+            <span class="sentinel-stat-lbl">Sub-Threshold Tenders (GFR 149)</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('vidhi-kavach'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #dc2626;">
+          Filter Ledger for S-01 Breaches
+        </button>
+      </div>
+    </section>
+
+    <!-- 02. SENTINEL MODULE 02: PUNAR-DRISHTI (Duplicate Claims & Twin Works Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-02" id="punar-drishti-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge purple">MODULE 02</span>
+            <span>PUNAR-DRISHTI (पुनर्दृष्टि)</span>
+            <span class="feature-type-pill">NLP Duplicate Claims &amp; Twin Works Sentry</span>
+          </div>
+          <h2 class="core-section-heading">Cross-Work Lexical NLP Twin Work &amp; Double-Billing Sentry</h2>
+          <p class="core-section-desc">TF-IDF vectorizer &amp; Levenshtein distance cross-matcher identifying identical work descriptions and duplicate billing claims across contiguous gram panchayats.</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="punar-drishti.html" class="sentinel-deepdive-btn">
+            Open Dedicated Punar-Drishti Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val" style="color:#9333ea;">10,204</span>
+            <span class="sentinel-stat-lbl">Duplicate Claims Detected</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val" style="color:#9333ea;">6,965</span>
+            <span class="sentinel-stat-lbl">Identical Clone Works</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">88.4%</span>
+            <span class="sentinel-stat-lbl">Mean Lexical Match Ratio</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-green">₹142.8 Cr</span>
+            <span class="sentinel-stat-lbl">Duplicate Disbursal Blocked</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('punar-drishti'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #9333ea;">
+          Filter Ledger for S-02 Duplicates
+        </button>
+      </div>
+    </section>
+
+    <!-- 03. SENTINEL MODULE 03: ARTHA-DARPAN (CPWD Rate Benchmark & Cost Inflation Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-03" id="artha-darpan-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge amber">MODULE 03</span>
+            <span>ARTHA-DARPAN (अर्थ-दर्पण)</span>
+            <span class="feature-type-pill">CPWD Rate Benchmark &amp; Cost Inflation Sentry</span>
+          </div>
+          <h2 class="core-section-heading">CPWD Schedule of Rates Benchmark &amp; Cost Inflation Sentry</h2>
+          <p class="core-section-desc">Calibrated with 108 State-Category CPWD Delhi Schedule of Rates (DSR 2023-24) to flag unjustified cost escalations and tranche diversion anomalies.</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="artha-darpan.html" class="sentinel-deepdive-btn">
+            Open Dedicated Artha-Darpan Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">₹3,639.9 Cr</span>
+            <span class="sentinel-stat-lbl">Flagged Excess Overrun Risk</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">108</span>
+            <span class="sentinel-stat-lbl">CPWD Regional Benchmarks</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-amber">14,219</span>
+            <span class="sentinel-stat-lbl">Works &gt;20% Above DSR Limit</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">1.84x</span>
+            <span class="sentinel-stat-lbl">Peak Outlier Cost Multiplier</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('artha-darpan'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #d97706;">
+          Filter Ledger for S-03 Cost Overruns
+        </button>
+      </div>
+    </section>
+
+    <!-- 04. SENTINEL MODULE 04: CHAKRA-VYUH (Contractor Cartel & Vendor Nexus Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-04" id="chakra-vyuh-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge crimson">MODULE 04</span>
+            <span>CHAKRA-VYUH (चक्रव्यूह)</span>
+            <span class="feature-type-pill">Contractor Cartel &amp; Vendor Nexus Sentry</span>
+          </div>
+          <h2 class="core-section-heading">Contractor Cartel &amp; Vendor Nexus Forensic Sentry</h2>
+          <p class="core-section-desc">Herfindahl-Hirschman Index (HHI) concentration audit over 109,475 payment vouchers mapping MP-to-Agency-to-Vendor circular flows and monopoly rings.</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="chakra-vyuh.html" class="sentinel-deepdive-btn">
+            Open Dedicated Chakra-Vyuh Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">47,302</span>
+            <span class="sentinel-stat-lbl">Cartel Risk Works Flagged</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">1,248</span>
+            <span class="sentinel-stat-lbl">Single-Vendor Monopolies</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">97%</span>
+            <span class="sentinel-stat-lbl">Peak Vendor Concentration (Attingal)</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">9,363</span>
+            <span class="sentinel-stat-lbl">Peak HHI Score (Severe Monopoly)</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('chakra-vyuh'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #be123c;">
+          Filter Ledger for S-04 Cartels
+        </button>
+      </div>
+    </section>
+
+    <!-- 05. SENTINEL MODULE 05: VIBHED-NETRA (12-Dimensional Isolation Forest Outlier Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-05" id="vibhed-netra-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge teal">MODULE 05</span>
+            <span>VIBHED-NETRA (विभेद-नेत्र)</span>
+            <span class="feature-type-pill">12-Dimensional Isolation Forest Outlier Sentry</span>
+          </div>
+          <h2 class="core-section-heading">12-Dimensional Isolation Forest Multivariate Outlier Sentry</h2>
+          <p class="core-section-desc">Unsupervised Machine Learning anomaly detector calibrated in &lt;15ms across 176,925 works evaluating efficiency and delay vectors across Indian districts.</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="vibhed-netra.html" class="sentinel-deepdive-btn">
+            Open Dedicated Vibhed-Netra Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val" style="color:#0f766e;">37,391</span>
+            <span class="sentinel-stat-lbl">High-Dimensional Outliers</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">7,780</span>
+            <span class="sentinel-stat-lbl">Critical Multivariate Anomalies</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">12</span>
+            <span class="sentinel-stat-lbl">Orthogonal Feature Dimensions</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">&lt;15ms</span>
+            <span class="sentinel-stat-lbl">Inference Latency (All Works)</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('vibhed-netra'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #0f766e;">
+          Filter Ledger for S-05 ML Outliers
+        </button>
+      </div>
+    </section>
+
+    <!-- 06. SENTINEL MODULE 06: SANKHYA-SATYA (Benford's Law Digital & Tender-Splitting Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-06" id="sankhya-satya-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge indigo">MODULE 06</span>
+            <span>SANKHYA-SATYA (संख्या-सत्य)</span>
+            <span class="feature-type-pill">Benford's Law Digital &amp; Tender-Splitting Sentry</span>
+          </div>
+          <h2 class="core-section-heading">Benford's Law Digit Sentry &amp; GFR Tender-Splitting Sentry</h2>
+          <p class="core-section-desc">Forensic logarithmic first-digit analysis &amp; threshold evasion detection (works clustered just below ₹5,00,000 and ₹10,00,000 to bypass open e-tenders).</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="sankhya-satya.html" class="sentinel-deepdive-btn">
+            Open Dedicated Sankhya-Satya Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val" style="color:#4338ca;">7,710</span>
+            <span class="sentinel-stat-lbl">Sub-Ceiling Threshold Splits</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">13,917.59</span>
+            <span class="sentinel-stat-lbl">Chi-Square Anomaly Statistic</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">13.79%</span>
+            <span class="sentinel-stat-lbl">Observed Digit 5 (Exp: 7.9%)</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">24.28%</span>
+            <span class="sentinel-stat-lbl">Observed Digit 2 (Exp: 17.6%)</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('sankhya-satya'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #4338ca;">
+          Filter Ledger for S-06 Benford Splits
+        </button>
+      </div>
+    </section>
+
+    <!-- 07. SENTINEL MODULE 07: BHU-DRISHTI (Geospatial Satellite & GPS Geofencing Sentry) -->
+    <section class="core-feature-card sentinel-showcase-card s-07" id="bhu-drishti-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge emerald">MODULE 07</span>
+            <span>BHU-DRISHTI (भूर-दृष्टि)</span>
+            <span class="feature-type-pill">Geospatial Remote Sensing &amp; GPS Sentry</span>
+          </div>
+          <h2 class="core-section-heading">Geospatial Remote Sensing, ISRO Bhuvan &amp; GPS Geofencing Sentry</h2>
+          <p class="core-section-desc">Interactive all-India asset radar with HD satellite layers, parliamentary boundary geofencing, and ghost asset detection.</p>
+        </div>
+        <div class="core-section-actions">
+          <a href="bhu-drishti.html" class="sentinel-deepdive-btn">
+            Open Dedicated Bhu-Drishti Page
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="sentinel-showcase-body">
+        <div class="sentinel-stat-box">
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-red">8,419</span>
+            <span class="sentinel-stat-lbl">Ghost Assets (No GPS Geotag)</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-amber">12,305</span>
+            <span class="sentinel-stat-lbl">Out-of-Constituency GPS Drifts</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val">3</span>
+            <span class="sentinel-stat-lbl">HD Satellite Basemap Engines</span>
+          </div>
+          <div class="sentinel-stat-pill">
+            <span class="sentinel-stat-val text-green">100%</span>
+            <span class="sentinel-stat-lbl">Nationwide GIS Mesh</span>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="setFeatureMode('bhu-drishti'); jumpToSection('satark-karyaa-section');" style="padding: 7px 14px; font-size: 11.5px; background: #059669;">
+          Filter Ledger for S-07 GIS Works
+        </button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PART 2: THE 6 CORE STRATEGIC PLATFORMS (MODULES 08 - 13)
+         ========================================================================== -->
+
+    <!-- 08. CORE MODULE 08: SATARK-DRISHTI (Unified Risk Intelligence & Overview) -->
+    <section class="overview-hero-section core-feature-card" id="overview-hero-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge gold">MODULE 08</span>
+            <span>SATARK-DRISHTI (सतर्क दृष्टि)</span>
+            <span class="feature-type-pill">Unified Risk Intelligence &amp; Overview</span>
+          </div>
+          <h2 class="core-section-heading">Nationwide Public Fund Risk Intelligence &amp; Macro Overview</h2>
+          <p class="core-section-desc">Continuous real-time auditing of 176,925 MoSPI eSAKSHI works across 36 States/UTs using 7 unified forensic sentinels</p>
+        </div>
+      </div>
+
+      <div class="hero-main-card">
         <div class="hero-left">
-          <div class="hero-tag">SATARK-DRISHTI UNIFIED RISK INTELLIGENCE</div>
-          <h2 class="hero-title">Nationwide Public Fund Risk Overview</h2>
-          <p class="hero-desc">Auditing 176,925 MoSPI eSAKSHI works across 36 States/UTs using 7 unified forensic sentinels</p>
+          <div class="hero-tag">SATARK-DRISHTI MACRO VIGILANCE METRICS</div>
           <div class="hero-metrics-grid">
             <div class="hero-metric">
               <span class="m-val" id="hero-total-works">1,76,925</span>
@@ -218,7 +527,7 @@
       <div class="overview-shared-panel">
         <div class="overview-panel-card" id="bhavishya-trend-chart">
           <div class="panel-header">
-            <span>BHAVISHYA-REKHA Expenditure Trend Snapshot</span>
+            <span>BHAVISHYA-REKHA Quick Expenditure Snapshot</span>
             <span class="panel-tag">March Rush Surge</span>
           </div>
           <div id="overview-trend-snapshot" style="height:110px; display:flex; align-items:flex-end; gap:8px; background:#f8fafc; padding:8px; border-radius:6px;"></div>
@@ -237,77 +546,26 @@
           </div>
         </div>
       </div>
-
-      <!-- 5. SENTINEL ACTIVITY SUMMARY STRIP — ONE Compact Strip for All 7 Sentinels -->
-      <div class="sentinel-summary-strip" id="sentinel-summary-strip">
-        <div class="sentinel-strip-item" onclick="window.location.href='vidhi-kavach.html'" title="Open Sentinel S-01: VIDHI-KAVACH Dedicated Page">
-          <span class="s-code">S-01</span>
-          <div class="s-info">
-            <span class="s-title">VIDHI-KAVACH</span>
-            <span class="s-count text-red" id="strip-vidhi-count">23,722</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='punar-drishti.html'" title="Open Sentinel S-02: PUNAR-DRISHTI Dedicated Page">
-          <span class="s-code">S-02</span>
-          <div class="s-info">
-            <span class="s-title">PUNAR-DRISHTI</span>
-            <span class="s-count text-purple" id="strip-punar-count">10,204</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='artha-darpan.html'" title="Open Sentinel S-03: ARTHA-DARPAN Dedicated Page">
-          <span class="s-code">S-03</span>
-          <div class="s-info">
-            <span class="s-title">ARTHA-DARPAN</span>
-            <span class="s-count text-amber" id="strip-artha-count">69,170</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='chakra-vyuh.html'" title="Open Sentinel S-04: CHAKRA-VYUH Dedicated Page">
-          <span class="s-code">S-04</span>
-          <div class="s-info">
-            <span class="s-title">CHAKRA-VYUH</span>
-            <span class="s-count text-crimson" id="strip-chakra-count">47,302</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='vibhed-netra.html'" title="Open Sentinel S-05: VIBHED-NETRA Dedicated Page">
-          <span class="s-code">S-05</span>
-          <div class="s-info">
-            <span class="s-title">VIBHED-NETRA</span>
-            <span class="s-count text-teal" id="strip-vibhed-count">37,391</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='sankhya-satya.html'" title="Open Sentinel S-06: SANKHYA-SATYA Dedicated Page">
-          <span class="s-code">S-06</span>
-          <div class="s-info">
-            <span class="s-title">SANKHYA-SATYA</span>
-            <span class="s-count text-indigo" id="strip-sankhya-count">7,710</span>
-          </div>
-        </div>
-        <div class="sentinel-strip-item" onclick="window.location.href='bhu-drishti.html'" title="Open Sentinel S-07: BHU-DRISHTI Dedicated Page">
-          <span class="s-code">S-07</span>
-          <div class="s-info">
-            <span class="s-title">BHU-DRISHTI</span>
-            <span class="s-count text-emerald" id="strip-bhu-count">3,031</span>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- 4. SATARK-SAMVAAD GenAI Investigation Copilot Card -->
-    <section class="samvaad-copilot-card" id="samvaad-copilot-card">
-      <div class="samvaad-header">
-        <div class="samvaad-title">
-          <span>SATARK-SAMVAAD (सतर्क संवाद)</span>
-          <span style="font-size:11px; font-weight:700; background:var(--gov-cobalt-light); color:var(--gov-navy); border:1px solid var(--gov-cobalt-border); padding:2px 8px; border-radius:4px;">GenAI Investigation Copilot</span>
-        </div>
-        <div style="font-size:12px; color:var(--gov-text-muted); font-weight:600;">
-          Querying 176,925 MoSPI eSAKSHI Records in Real Time
+    <!-- 09. CORE MODULE 09: SATARK-SAMVAAD (GenAI Natural Language Audit Copilot) -->
+    <section class="samvaad-copilot-card core-feature-card" id="samvaad-copilot-card" style="display: block;">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge blue">MODULE 09</span>
+            <span>SATARK-SAMVAAD (सतर्क संवाद)</span>
+            <span class="feature-type-pill">GenAI Natural Language Audit Copilot</span>
+          </div>
+          <h3 class="core-section-heading">Natural Language Forensic Query Copilot</h3>
+          <p class="core-section-desc">Query 176,925 MoSPI eSAKSHI works in English or Hindi. Synthesizes cross-sentinel evidence and exports official vigilance memorandums.</p>
         </div>
       </div>
 
       <div class="samvaad-search-box">
         <input type="text" id="samvaad-input" class="samvaad-input" placeholder="Query SATARK: e.g. 'Show high-risk projects in Bihar under 5 lakh' or 'Find contractors connected to cartels'..." onkeyup="if(event.key==='Enter') executeSamvaadQuery()">
         <button class="btn-primary" id="btn-ask-samvaad" onclick="executeSamvaadQuery()" style="padding:10px 20px; font-weight:700; background:var(--gov-navy);">
-          Query Data
+          Query Copilot
         </button>
       </div>
 
@@ -325,6 +583,209 @@
         <div id="samvaad-results-table"></div>
       </div>
     </section>
+
+    <!-- 10. CORE MODULE 10: PRASHNA-KAVACH (Explainable AI & Forensic Evidence Shield) -->
+    <section class="prashna-kavach-section core-feature-card" id="prashna-kavach-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge rose">MODULE 10</span>
+            <span>PRASHNA-KAVACH (प्रश्न कवच)</span>
+            <span class="feature-type-pill">Explainable AI &amp; Evidence Shield</span>
+          </div>
+          <h3 class="core-section-heading">Explainable AI Attribution &amp; Statutory Legal Proof</h3>
+          <p class="core-section-desc">Deconstructs complex multi-sentinel priority scores into additive SHAP feature attribution and statutory legal citations from MoSPI Guidelines 2023 &amp; GFR Rules.</p>
+        </div>
+        <div class="core-section-actions">
+          <button class="btn-dossier-outline" onclick="openPrashnaModalById('MPLADS-145555')">
+            Inspect Full Evidence Dossier
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Sample Project Selector -->
+      <div class="prashna-showcase-container">
+        <div class="prashna-project-tabs">
+          <span class="tabs-label">Sample Audit Case Studies:</span>
+          <button type="button" class="prashna-tab-btn active" id="prashna-btn-1" onclick="loadPrashnaShowcase(1)">Case 1: Religious Negative List &amp; March Rush (UP)</button>
+          <button type="button" class="prashna-tab-btn" id="prashna-btn-2" onclick="loadPrashnaShowcase(2)">Case 2: E-Tender ₹4.95L Smurfing (Bihar)</button>
+          <button type="button" class="prashna-tab-btn" id="prashna-btn-3" onclick="loadPrashnaShowcase(3)">Case 3: Unverified Geotag Ghost Asset (Rajasthan)</button>
+          <button type="button" class="prashna-tab-btn" id="prashna-btn-4" onclick="loadPrashnaShowcase(4)">Case 4: 97% Monopoly Cartel Allocation (Kerala)</button>
+        </div>
+
+        <div class="prashna-showcase-body" id="prashna-showcase-body">
+          <!-- Populated by loadPrashnaShowcase() in app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. CORE MODULE 11: SATARK-SIMULATION (Pre-Sanction Proposal Sandbox <50ms) -->
+    <section class="satark-simulation-section core-feature-card" id="satark-simulation-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge cyan">MODULE 11</span>
+            <span>SATARK-SIMULATION (सतर्क सिमुलेशन)</span>
+            <span class="feature-type-pill">Pre-Sanction Proposal Sandbox (&lt;50ms)</span>
+          </div>
+          <h3 class="core-section-heading">Pre-Sanction "What-If" Proposal Simulator</h3>
+          <p class="core-section-desc">Instantaneous multi-model risk audit for proposed works before statutory sanction and fund release to intercept fraudulent allocations at entry.</p>
+        </div>
+        <div class="core-section-actions">
+          <button class="btn-primary" onclick="openSimulator()" style="background:var(--gov-navy);">
+            Open Enlarged Modal Sandbox
+          </button>
+        </div>
+      </div>
+
+      <!-- Presets Banner -->
+      <div class="sim-presets-banner">
+        <span class="presets-label">1-Click Benchmark Scenarios:</span>
+        <div class="presets-buttons">
+          <button type="button" class="sim-preset-btn active" id="opsim-btn-1" onclick="loadOnPageSimPreset(1)">Scenario 1: Negative-List &amp; March Rush</button>
+          <button type="button" class="sim-preset-btn" id="opsim-btn-2" onclick="loadOnPageSimPreset(2)">Scenario 2: ₹4.95L Tender-Split Smurfing</button>
+          <button type="button" class="sim-preset-btn" id="opsim-btn-3" onclick="loadOnPageSimPreset(3)">Scenario 3: Unverified Geotag (Ghost Asset)</button>
+          <button type="button" class="sim-preset-btn" id="opsim-btn-4" onclick="loadOnPageSimPreset(4)">Scenario 4: Compliant Rural Anganwadi</button>
+        </div>
+      </div>
+
+      <!-- Interactive Simulation Grid -->
+      <div class="sim-layout-grid" style="margin-top:14px;">
+        <!-- Left: Input Form -->
+        <div class="sim-form-container">
+          <h4 class="sim-section-heading">Proposal Parameters to Evaluate</h4>
+          <form id="onpage-sim-form" onsubmit="event.preventDefault(); runOnPageSimulation();">
+            <div class="form-group">
+              <label for="opsim-title">Proposed Work Title *</label>
+              <input type="text" id="opsim-title" class="form-input" required value="Construction of Community Hall and Mandir Boundary Wall">
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="opsim-cost">Sanction Cost (INR ₹) *</label>
+                <input type="number" id="opsim-cost" class="form-input" required min="1000" step="1000" value="495000">
+                <span class="form-hint" id="opsim-cost-hint">₹4,95,000 (Pegged ₹5,000 below ₹5L ceiling)</span>
+              </div>
+
+              <div class="form-group">
+                <label for="opsim-date">Sanction Date *</label>
+                <input type="date" id="opsim-date" class="form-input" value="2024-03-29">
+                <span class="form-hint">March Rush testing window</span>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="opsim-state">State / UT *</label>
+                <select id="opsim-state" class="form-input">
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="West Bengal">West Bengal</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Assam">Assam</option>
+                  <option value="National">All-India General</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="opsim-district">District / Constituency</label>
+                <input type="text" id="opsim-district" class="form-input" value="Varanasi">
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="opsim-category">Sector / Category</label>
+                <select id="opsim-category" class="form-input">
+                  <option value="Community Hall">Community Hall</option>
+                  <option value="Road">Rural Road / PCC</option>
+                  <option value="School / Education">School Building / Education</option>
+                  <option value="Drinking Water">Drinking Water &amp; Pipeline</option>
+                  <option value="Health / Dispensary">Health / Dispensary</option>
+                  <option value="Sanitation / Drain">Sanitation &amp; Drainage</option>
+                  <option value="Irrigation">Minor Irrigation</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="opsim-vendor">Proposed Contractor / Vendor</label>
+                <input type="text" id="opsim-vendor" class="form-input" value="Shree Ram Infra Corp Pvt Ltd">
+              </div>
+            </div>
+
+            <div class="form-group checkbox-group" style="margin-top:4px;">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; color:var(--gov-text-body);">
+                <input type="checkbox" id="opsim-has-geotag" checked>
+                <span><b>GPS Geotag Verified on ISRO Bhuvan / eSAKSHI App</b> (Uncheck to test Ghost Asset)</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-opsim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; background:var(--gov-navy);">
+              Run Real-Time Forensic Simulation (&lt;50ms)
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Live Simulation Results -->
+        <div class="sim-results-container" id="opsim-results-box">
+          <!-- Populated by runOnPageSimulation() -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. CORE MODULE 12: BHAVISHYA-REKHA (Expenditure Velocity & March Rush Trends) -->
+    <section class="bhavishya-trends-section core-feature-card" id="bhavishya-trends-section" style="display: block;">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge amber">MODULE 12</span>
+            <span>BHAVISHYA-REKHA (भविष्य रेखा)</span>
+            <span class="feature-type-pill">Expenditure Velocity &amp; March Rush Trends</span>
+          </div>
+          <h3 class="core-section-heading">Predictive Time-Series &amp; Fiscal Year-End Anomaly Forecasts</h3>
+          <p class="core-section-desc">Audits macro fund disbursement speed across fiscal cycles and flags artificial year-end sanction clustering violating GFR Rule 62 with 1-2 quarter linear forecasts.</p>
+        </div>
+      </div>
+
+      <div class="trend-card-grid">
+        <div class="trend-card">
+          <div class="trend-title">
+            <span>Fund Utilization &amp; Expenditure Velocity</span>
+            <span class="forecast-badge">MoSPI eSAKSHI Repository</span>
+          </div>
+          <p style="font-size: 11.5px; color: var(--gov-text-muted); margin-bottom: 10px;">Nationwide annual expenditure velocity and total works sanctioned across fiscal years.</p>
+          <div id="trend-expenditure-chart" style="width:100%; height:200px; background:var(--gov-surface-subtle); border-radius:6px; padding:10px; display:flex; align-items:flex-end; gap:12px;"></div>
+        </div>
+
+        <div class="trend-card">
+          <div class="trend-title">
+            <span>March Rush Surge &amp; Predictive Risk Trajectory</span>
+            <span class="forecast-badge">1-2 Qtr Linear Projection</span>
+          </div>
+          <p style="font-size: 11.5px; color: var(--gov-text-muted); margin-bottom: 10px;">March sanction surge vs. non-March baseline with forward-looking risk trajectory.</p>
+          <div id="trend-march-spike-chart" style="width:100%; height:200px; background:var(--gov-surface-subtle); border-radius:6px; padding:10px; display:flex; align-items:flex-end; gap:12px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. CORE MODULE 13: SATARK-KARYAA (Project Explorer, Field Inspections & Action Ledger) -->
+    <section class="satark-karyaa-section core-feature-card" id="satark-karyaa-section">
+      <div class="core-section-header">
+        <div class="core-section-title-wrap">
+          <div class="core-module-tag">
+            <span class="module-seq-badge emerald">MODULE 13</span>
+            <span>SATARK-KARYAA (सतर्क कार्या)</span>
+            <span class="feature-type-pill">Project Explorer &amp; Action Ledger</span>
+          </div>
+          <h3 class="core-section-heading">Operational Project Explorer, Field Inspections &amp; Action Ledger</h3>
+          <p class="core-section-desc">Dynamic multi-dimensional audit table over 176,925 works with state/district drilldown, multi-sentinel findings, and one-click official GFR-19A memorandum export.</p>
+        </div>
+      </div>
 
     <!-- Dynamic 4 Summary KPI Cards (Changes based on selected Feature) -->
     <section class="kpi-row" id="kpi-container">
@@ -382,27 +843,6 @@
       <!-- Quick Filter Tabs (Dynamic for current feature) -->
       <div class="filter-tab-bar" id="filter-tab-bar">
         <!-- Will be populated dynamically by current feature mode -->
-      </div>
-
-      <!-- BHAVISHYA-REKHA Trend & Forecast Sentinel Section (Visible in TRENDS mode) -->
-      <div id="bhavishya-trends-section" class="trend-card-grid" style="display: none;">
-        <div class="trend-card">
-          <div class="trend-title">
-            <span>Fund Utilization &amp; Expenditure Velocity</span>
-            <span class="forecast-badge">MoSPI eSAKSHI Repository</span>
-          </div>
-          <p style="font-size: 11.5px; color: var(--gov-text-muted); margin-bottom: 10px;">Nationwide annual expenditure velocity and total works sanctioned across fiscal years.</p>
-          <div id="trend-expenditure-chart" style="width:100%; height:200px; background:var(--gov-surface-subtle); border-radius:6px; padding:10px; display:flex; align-items:flex-end; gap:12px;"></div>
-        </div>
-
-        <div class="trend-card">
-          <div class="trend-title">
-            <span>March Rush Surge &amp; Predictive Risk Trajectory</span>
-            <span class="forecast-badge">1-2 Qtr Linear Projection</span>
-          </div>
-          <p style="font-size: 11.5px; color: var(--gov-text-muted); margin-bottom: 10px;">March sanction surge vs. non-March baseline with forward-looking risk trajectory.</p>
-          <div id="trend-march-spike-chart" style="width:100%; height:200px; background:var(--gov-surface-subtle); border-radius:6px; padding:10px; display:flex; align-items:flex-end; gap:12px;"></div>
-        </div>
       </div>
 
       <!-- Feature 4 Dedicated Interactive Network Ego-Graph (Visible only in CHAKRA-VYUH mode) -->
@@ -573,6 +1013,7 @@
         <button id="next-btn" class="nav-btn">Next →</button>
       </div>
     </section>
+    </section><!-- /satark-karyaa-section -->
 
     <!-- Bottom Feature Roadmap Callout -->
     <section class="roadmap-callout">

@@ -7,22 +7,19 @@ const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
 // 1. Head Content
 const headContent = indexHtml.substring(indexHtml.indexOf('<head>'), indexHtml.indexOf('</head>') + 7);
 
-// 2. National Utility Strip
-const utilStart = indexHtml.indexOf('<!-- 1. OFFICIAL NATIONAL PORTAL UTILITY STRIP');
+// 2. Ministerial Masthead (Utility strip removed per design request)
 const mastheadStart = indexHtml.indexOf('<!-- 2. MINISTERIAL MASTHEAD');
-const utilityBar = indexHtml.substring(utilStart, mastheadStart).trim();
-
-// 3. Ministerial Masthead
 const stickyNavStart = indexHtml.indexOf('<!-- UNIFIED STICKY EXECUTIVE NAVIGATION HEADER');
 const masthead = indexHtml.substring(mastheadStart, stickyNavStart).trim();
 
 // 4. Unified Sticky Executive Navigation Header (Primary Nav + Sentinel Directory)
+const breadcrumbStart = indexHtml.indexOf('<!-- PAGE IDENTITY BREADCRUMB BAR -->');
 const mainContentStart = indexHtml.indexOf('<!-- Main Content Container -->');
-const stickyNavHeader = indexHtml.substring(stickyNavStart, mainContentStart).trim();
+const stickyNavHeader = indexHtml.substring(stickyNavStart, breadcrumbStart).trim();
 
 // 5. Sentinel Directory Bar (preserved for backward-compat test scripts)
 const sentinelNavStart = indexHtml.indexOf('<!-- 3B. INDEPENDENT SENTINEL DIRECTORY BAR');
-const sentinelNavStrip = indexHtml.substring(sentinelNavStart, mainContentStart).trim();
+const sentinelNavStrip = indexHtml.substring(sentinelNavStart, breadcrumbStart).trim();
 
 // 6. Shared KPI Section
 const kpiStart = indexHtml.indexOf('<!-- Dynamic 4 Summary KPI Cards');
@@ -35,8 +32,8 @@ const filterTabBarStart = indexHtml.indexOf('<!-- Quick Filter Tabs');
 const tableHeaderBar = indexHtml.substring(tableHeaderBarStart, filterTabBarStart).trim();
 
 // 8. Filter Tab Bar
-const trendsSecStart = indexHtml.indexOf('<!-- BHAVISHYA-REKHA Trend & Forecast Sentinel Section');
-const filterTabBar = indexHtml.substring(filterTabBarStart, trendsSecStart).trim();
+const chakraStart = indexHtml.indexOf('<!-- Feature 4 Dedicated Interactive Network Ego-Graph');
+const filterTabBar = indexHtml.substring(filterTabBarStart, chakraStart).trim();
 
 // 9. Table Container and Pagination Footer
 const tableContainerStart = indexHtml.indexOf('<!-- Real Data Table -->');
@@ -54,7 +51,6 @@ const footer = indexHtml.substring(footerStart, footerEnd).trim();
 
 // Feature-Specific Specialized Visualizer Sections
 // A. Chakra-Vyuh graph section
-const chakraStart = indexHtml.indexOf('<!-- Feature 4 Dedicated Interactive Network Ego-Graph');
 const benfordStart = indexHtml.indexOf('<!-- Feature 6 Dedicated Interactive Benford');
 const chakraSection = indexHtml.substring(chakraStart, benfordStart).trim().replace('style="display: none;"', 'style="display: block;"');
 
@@ -66,8 +62,9 @@ const benfordSection = indexHtml.substring(benfordStart, bhuStart).trim().replac
 const bhuSection = indexHtml.substring(bhuStart, tableContainerStart).trim().replace('style="display: none;"', 'style="display: block;"');
 
 // D. Samvaad Copilot Card
-const samvaadStart = indexHtml.indexOf('<!-- 4. SATARK-SAMVAAD GenAI Investigation Copilot Card -->');
-const samvaadSection = indexHtml.substring(samvaadStart, kpiStart).trim();
+const samvaadStart = indexHtml.indexOf('<!-- 09. CORE MODULE 09: SATARK-SAMVAAD');
+const prashnaStart = indexHtml.indexOf('<!-- 10. CORE MODULE 10: PRASHNA-KAVACH');
+const samvaadSection = indexHtml.substring(samvaadStart, prashnaStart).trim().replace('style="display: none;"', 'style="display: block;"');
 
 // Function to generate the Unified Sticky Header with accurate active states
 function getStickyNavHeader(activeView, activeNav) {
@@ -85,6 +82,9 @@ const pages = [
     fileName: 'vidhi-kavach.html',
     pageId: 'vidhi-kavach',
     mainView: 'overview',
+    sentinelCode: 'S-01',
+    chipClass: 'red',
+    shortTitle: 'VIDHI-KAVACH (विधि-कवच)',
     title: 'VIDHI-KAVACH (विधि-कवच) · Statutory Compliance & Negative List Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-01: VIDHI-KAVACH (विधि-कवच — STATUTORY POLICY SHIELD)',
     tagColor: '#fee2e2',
@@ -101,6 +101,9 @@ const pages = [
     fileName: 'punar-drishti.html',
     pageId: 'punar-drishti',
     mainView: 'overview',
+    sentinelCode: 'S-02',
+    chipClass: 'purple',
+    shortTitle: 'PUNAR-DRISHTI (पुनर्दृष्टि)',
     title: 'PUNAR-DRISHTI (पुनर्दृष्टि) · NLP Duplicate Claims & Twin Works Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-02: PUNAR-DRISHTI (पुनर्दृष्टि — NLP DUPLICATE SENTRY)',
     tagColor: '#f3e8ff',
@@ -117,6 +120,9 @@ const pages = [
     fileName: 'artha-darpan.html',
     pageId: 'artha-darpan',
     mainView: 'overview',
+    sentinelCode: 'S-03',
+    chipClass: 'amber',
+    shortTitle: 'ARTHA-DARPAN (अर्थ-दर्पण)',
     title: 'ARTHA-DARPAN (अर्थ-दर्पण) · CPWD DSR Benchmark & Price Inflation Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-03: ARTHA-DARPAN (अर्थ-दर्पण — COST INTEGRITY SENTRY)',
     tagColor: '#fef3c7',
@@ -133,6 +139,9 @@ const pages = [
     fileName: 'chakra-vyuh.html',
     pageId: 'chakra-vyuh',
     mainView: 'networks',
+    sentinelCode: 'S-04',
+    chipClass: 'crimson',
+    shortTitle: 'CHAKRA-VYUH (चक्रव्यूह)',
     title: 'CHAKRA-VYUH (चक्रव्यूह) · Contractor Cartel & Vendor Nexus Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-04: CHAKRA-VYUH (चक्रव्यूह — CARTEL NEXUS SENTRY)',
     tagColor: '#ffe4e6',
@@ -149,6 +158,9 @@ const pages = [
     fileName: 'vibhed-netra.html',
     pageId: 'vibhed-netra',
     mainView: 'overview',
+    sentinelCode: 'S-05',
+    chipClass: 'teal',
+    shortTitle: 'VIBHED-NETRA (विभेद-नेत्र)',
     title: 'VIBHED-NETRA (विभेद-नेत्र) · 12-Dimensional Isolation Forest Anomaly Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-05: VIBHED-NETRA (विभेद-नेत्र — ML ANOMALY SENTRY)',
     tagColor: '#ccfbf1',
@@ -165,6 +177,9 @@ const pages = [
     fileName: 'sankhya-satya.html',
     pageId: 'sankhya-satya',
     mainView: 'overview',
+    sentinelCode: 'S-06',
+    chipClass: 'indigo',
+    shortTitle: 'SANKHYA-SATYA (संख्या-सत्य)',
     title: 'SANKHYA-SATYA (संख्या-सत्य) · Benford Forensic Digit & Tender-Splitting Sentry | MPLADS-SATARK',
     tag: 'SENTINEL S-06: SANKHYA-SATYA (संख्या-सत्य — MATHEMATICAL FORENSIC SENTRY)',
     tagColor: '#e0e7ff',
@@ -181,6 +196,9 @@ const pages = [
     fileName: 'bhu-drishti.html',
     pageId: 'bhu-drishti',
     mainView: 'map',
+    sentinelCode: 'S-07',
+    chipClass: 'emerald',
+    shortTitle: 'BHU-DRISHTI (भू-दृष्टि)',
     title: 'BHU-DRISHTI (भू-दृष्टि) · Geospatial Satellite Sentry & Ghost Asset Radar | MPLADS-SATARK',
     tag: 'SENTINEL S-07: BHU-DRISHTI (भू-दृष्टि — GEOSPATIAL SATELLITE RADAR)',
     tagColor: '#d1fae5',
@@ -197,6 +215,9 @@ const pages = [
     fileName: 'samvaad.html',
     pageId: 'samvaad',
     mainView: 'investigate',
+    sentinelCode: 'AI',
+    chipClass: 'blue',
+    shortTitle: 'SATARK-SAMVAAD (सतर्क संवाद)',
     title: 'SATARK-SAMVAAD (सतर्क संवाद) · GenAI Natural Language Audit Copilot | MPLADS-SATARK',
     tag: 'SATARK-SAMVAAD (सतर्क संवाद) — GENAI AUDIT COPILOT',
     tagColor: '#dbeafe',
@@ -236,16 +257,39 @@ pages.forEach(p => {
     </section>
   `;
 
+  const breadcrumbBar = `
+  <!-- PAGE IDENTITY BREADCRUMB BAR -->
+  <nav class="page-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="breadcrumb-container">
+      <div class="breadcrumb-trail">
+        <a href="index.html" class="bc-root" title="National Risk Overview">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>MPLADS-SATARK</span>
+        </a>
+        <span class="bc-sep">/</span>
+        <span class="bc-current" id="bc-current-page">
+          <span class="bc-sentinel-chip ${p.chipClass}">${p.sentinelCode}</span>
+          <span><b>${p.shortTitle}</b></span>
+        </span>
+      </div>
+      <div class="breadcrumb-context-badge" id="bc-context-badge">
+        <span class="bc-pulse-dot"></span>
+        <span id="bc-status-text">Dedicated Sentinel Mode · MoSPI eSAKSHI Verified</span>
+      </div>
+    </div>
+  </nav>
+  `;
+
   const pageHtml = `<!DOCTYPE html>
 <html lang="en">
 ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
 <body data-page="${p.pageId}">
 
-  ${utilityBar}
-
   ${masthead}
 
   ${currentStickyNav}
+
+  ${breadcrumbBar}
 
   <!-- Main Content Container -->
   <main class="page-container">
