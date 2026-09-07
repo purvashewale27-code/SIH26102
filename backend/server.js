@@ -17,7 +17,7 @@ const compositeScorer = require('./ml/composite_scorer');
 const dossierGenerator = require('./services/dossier_generator');
 const groqCopilot = require('./services/groq_copilot');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
 
 let allProjects = [];
@@ -851,8 +851,13 @@ const server = http.createServer(async (req, res) => {
   res.end('Not Found');
 });
 
-server.listen(PORT, () => {
-  console.log(`\n======================================================`);
-  console.log(`🚀 Step 1 Server Running: http://localhost:${PORT}`);
-  console.log(`======================================================\n`);
-});
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`\n======================================================`);
+    console.log(`🚀 Step 1 Server Running: http://localhost:${PORT}`);
+    console.log(`======================================================\n`);
+  });
+}
+
+module.exports = server;
+
