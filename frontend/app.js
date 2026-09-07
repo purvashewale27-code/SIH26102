@@ -2149,7 +2149,7 @@ function openModal(project) {
     <div style="display:flex; align-items:center; gap:16px;">
       <div style="text-align:center; background:#ffffff; border:2px solid ${riskColor}; padding:10px 16px; border-radius:8px;">
         <div style="font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase;">Composite Score</div>
-        <div style="font-family:var(--font-mono); font-size:26px; font-weight:900; color:${riskColor}; line-height:1.1;">${comp.score} / 100</div>
+        <div style="font-family:var(--font-number); font-size:26px; font-weight:800; letter-spacing:-0.02em; font-variant-numeric:tabular-nums lining-nums; color:${riskColor}; line-height:1.1;">${comp.score} / 100</div>
         <div style="font-size:10px; font-weight:800; color:${riskColor}; margin-top:2px;">${riskLabel}</div>
       </div>
       <div>
@@ -2298,7 +2298,7 @@ function openModal(project) {
     locSec.innerHTML = `
       <div style="font-size:12px; font-weight:800; color:#047857; margin-bottom:4px;">BHU-DRISHTI Geospatial Location</div>
       <div style="font-size:11px; color:#475569;">
-        Latitude: <b style="font-family:var(--font-mono);">${project.lat.toFixed(5)}°N</b> | Longitude: <b style="font-family:var(--font-mono);">${project.lon.toFixed(5)}°E</b> | District: <b>${project.district}</b>
+        Latitude: <b style="font-family:var(--font-number); font-variant-numeric:tabular-nums lining-nums;">${project.lat.toFixed(5)}°N</b> | Longitude: <b style="font-family:var(--font-number); font-variant-numeric:tabular-nums lining-nums;">${project.lon.toFixed(5)}°E</b> | District: <b>${project.district}</b>
       </div>
     `;
     findingsContainer.appendChild(locSec);
@@ -4323,7 +4323,7 @@ function openGovPolicyModal(type) {
           <h4 style="color:var(--gov-navy); margin-bottom:8px; font-size:14px;">Accessible Architectural Features</h4>
           <ul style="padding-left:18px; line-height:1.8;">
             <li><b>Text Scaling Engine:</b> The top utility bar provides instant font resizing (<code>A-</code>, <code>A</code>, <code>A+</code>) with high-contrast legibility.</li>
-            <li><b>Tabular Numeral Typography:</b> Uses JetBrains Mono and IBM Plex Mono (<code>font-variant-numeric: tabular-nums</code>) ensuring right-aligned figures never jitter during screen reader traversal.</li>
+            <li><b>Executive Tabular Typography:</b> Employs Plus Jakarta Sans and Inter (<code>font-variant-numeric: tabular-nums lining-nums</code>) ensuring right-aligned figures and financial metrics align with mathematical precision without robotic monospace artifacts.</li>
             <li><b>Full Keyboard Operability:</b> Complete keyboard traversal via <code>Tab</code>, quick project search via <code>Ctrl+K</code>, and modal dismissal via <code>Escape</code>.</li>
             <li><b>Semantic ARIA Landmarks:</b> High-contrast ratio (≥ 4.5:1 for normal text, ≥ 3:1 for large display figures) across all components.</li>
           </ul>

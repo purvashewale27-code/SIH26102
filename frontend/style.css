@@ -51,8 +51,8 @@
   /* Official Government Typography */
   --font-serif: 'Lora', 'Georgia', 'Cambria', serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', 'Consolas', monospace;
-  --font-number: 'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', 'Consolas', monospace;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', 'Consolas', monospace;
+  --font-number: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --font-heading: var(--font-serif);
   --font-body: var(--font-sans);
@@ -1075,13 +1075,13 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .kpi-number {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 26px;
   font-weight: 700;
   color: var(--gov-text-primary);
   letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1, "zero" 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
   margin-bottom: 4px;
 }
 
@@ -1553,16 +1553,20 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 
 .digit-label {
   margin-top: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 11px;
   font-weight: 800;
   color: #1e1b4b;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .digit-val-text {
   font-size: 9.5px;
   font-weight: 700;
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
   margin-bottom: 2px;
   white-space: nowrap;
 }
@@ -1796,10 +1800,12 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .modal-cost {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-weight: 800;
   color: #0f172a;
   font-size: 16px;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .modal-grid-2 {
@@ -2292,11 +2298,14 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .sim-score-num {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 34px;
   font-weight: 800;
   color: #dc2626;
   line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .sim-score-denom {
@@ -2426,13 +2435,15 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .waterfall-pts-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-weight: 700;
   color: #b91c1c;
   background: #fee2e2;
   padding: 1px 6px;
   border-radius: 3px;
   display: inline-block;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .btn-dossier-outline {
@@ -2650,10 +2661,12 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .memo-score-val {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 18px;
   font-weight: 800;
   color: #b91c1c;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .memo-tier-val {
@@ -2815,10 +2828,13 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .prov-kpi-val {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 24px;
   font-weight: 800;
   color: #1e3a8a;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .prov-kpi-lbl {
@@ -3484,11 +3500,14 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .dial-score {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 38px;
-  font-weight: 700;
+  font-weight: 800;
   color: #fca5a5;
   line-height: 1;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .dial-denom {
@@ -3643,9 +3662,11 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
 }
 
 .s-count {
-  font-family: var(--font-mono);
+  font-family: var(--font-number);
   font-size: 14px;
   font-weight: 700;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 /* ==========================================================
@@ -3750,13 +3771,18 @@ html.lenis, html.lenis body {
 .pagination-footer span,
 .memo-meta-table td,
 .memo-ref-bar span,
-.barcode-visual,
-.barcode-sub,
-code,
-kbd {
+.macro-stat-num,
+.bento-metric-val,
+.sentinel-stat-val,
+.digit-label,
+.digit-val-text,
+.modal-cost,
+.prov-kpi-val,
+.shap-item-points,
+.chip-value {
   font-family: var(--font-number) !important;
-  font-feature-settings: "tnum" 1, "zero" 1, "cv01" 1, "cv02" 1 !important;
-  font-variant-numeric: tabular-nums lining-nums slashed-zero !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+  font-variant-numeric: tabular-nums lining-nums !important;
 }
 
 /* Financial Outlay & Alignment in Tables */
@@ -3769,7 +3795,7 @@ kbd {
   font-family: var(--font-number) !important;
   font-weight: 700 !important;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
   letter-spacing: -0.01em;
   color: var(--gov-text-primary) !important;
 }
@@ -3788,7 +3814,7 @@ kbd {
   font-weight: 700;
   letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
 }
 
 /* Hero Section Metrics Numbers */
@@ -3798,7 +3824,7 @@ kbd {
   font-weight: 700;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
 }
 
 /* Dial Score in Hero */
@@ -3808,7 +3834,7 @@ kbd {
   font-weight: 800;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
 }
 
 .dial-denom {
@@ -3816,6 +3842,8 @@ kbd {
   font-size: 14px;
   font-weight: 600;
   color: #cbd5e1;
+  font-variant-numeric: tabular-nums lining-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
 }
 
 /* Tab Count Badges in Filter Bars */
@@ -3823,7 +3851,8 @@ kbd {
   font-family: var(--font-number) !important;
   font-size: 10.5px;
   font-weight: 700;
-  font-variant-numeric: tabular-nums !important;
+  font-variant-numeric: tabular-nums lining-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
   background: var(--gov-surface-subtle);
   color: var(--gov-text-muted);
   border: 1px solid var(--gov-border);
@@ -3846,7 +3875,7 @@ kbd {
   font-size: 14.5px;
   font-weight: 700;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
   letter-spacing: -0.02em;
 }
 
@@ -3857,7 +3886,7 @@ kbd {
   font-size: 24px;
   font-weight: 800;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
   letter-spacing: -0.02em;
 }
 
@@ -3865,7 +3894,7 @@ kbd {
 .score-badge-num {
   font-family: var(--font-number) !important;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
   font-weight: 700;
 }
 
@@ -3873,7 +3902,7 @@ kbd {
 .waterfall-pts-badge {
   font-family: var(--font-number) !important;
   font-variant-numeric: tabular-nums lining-nums !important;
-  font-feature-settings: "tnum" 1, "zero" 1 !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
   font-weight: 700;
   font-size: 11px;
 }
@@ -5083,6 +5112,9 @@ body[data-page="samvaad"] .feature-hero-card {
   font-weight: 800;
   line-height: 1.1;
   color: var(--gov-text);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .bento-metric-tag {
@@ -5348,7 +5380,7 @@ body[data-page="samvaad"] .feature-hero-card {
 }
 
 .eyebrow-text {
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -5356,27 +5388,39 @@ body[data-page="samvaad"] .feature-hero-card {
   white-space: nowrap;
 }
 
-/* Emblem Badge */
+/* Real Project Emblem Badge */
 .hero-emblem-badge {
-  width: 54px;
-  height: 54px;
+  width: 68px;
+  height: 68px;
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(224, 169, 109, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  margin-bottom: 12px;
-  padding: 6px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), 0 0 16px rgba(224, 169, 109, 0.3);
+  margin-bottom: 14px;
+  padding: 2px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-emblem-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 22px rgba(224, 169, 109, 0.45);
 }
 
 .hero-emblem-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
-.india-gate-svg {
+.india-gate-monument-svg,
+.india-gate-svg,
+.india-map-svg {
   width: 100%;
   height: 100%;
   display: block;
@@ -5399,7 +5443,7 @@ body[data-page="samvaad"] .feature-hero-card {
 }
 
 .ministry-gold {
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 800;
   color: #e0a96d;
@@ -5514,16 +5558,19 @@ body[data-page="samvaad"] .feature-hero-card {
 }
 
 .macro-stat-num {
-  font-family: var(--font-number, monospace);
+  font-family: var(--font-number);
   font-size: 26px;
   font-weight: 800;
   color: #ffffff;
   line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
   margin-bottom: 4px;
 }
 
 .macro-stat-label {
-  font-family: var(--font-mono, monospace);
+  font-family: var(--font-sans);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
