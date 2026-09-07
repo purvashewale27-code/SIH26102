@@ -15,6 +15,7 @@ const sankhyaSatya = require('./ml/sankhya_satya');
 const bhuDrishti = require('./ml/bhu_drishti');
 const compositeScorer = require('./ml/composite_scorer');
 const dossierGenerator = require('./services/dossier_generator');
+const groqCopilot = require('./services/groq_copilot');
 
 const PORT = 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_recommended_completed.json');
@@ -203,7 +204,7 @@ if (fs.existsSync(DATA_FILE)) {
 }
 
 // 2. Simple HTTP Server
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = reqUrl.pathname;
 
@@ -450,52 +451,114 @@ const server = http.createServer((req, res) => {
 
   // API 2F: SATARK-SAMVAAD GenAI Copilot Query Processor over 176,925 MoSPI records
   if (pathname === '/api/samvaad') {
-    const query = (reqUrl.searchParams.get('q') || '').toLowerCase().trim();
+    const rawQuery = (reqUrl.searchParams.get('q') || '').trim();
+    const query = rawQuery.toLowerCase();
+    
+    // Check user intent
+    const GREETING_REGEX = /^(hello|hi|hey|greetings|namaste|who are you|what can you do|help|howdy)(\s+.*)?$/i;
+    const isGreeting = GREETING_REGEX.test(query);
+    const isDrafting = /\b(draft|notice|memo|show cause|letter|inquiry order|charge sheet)\b/i.test(query);
+
     let results = allProjects;
 
-    // 1. Extract State filter if present
-    const stateMatch = Array.from(statesSet).find(s => query.includes(s.toLowerCase()));
-    if (stateMatch) {
-      results = results.filter(p => p.state.toLowerCase() === stateMatch.toLowerCase());
-    }
+    if (!isGreeting) {
+      // 1. Extract State filter if present
+      const stateMatch = Array.from(statesSet).find(s => query.includes(s.toLowerCase()));
+      if (stateMatch) {
+        results = results.filter(p => p.state && p.state.toLowerCase() === stateMatch.toLowerCase());
+      } else {
+        // Check for specific District or Constituency keywords (e.g. Varanasi, Patna, Alwar, etc.)
+        const matchedLocProject = allProjects.find(p => 
+          (p.district && p.district.length > 3 && query.includes(p.district.toLowerCase())) ||
+          (p.constituency && p.constituency.length > 3 && query.includes(p.constituency.toLowerCase()))
+        );
+        if (matchedLocProject) {
+          const targetLoc = (matchedLocProject.district || matchedLocProject.constituency).toLowerCase();
+          results = results.filter(p => 
+            (p.district && p.district.toLowerCase().includes(targetLoc)) ||
+            (p.constituency && p.constituency.toLowerCase().includes(targetLoc))
+          );
+        }
+      }
 
-    // 2. Extract Cost / Threshold filter if present
-    if (query.includes('5 lakh') || query.includes('5l') || query.includes('procurement threshold')) {
-      results = results.filter(p => p.cost < 500000 && p.cost >= 450000);
-    } else if (query.includes('below 10 lakh') || query.includes('below 10l')) {
-      results = results.filter(p => p.cost < 1000000);
-    }
+      // 2. Extract Activity / Title keywords if present (e.g. solar, cctv, road, ambulance)
+      const activityKeywords = ['solar', 'road', 'school', 'cctv', 'water', 'hospital', 'ambulance', 'light', 'bridge', 'community', 'pcc'];
+      const matchedKeyword = activityKeywords.find(kw => query.includes(kw));
+      if (matchedKeyword) {
+        const keywordMatches = results.filter(p => p.title && p.title.toLowerCase().includes(matchedKeyword));
+        if (keywordMatches.length > 0) {
+          results = keywordMatches;
+        }
+      }
 
-    // 3. Extract Sentinel / Risk type filter if present
-    if (query.includes('high risk') || query.includes('critical risk') || query.includes('top 10')) {
-      results = results.filter(p => p.composite && p.composite.priorityScore >= 70);
-    } else if (query.includes('march rush')) {
-      results = results.filter(p => p.audit && p.audit.violations.some(v => v.ruleId === 'MARCH-RUSH'));
-    } else if (query.includes('duplicate')) {
-      results = results.filter(p => p.duplicate && p.duplicate.isDuplicate);
-    } else if (query.includes('contractor') || query.includes('cartel') || query.includes('nexus')) {
-      results = results.filter(p => p.chakra && p.chakra.hasCartelRisk);
-    } else if (query.includes('ghost') || query.includes('geotag')) {
-      results = results.filter(p => p.bhu_drishti && p.bhu_drishti.isGhostAsset);
-    } else if (query.includes('tender split') || query.includes('splitting')) {
-      results = results.filter(p => p.sankhya && p.sankhya.isThresholdSplit);
+      // 3. Extract Cost / Threshold filter if present
+      if (query.includes('5 lakh') || query.includes('5l') || query.includes('procurement threshold')) {
+        results = results.filter(p => p.cost < 500000 && p.cost >= 450000);
+      } else if (query.includes('below 10 lakh') || query.includes('below 10l')) {
+        results = results.filter(p => p.cost < 1000000);
+      }
+
+      // 4. Extract Sentinel / Risk type filter if present
+      if (query.includes('high risk') || query.includes('critical risk') || query.includes('top 10')) {
+        results = results.filter(p => {
+          const s = p.composite ? (p.composite.score ?? p.composite.priorityScore ?? 0) : 0;
+          return s >= 55;
+        });
+      } else if (query.includes('march rush')) {
+        results = results.filter(p => p.audit && p.audit.violations.some(v => v.ruleId === 'MARCH-RUSH'));
+      } else if (query.includes('duplicate')) {
+        results = results.filter(p => p.duplicate && p.duplicate.isDuplicate);
+      } else if (query.includes('contractor') || query.includes('cartel') || query.includes('nexus')) {
+        results = results.filter(p => p.chakra && p.chakra.hasCartelRisk);
+      } else if (query.includes('ghost') || query.includes('geotag')) {
+        results = results.filter(p => p.bhu_drishti && p.bhu_drishti.isGhostAsset);
+      } else if (query.includes('tender split') || query.includes('splitting')) {
+        results = results.filter(p => p.sankhya && p.sankhya.isThresholdSplit);
+      }
     }
 
     // Sort by composite risk score descending
-    results.sort((a, b) => (b.composite ? b.composite.priorityScore : 0) - (a.composite ? a.composite.priorityScore : 0));
+    results.sort((a, b) => {
+      const scoreA = a.composite ? (a.composite.score ?? a.composite.priorityScore ?? 0) : 0;
+      const scoreB = b.composite ? (b.composite.score ?? b.composite.priorityScore ?? 0) : 0;
+      return scoreB - scoreA;
+    });
 
-    // Limit to top 25 matches for responsive rendering
-    const topMatches = results.slice(0, 25);
+    // Limit matches for responsive rendering
+    const topMatches = isGreeting ? results.slice(0, 5) : results.slice(0, 25);
     const totalExposure = results.reduce((sum, p) => sum + p.cost, 0);
     const exposureInCr = (totalExposure / 10000000).toFixed(2);
+    const defaultSummary = isGreeting 
+      ? `Welcome to SATARK-SAMVAAD, your AI Vigilance and Audit Copilot. Monitoring 1,76,925 MoSPI works nationwide with total financial exposure of ₹${exposureInCr} Cr.`
+      : `Found ${results.length.toLocaleString('en-IN')} MoSPI works matching query criteria with total financial exposure of ₹${exposureInCr} Cr. High-risk projects require field verification under GFR Rule 144.`;
+
+    // Real GenAI Inference on Groq LPU
+    let aiResult = null;
+    try {
+      aiResult = await groqCopilot.generateAuditResponse(rawQuery || 'General Investigation', {
+        totalMatches: results.length,
+        exposureInCr,
+        topMatches,
+        isGreeting,
+        isDrafting
+      });
+    } catch (aiErr) {
+      console.error('Groq AI invocation failed, using deterministic fallback:', aiErr.message);
+    }
 
     return sendJson({
       status: 'success',
-      query: reqUrl.searchParams.get('q') || 'General Investigation',
+      query: rawQuery || 'General Investigation',
+      isGreeting,
+      isDrafting,
+      isRealAI: Boolean(aiResult && aiResult.success),
+      model: aiResult && aiResult.success ? aiResult.model : 'Deterministic Rule-Based Engine',
+      responseTimeMs: aiResult ? aiResult.responseTimeMs : 15,
+      aiResponse: (aiResult && aiResult.success) ? aiResult.aiText : defaultSummary,
+      summary: defaultSummary,
       totalMatches: results.length,
       financialExposureFormatted: `₹${exposureInCr} Cr`,
-      summary: `Found ${results.length} MoSPI works matching query criteria with total financial exposure of ₹${exposureInCr} Cr. High-risk projects require field verification under GFR Rule 144.`,
-      projects: topMatches
+      projects: isGreeting ? [] : topMatches
     });
   }
 

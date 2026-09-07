@@ -3111,6 +3111,141 @@ body:not(:has(.sticky-nav-header)) .sentinel-nav-strip {
   margin-bottom: 10px;
 }
 
+/* SATARK-SAMVAAD GENAI AI PROSE & BADGE STYLING */
+.ai-copilot-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-left: 4px solid var(--gov-cobalt);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.ai-copilot-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ai-copilot-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ai-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+}
+
+.ai-dot-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+  animation: aiDotPulse 1.8s infinite ease-out;
+}
+
+@keyframes aiDotPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.ai-model-tag {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.ai-speed-tag {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.ai-exposure-badge {
+  font-size: 12px;
+  color: #334155;
+}
+
+.ai-prose-content {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #1e293b;
+}
+
+.ai-prose-content h2,
+.ai-prose-content h3,
+.ai-prose-content h4 {
+  color: var(--gov-navy);
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.ai-prose-content ul,
+.ai-prose-content ol {
+  margin-top: 6px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.ai-prose-content li {
+  margin-bottom: 4px;
+}
+
+.ai-prose-content p {
+  margin-bottom: 10px;
+}
+
+.ai-prose-content hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 12px 0;
+}
+
+.ai-prose-content strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.ai-prose-content blockquote {
+  border-left: 3px solid #3b82f6;
+  background: #f8fafc;
+  padding: 8px 14px;
+  margin: 10px 0;
+  border-radius: 0 6px 6px 0;
+  color: #334155;
+  font-style: italic;
+}
+
 /* PRASHNA-KAVACH EVIDENCE DRAWER */
 .prashna-evidence-card {
   background: #ffffff;

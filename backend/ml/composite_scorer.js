@@ -212,7 +212,9 @@ function calculateCompositeScore(p) {
 
   return {
     score: finalScore,
+    priorityScore: finalScore,
     tier: tier,
+    riskTier: tier,
     tierColor: tierColor,
     shapSummary: shapSummary,
     predictiveRisk: predictiveRisk,

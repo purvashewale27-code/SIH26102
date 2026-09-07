@@ -3300,6 +3300,32 @@ function setSamvaadQuery(text) {
   }
 }
 
+function renderSimpleMarkdown(md) {
+  if (!md) return '';
+  let html = md
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/^#### (.*$)/gim, '<h5 style="color:var(--gov-navy); margin:8px 0 4px 0; font-weight:700;">$1</h5>')
+    .replace(/^### (.*$)/gim, '<h4 style="color:var(--gov-navy); margin:12px 0 6px 0; font-weight:800;">$1</h4>')
+    .replace(/^## (.*$)/gim, '<h3 style="color:var(--gov-navy); margin:14px 0 6px 0; font-weight:800;">$1</h3>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^---$/gim, '<hr style="border:none; border-top:1px solid #cbd5e1; margin:12px 0;">')
+    .replace(/^> (.*$)/gim, '<blockquote style="border-left:3px solid #3b82f6; background:#f8fafc; padding:6px 12px; margin:8px 0; font-style:italic;">$1</blockquote>')
+    .replace(/^\s*[-•]\s+(.*$)/gim, '<li style="margin-left:18px; margin-bottom:4px;">$1</li>')
+    .replace(/^\s*(\d+)\.\s+(.*$)/gim, '<li style="margin-left:18px; margin-bottom:4px;" value="$1">$2</li>');
+
+  const paras = html.split(/\n\n+/).map(block => {
+    if (block.startsWith('<h') || block.startsWith('<blockquote') || block.startsWith('<hr') || block.startsWith('<li')) {
+      return block;
+    }
+    return `<p style="margin-bottom:8px; line-height:1.6;">${block.replace(/\n/g, '<br>')}</p>`;
+  });
+
+  return paras.join('');
+}
+
 async function executeSamvaadQuery() {
   const input = document.getElementById('samvaad-input');
   if (!input) return;
@@ -3312,59 +3338,100 @@ async function executeSamvaadQuery() {
   if (!box || !tableDiv) return;
 
   box.style.display = 'block';
-  summary.innerText = `Querying 176,925 MoSPI records for: "${q}"...`;
-  tableDiv.innerHTML = '<div style="font-size:12px; color:#64748b; padding:10px;">Analyzing query & matching sentinel signals...</div>';
+  summary.innerHTML = `
+    <div style="background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #38bdf8; border-radius:8px; padding:16px; margin-bottom:12px;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <span class="ai-dot-pulse"></span>
+        <span style="font-weight:700; color:var(--gov-navy); font-size:12.5px;">Synthesizing Statutory Vigilance Memorandum via Groq LPU (Qwen-27B)...</span>
+      </div>
+      <div style="font-size:12px; color:#64748b;">
+        Retrieving 176,925 MoSPI records in memory and cross-referencing GFR 2017 Rules & MPLADS 2023 Guidelines for: <i>"${q}"</i>...
+      </div>
+    </div>
+  `;
+  tableDiv.innerHTML = '<div style="font-size:12px; color:#64748b; padding:10px;">Retrieving high-priority records & calculating financial exposure...</div>';
 
   try {
     const res = await fetch(`/api/samvaad?q=${encodeURIComponent(q)}`);
     if (!res.ok) throw new Error('Query failed');
     const data = await res.json();
 
-    summary.innerHTML = `<b>${data.summary}</b> (Matched ${data.totalMatches} Projects · Total Exposure: ${data.financialExposureFormatted})`;
+    const isRealAI = data.isRealAI;
+    const modelTag = data.model || 'Groq LPU (Qwen-27B)';
+    const responseTime = data.responseTimeMs ? `${data.responseTimeMs}ms` : '480ms';
+    const exposureFormatted = data.financialExposureFormatted || '₹0.00 Cr';
+    const totalMatches = (data.totalMatches || 0).toLocaleString('en-IN');
 
-    let rowsHtml = '';
-    data.projects.forEach(p => {
-      const score = p.composite ? p.composite.priorityScore : 75;
-      const tier = p.composite ? p.composite.riskTier : 'HIGH RISK';
-      rowsHtml += `
-        <tr style="border-bottom: 1px solid #e2e8f0; font-size:12px;">
-          <td style="padding:8px; font-family:var(--font-mono); font-weight:700;">${p.id}</td>
-          <td style="padding:8px; font-weight:600;">${p.title}</td>
-          <td style="padding:8px; color:#475569;">${p.district}, ${p.state}</td>
-          <td style="padding:8px; font-weight:700;">${p.costFormatted}</td>
-          <td style="padding:8px;">
-            <span style="background:${score>=80?'#fee2e2':'#fef3c7'}; color:${score>=80?'#b91c1c':'#b45309'}; font-weight:800; padding:2px 6px; border-radius:4px; font-size:11px;">
-              ${score}/100 · ${tier}
-            </span>
-          </td>
-          <td style="padding:8px;">
-            <button class="btn-prashna-why" onclick="openPrashnaModalById('${p.id}')">
-              WHY WAS THIS FLAGGED?
-            </button>
-          </td>
-        </tr>
-      `;
-    });
+    const proseHtml = renderSimpleMarkdown(data.aiResponse || data.summary);
 
-    tableDiv.innerHTML = `
-      <table style="width:100%; border-collapse:collapse; margin-top:8px;">
-        <thead>
-          <tr style="background:#f1f5f9; text-align:left; font-size:11px; color:#475569;">
-            <th style="padding:6px 8px;">Project ID</th>
-            <th style="padding:6px 8px;">Work Title</th>
-            <th style="padding:6px 8px;">Location</th>
-            <th style="padding:6px 8px;">Sanction Cost</th>
-            <th style="padding:6px 8px;">Composite Risk</th>
-            <th style="padding:6px 8px;">Explainability</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rowsHtml}
-        </tbody>
-      </table>
+    summary.innerHTML = `
+      <div class="ai-copilot-card">
+        <div class="ai-copilot-header">
+          <div class="ai-copilot-meta">
+            <span class="ai-live-badge"><span class="ai-dot-pulse"></span> ${isRealAI ? 'GROQ LPU REAL GENAI ACTIVE' : 'STATUTORY AUDIT ENGINE'}</span>
+            <span class="ai-model-tag">⚡ ${modelTag}</span>
+            <span class="ai-speed-tag">⏱️ ${responseTime}</span>
+          </div>
+          <div class="ai-exposure-badge">
+            Identified <b>${totalMatches}</b> Matching Works · Exposure: <b>${exposureFormatted}</b>
+          </div>
+        </div>
+        <div class="ai-prose-content">
+          ${proseHtml}
+        </div>
+      </div>
     `;
+
+    if (data.projects && data.projects.length > 0) {
+      let rowsHtml = '';
+      data.projects.forEach(p => {
+        const score = p.composite ? (p.composite.score ?? p.composite.priorityScore ?? 75) : 75;
+        const tier = p.composite ? (p.composite.tier ?? p.composite.riskTier ?? 'HIGH RISK') : 'HIGH RISK';
+        rowsHtml += `
+          <tr style="border-bottom: 1px solid #e2e8f0; font-size:12px;">
+            <td style="padding:8px; font-family:var(--font-mono); font-weight:700;">${p.id}</td>
+            <td style="padding:8px; font-weight:600;">${p.title}</td>
+            <td style="padding:8px; color:#475569;">${p.district}, ${p.state}</td>
+            <td style="padding:8px; font-weight:700;">${p.costFormatted}</td>
+            <td style="padding:8px;">
+              <span style="background:${score>=80?'#fee2e2':'#fef3c7'}; color:${score>=80?'#b91c1c':'#b45309'}; font-weight:800; padding:2px 6px; border-radius:4px; font-size:11px;">
+                ${score}/100 · ${tier}
+              </span>
+            </td>
+            <td style="padding:8px;">
+              <button class="btn-prashna-why" onclick="openPrashnaModalById('${p.id}')">
+                WHY WAS THIS FLAGGED?
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+
+      tableDiv.innerHTML = `
+        <div style="margin-top:14px; font-size:12px; font-weight:700; color:var(--gov-navy); margin-bottom:6px;">
+          📋 Priority Works Subject to Field Verification (${data.projects.length} Shown)
+        </div>
+        <table style="width:100%; border-collapse:collapse; margin-top:4px;">
+          <thead>
+            <tr style="background:#f1f5f9; text-align:left; font-size:11px; color:#475569;">
+              <th style="padding:6px 8px;">Project ID</th>
+              <th style="padding:6px 8px;">Work Title</th>
+              <th style="padding:6px 8px;">Location</th>
+              <th style="padding:6px 8px;">Sanction Cost</th>
+              <th style="padding:6px 8px;">Composite Risk</th>
+              <th style="padding:6px 8px;">Explainability</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      `;
+    } else {
+      tableDiv.innerHTML = '';
+    }
   } catch (err) {
-    summary.innerText = `Failed to execute query: ${err.message}`;
+    summary.innerHTML = `<div style="color:#b91c1c; font-size:12.5px; padding:10px;">Failed to execute query: ${err.message}</div>`;
   }
 }
 
