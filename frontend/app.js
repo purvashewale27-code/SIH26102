@@ -18,9 +18,18 @@ const limit = 20;
 let currentLoadedProjects = [];
 let statsData = null;
 
+// Ensure window.L correctly resolves to Leaflet even if third-party libraries (e.g. Lenis) declare var L
+if (typeof window !== 'undefined') {
+  if (typeof window.leaflet !== 'undefined' && (!window.L || typeof window.L.map !== 'function')) {
+    window.L = window.leaflet;
+  }
+}
+
 // Feature 7: BHU-DRISHTI Map State
 let bhuLeafletMap = null;
 let bhuMarkersLayer = null;
+let bhuClustersLayer = null;
+let bhuMapQueryDebounce = null;
 let bhuCurrentTileLayer = null;
 let bhuActiveBasemap = 'satellite';
 let bhuCurrentMapFilter = 'all-spatial';
@@ -85,17 +94,60 @@ function getPageFromUrl() {
   return 'overview';
 }
 
+function closeForensicDropdown() {
+  const enginesDropdown = document.getElementById('forensic-engines-dropdown');
+  const enginesTrigger = document.getElementById('btn-engines-menu');
+  if (enginesDropdown) enginesDropdown.classList.remove('is-open');
+  if (enginesTrigger) enginesTrigger.setAttribute('aria-expanded', 'false');
+}
+
+function setupForensicDropdown() {
+  const enginesDropdown = document.getElementById('forensic-engines-dropdown');
+  const enginesTrigger = document.getElementById('btn-engines-menu');
+  if (!enginesTrigger || !enginesDropdown) return;
+
+  enginesTrigger.onclick = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    enginesDropdown.classList.toggle('is-open');
+    const isOpen = enginesDropdown.classList.contains('is-open');
+    enginesTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
+  document.addEventListener('click', function(e) {
+    if (!enginesDropdown.contains(e.target)) {
+      enginesDropdown.classList.remove('is-open');
+      enginesTrigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      enginesDropdown.classList.remove('is-open');
+      enginesTrigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
 function initPageDispatcher() {
   const pageName = document.body.getAttribute('data-page') || getPageFromUrl();
+
+  setupForensicDropdown();
 
   // Highlight active sentinel tab in Sentinel Navigation Strip
   document.querySelectorAll('.s-nav-tab').forEach(tab => {
     if (tab.getAttribute('data-nav') === pageName) {
       tab.classList.add('active');
-    } else {
+    } else if (!tab.classList.contains('s-dropdown-trigger')) {
       tab.classList.remove('active');
     }
   });
+
+  const engineNavs = ['vidhi-kavach', 'punar-drishti', 'artha-darpan', 'chakra-vyuh', 'vibhed-netra', 'sankhya-satya', 'bhu-drishti'];
+  const enginesTrigger = document.getElementById('btn-engines-menu');
+  if (engineNavs.includes(pageName) && enginesTrigger) {
+    enginesTrigger.classList.add('active');
+  }
 
   // Highlight active main nav button and core-nav-item
   document.querySelectorAll('.main-nav-btn, .core-nav-item').forEach(btn => {
@@ -2265,15 +2317,30 @@ function closeModal() {
 // FEATURE 7: BHU-DRISHTI GIS & MAP CONTROLLER
 // ==========================================
 
+function getLeafletEngine() {
+  if (typeof window !== 'undefined') {
+    if (window.leaflet && typeof window.leaflet.map === 'function') {
+      window.L = window.leaflet;
+      return window.leaflet;
+    }
+    if (window.L && typeof window.L.map === 'function') {
+      return window.L;
+    }
+  }
+  return null;
+}
+
 function initOrUpdateBhuMap() {
   const mapContainer = document.getElementById('bhu-drishti-map');
   if (!mapContainer) return;
 
-  if (typeof L === 'undefined') {
+  const L = getLeafletEngine();
+  if (typeof L === 'undefined' || !L || typeof L.map !== 'function') {
     console.warn('Leaflet GIS Engine loading, scheduling map initialization...');
     setTimeout(initOrUpdateBhuMap, 150);
     return;
   }
+  window.L = L;
 
   // Clear any legacy custom key
   try {
@@ -2298,8 +2365,17 @@ function initOrUpdateBhuMap() {
       zoomControl: true
     });
 
+    bhuClustersLayer = L.layerGroup().addTo(bhuLeafletMap);
     bhuMarkersLayer = L.layerGroup().addTo(bhuLeafletMap);
     applyBasemap(bhuActiveBasemap || 'satellite');
+
+    // Debounce map movements (pan & zoom) to dynamically update clusters & works
+    bhuLeafletMap.on('moveend zoomend', () => {
+      if (bhuMapQueryDebounce) clearTimeout(bhuMapQueryDebounce);
+      bhuMapQueryDebounce = setTimeout(() => {
+        loadBhuMapPoints(bhuCurrentMapFilter);
+      }, 350);
+    });
   }
 
   // Force size invalidation so Leaflet recalculates viewport & tile grid
@@ -2317,7 +2393,8 @@ function initOrUpdateBhuMap() {
 }
 
 function applyBasemap(type) {
-  if (!bhuLeafletMap) return;
+  const L = getLeafletEngine();
+  if (!L || !bhuLeafletMap) return;
 
   if (bhuCurrentTileLayer) {
     bhuLeafletMap.removeLayer(bhuCurrentTileLayer);
@@ -2388,65 +2465,153 @@ window.loadBhuMapPoints = loadBhuMapPoints;
 window.switchBasemap = switchBasemap;
 
 async function loadBhuMapPoints(filterType) {
-  if (!bhuLeafletMap || !bhuMarkersLayer) return;
+  const L = getLeafletEngine();
+  if (!L || !bhuLeafletMap || !bhuMarkersLayer) return;
 
   bhuCurrentMapFilter = filterType || 'all-spatial';
   const countEl = document.getElementById('map-point-count');
-  if (countEl) countEl.innerText = 'Loading geospatial points...';
+  if (countEl) countEl.innerText = 'Synchronizing GIS cluster aggregates...';
 
   try {
-    const res = await fetch(`/api/spatial-map?filter=${encodeURIComponent(bhuCurrentMapFilter)}`);
+    const zoom = bhuLeafletMap.getZoom();
+    const bounds = bhuLeafletMap.getBounds();
+    const bboxStr = `${bounds.getSouth().toFixed(4)},${bounds.getWest().toFixed(4)},${bounds.getNorth().toFixed(4)},${bounds.getEast().toFixed(4)}`;
+    
+    const url = `/api/spatial-map?filter=${encodeURIComponent(bhuCurrentMapFilter)}&zoom=${zoom}&bounds=${encodeURIComponent(bboxStr)}`;
+    const res = await fetch(url);
     if (!res.ok) throw new Error('Failed to fetch spatial points');
     const result = await res.json();
-    const points = result.data || [];
+    
+    const clusters = result.clusters || [];
+    const points = result.points || result.data || [];
 
+    if (bhuClustersLayer) bhuClustersLayer.clearLayers();
     bhuMarkersLayer.clearLayers();
 
-    points.forEach(pt => {
-      let markerColor = '#10b981'; // Green (Verified)
-      let radius = 4;
-      let fillOpacity = 0.75;
+    // A. Render Clusters (Zonal, State, or District level)
+    if (clusters.length > 0) {
+      clusters.forEach(c => {
+        const dim = c.level === 'zonal' ? 42 : (c.level === 'state' ? 36 : 30);
+        const fontSize = c.level === 'zonal' ? 12 : (c.level === 'state' ? 11 : 10);
+        
+        const countDisplay = c.count >= 10000 
+          ? (c.count / 1000).toFixed(0) + 'k' 
+          : (c.count >= 1000 ? (c.count / 1000).toFixed(1) + 'k' : c.count);
 
-      if (pt.anomaly === 'GHOST_ASSET') {
-        markerColor = '#ef4444'; // Red (Ghost)
-        radius = 6;
-        fillOpacity = 0.95;
-      } else if (pt.anomaly === 'SPATIAL_CLUSTER') {
-        markerColor = '#a855f7'; // Purple (Cluster)
-        radius = 5;
-        fillOpacity = 0.9;
-      }
+        const pipHtml = c.ghostCount > 0 ? '<div class="bhu-cluster-pip"></div>' : '';
 
-      const marker = L.circleMarker([pt.lat, pt.lon], {
-        radius: radius,
-        fillColor: markerColor,
-        color: '#ffffff',
-        weight: 1.5,
-        opacity: 1,
-        fillOpacity: fillOpacity
-      });
-
-      const popupHtml = `
-        <div style="font-family: var(--font-sans); min-width: 220px; font-size: 12px; line-height: 1.4;">
-          <div style="font-weight: 700; color: #0f172a; margin-bottom: 3px;">${pt.title}</div>
-          <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">${pt.district}, ${pt.state}</div>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 11px;">
-            <span>Sanction: <b>${pt.costFormatted}</b></span>
-            <span style="font-weight: 700; color: ${pt.riskLevel === 'CRITICAL' ? '#dc2626' : (pt.riskLevel === 'MEDIUM' ? '#7e22ce' : '#059669')};">${pt.anomalyTitle}</span>
+        const html = `
+          <div class="bhu-cluster-disc cluster-level-${c.level}" style="width: ${dim}px; height: ${dim}px; font-size: ${fontSize}px;">
+            <span>${countDisplay}</span>
+            ${pipHtml}
           </div>
-          <div style="font-size: 10px; color: #94a3b8; margin-bottom: 8px;">GPS: ${pt.lat != null ? pt.lat.toFixed(4) : 0}°N, ${pt.lon != null ? pt.lon.toFixed(4) : 0}°E</div>
-          <button style="width: 100%; padding: 5px 8px; font-size: 11px; font-weight: 700; background: #0d9488; color: #fff; border: none; border-radius: 4px; cursor: pointer;" onclick="openModalById('${pt.id}')">
-            Inspect 4-Q XAI Details
-          </button>
-        </div>
-      `;
+        `;
 
-      marker.bindPopup(popupHtml);
-      bhuMarkersLayer.addLayer(marker);
-    });
+        const clusterIcon = L.divIcon({
+          className: 'bhu-cluster-marker',
+          html: html,
+          iconSize: [dim, dim],
+          iconAnchor: [Math.round(dim / 2), Math.round(dim / 2)]
+        });
 
+        const marker = L.marker([c.lat, c.lon], { icon: clusterIcon });
+
+        const ghostBadge = c.ghostCount > 0 
+          ? `<div style="color: #f87171; font-weight: 700; font-size: 11px; margin-top: 2px;">⚠ ${c.ghostCount.toLocaleString('en-IN')} Ghost Asset Flags</div>` 
+          : '<div style="color: #34d399; font-size: 11px;">✔ 100% Geotag Verified</div>';
+
+        const tooltipContent = `
+          <div style="min-width: 170px;">
+            <div style="font-weight: 800; font-size: 12px; color: #38bdf8; margin-bottom: 3px;">${c.name}</div>
+            <div style="color: #e2e8f0; font-size: 11px;"><b>${c.count.toLocaleString('en-IN')}</b> Total MPLADS Works</div>
+            ${ghostBadge}
+            <div style="font-size: 10px; color: #94a3b8; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 3px;">Click to drill down</div>
+          </div>
+        `;
+
+        marker.bindTooltip(tooltipContent, {
+          className: 'bhu-gis-tooltip',
+          direction: 'top',
+          offset: [0, -Math.round(dim / 2) - 4]
+        });
+
+        marker.on('click', () => {
+          if (c.bounds && Array.isArray(c.bounds) && c.bounds.length === 2) {
+            bhuLeafletMap.flyToBounds(c.bounds, {
+              padding: [50, 50],
+              duration: 1.1,
+              maxZoom: c.level === 'zonal' ? 7 : (c.level === 'state' ? 10 : 13)
+            });
+          } else {
+            bhuLeafletMap.flyTo([c.lat, c.lon], Math.min(13, zoom + 2), { duration: 1.0 });
+          }
+        });
+
+        if (bhuClustersLayer) {
+          bhuClustersLayer.addLayer(marker);
+        }
+      });
+    }
+
+    // B. Render Individual Works only at Project / Street level (zoom >= 11)
+    if (result.level === 'project') {
+      points.forEach(pt => {
+        let markerColor = '#10b981'; // Green (Verified)
+        let radius = 5;
+        let fillOpacity = 0.8;
+
+        if (pt.anomaly === 'GHOST_ASSET') {
+          markerColor = '#ef4444'; // Red (Ghost)
+          radius = 7;
+          fillOpacity = 0.95;
+        } else if (pt.anomaly === 'SPATIAL_CLUSTER') {
+          markerColor = '#a855f7'; // Purple (Cluster)
+          radius = 6;
+          fillOpacity = 0.9;
+        }
+
+        const marker = L.circleMarker([pt.lat, pt.lon], {
+          radius: radius,
+          fillColor: markerColor,
+          color: '#ffffff',
+          weight: 1.5,
+          opacity: 1,
+          fillOpacity: fillOpacity
+        });
+
+        const popupHtml = `
+          <div style="font-family: var(--font-sans); min-width: 230px; font-size: 12px; line-height: 1.4;">
+            <div style="font-weight: 700; color: #0f172a; margin-bottom: 3px;">${pt.title}</div>
+            <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">${pt.district || ''}, ${pt.state || ''}</div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 11px;">
+              <span>Sanction: <b>${pt.costFormatted || ('₹' + (pt.cost || 0).toLocaleString('en-IN'))}</b></span>
+              <span style="font-weight: 700; color: ${pt.riskLevel === 'CRITICAL' ? '#dc2626' : (pt.riskLevel === 'MEDIUM' ? '#7e22ce' : '#059669')};">${pt.anomalyTitle || pt.anomaly || 'Verified'}</span>
+            </div>
+            <div style="font-size: 10px; color: #94a3b8; margin-bottom: 8px;">GPS: ${pt.lat != null ? pt.lat.toFixed(4) : 0}°N, ${pt.lon != null ? pt.lon.toFixed(4) : 0}°E</div>
+            <button style="width: 100%; padding: 5px 8px; font-size: 11px; font-weight: 700; background: #0d9488; color: #fff; border: none; border-radius: 4px; cursor: pointer;" onclick="openModalById('${pt.id}')">
+              Inspect 4-Q XAI Details
+            </button>
+          </div>
+        `;
+
+        marker.bindPopup(popupHtml);
+        bhuMarkersLayer.addLayer(marker);
+      });
+    }
+
+    // C. Update Dynamic Status Counter
     if (countEl) {
-      countEl.innerText = `Showing ${points.length} Balanced Works (${filterType})`;
+      if (result.level === 'zonal') {
+        const total = (result.totalAccounted || 176831).toLocaleString('en-IN');
+        countEl.innerText = `Showing all ${total} Works across 7 Zonal Command Hubs (Click any zone to drill down)`;
+      } else if (result.level === 'state') {
+        countEl.innerText = `Showing ${clusters.length} State Clusters across sector (Click to view districts)`;
+      } else if (result.level === 'district') {
+        countEl.innerText = `Showing ${clusters.length} District Sectors (Click to inspect local works)`;
+      } else {
+        const totalArea = result.totalAvailable ? result.totalAvailable.toLocaleString('en-IN') : points.length;
+        countEl.innerText = `Showing ${points.length} Local Work Geotags in Viewport (${totalArea} total in area)`;
+      }
     }
   } catch (err) {
     console.error('Failed to load spatial map points:', err);
@@ -4178,6 +4343,7 @@ window.initHeroSentinelConstellation = initHeroSentinelConstellation;
 // ==========================================================
 
 function jumpToSection(sectionId) {
+  closeForensicDropdown();
   const el = document.getElementById(sectionId);
   if (!el) {
     window.location.href = `index.html#${sectionId}`;
@@ -4222,6 +4388,7 @@ function jumpToSection(sectionId) {
 
 // Scroll spy to keep active navbar tab in sync as user scrolls
 function initScrollSpy() {
+  const engineNavs = ['vidhi-kavach', 'punar-drishti', 'artha-darpan', 'chakra-vyuh', 'vibhed-netra', 'sankhya-satya', 'bhu-drishti'];
   const sectionIds = [
     { id: 'vidhi-kavach-section', nav: 'vidhi-kavach' },
     { id: 'punar-drishti-section', nav: 'punar-drishti' },
@@ -4243,17 +4410,41 @@ function initScrollSpy() {
     for (let i = sectionIds.length - 1; i >= 0; i--) {
       const el = document.getElementById(sectionIds[i].id);
       if (el && el.offsetTop <= scrollPos) {
+        const currentNav = sectionIds[i].nav;
         document.querySelectorAll('.s-nav-tab').forEach(t => {
-          if (t.getAttribute('data-nav') === sectionIds[i].nav) {
+          if (t.getAttribute('data-nav') === currentNav) {
             t.classList.add('active');
-          } else {
+          } else if (!t.classList.contains('s-dropdown-trigger')) {
             t.classList.remove('active');
           }
         });
+        const trigger = document.getElementById('btn-engines-menu');
+        if (trigger) {
+          if (engineNavs.includes(currentNav)) {
+            trigger.classList.add('active');
+          } else {
+            trigger.classList.remove('active');
+          }
+        }
         break;
       }
     }
   }, { passive: true });
+
+  // Mobile / click toggle for forensic engines dropdown
+  const enginesDropdown = document.getElementById('forensic-engines-dropdown');
+  const enginesTrigger = document.getElementById('btn-engines-menu');
+  if (enginesTrigger && enginesDropdown) {
+    enginesTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      enginesDropdown.classList.toggle('is-open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!enginesDropdown.contains(e.target)) {
+        enginesDropdown.classList.remove('is-open');
+      }
+    });
+  }
 }
 
 // PRASHNA-KAVACH Showcase Data and Controller
@@ -4594,6 +4785,8 @@ window.initScrollSpy = initScrollSpy;
 window.loadPrashnaShowcase = loadPrashnaShowcase;
 window.loadOnPageSimPreset = loadOnPageSimPreset;
 window.runOnPageSimulation = runOnPageSimulation;
+window.closeForensicDropdown = closeForensicDropdown;
+window.setupForensicDropdown = setupForensicDropdown;
 
 
 

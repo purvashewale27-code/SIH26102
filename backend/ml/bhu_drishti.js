@@ -182,8 +182,411 @@ function evaluateBhuDrishti(p, index) {
   };
 }
 
+function formatPoint(p) {
+  const bd = p.bhu_drishti || {};
+  return {
+    id: p.id,
+    title: p.title,
+    state: p.state,
+    district: p.district,
+    constituency: p.constituency,
+    cost: p.cost,
+    costFormatted: p.costFormatted,
+    lat: bd.latitude || bd.lat || 0,
+    lon: bd.longitude || bd.lon || 0,
+    anomaly: bd.spatial_anomaly || 'VERIFIED_GEOTAG',
+    riskLevel: bd.risk_level || 'LOW',
+    clusterId: bd.cluster_id,
+    clusterRadius: bd.cluster_radius_meters,
+    clusterCount: bd.cluster_count,
+    anomalyTitle: bd.anomaly_title || 'Verified Physical Asset'
+  };
+}
+
+/**
+ * Enterprise Spatial Hierarchical Clustering Engine for 176,925 works
+ * - Zoom <= 6: State-Level Clusters (36 States & UTs, accounts for 100% of projects)
+ * - Zoom 7-9: District / Regional Grid Clusters (~70km binning)
+ * - Zoom >= 10: Individual GPS Coordinate Markers (viewport bounded)
+ */
+function getSpatialClusterData(allProjects, options = {}) {
+  const filter = (options.filter || 'all').toLowerCase();
+  const zoom = Number(options.zoom) || 5;
+  const boundsStr = options.bounds || ''; // "minLat,minLon,maxLat,maxLon"
+
+  let bounds = null;
+  if (boundsStr) {
+    const parts = boundsStr.split(',').map(Number);
+    if (parts.length === 4 && parts.every(n => !isNaN(n))) {
+      let valA = parts[0], valB = parts[1], valC = parts[2], valD = parts[3];
+      let lats = [valA, valC], lons = [valB, valD];
+      if (Math.max(valA, valC) > 50 && Math.max(valB, valD) < 50) {
+        // Leaflet toBBoxString format: west, south, east, north
+        lons = [valA, valC];
+        lats = [valB, valD];
+      }
+      bounds = {
+        minLat: Math.min(...lats),
+        maxLat: Math.max(...lats),
+        minLon: Math.min(...lons),
+        maxLon: Math.max(...lons)
+      };
+    }
+  }
+
+  // 1. Filter dataset according to active tab
+  let filtered = allProjects;
+  if (filter === 'ghost-assets') {
+    filtered = filtered.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'GHOST_ASSET');
+  } else if (filter === 'spatial-clusters') {
+    filtered = filtered.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'SPATIAL_CLUSTER');
+  } else if (filter === 'verified-geotags') {
+    filtered = filtered.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'VERIFIED_GEOTAG');
+  }
+
+  // 2. LEVEL 1: National View (zoom <= 5) -> 7 MoSPI Zonal Command Hubs (100% Works, Zero Clutter)
+  if (zoom <= 5) {
+    const ZONAL_COUNCILS = {
+      'Northern Region': {
+        name: 'Northern Zonal Command',
+        shortName: 'North Zone',
+        lat: 29.8, lon: 76.0,
+        states: ['punjab', 'haryana', 'himachalpradesh', 'rajasthan', 'delhi', 'chandigarh', 'jammuandkashmir', 'jammukashmir', 'ladakh', 'uttarakhand', 'uttaranchal']
+      },
+      'Central Region': {
+        name: 'Central Zonal Command',
+        shortName: 'Central Zone',
+        lat: 24.8, lon: 80.8,
+        states: ['madhyapradesh', 'uttarpradesh', 'chhattisgarh']
+      },
+      'Eastern Region': {
+        name: 'Eastern Zonal Command',
+        shortName: 'East Zone',
+        lat: 23.2, lon: 86.2,
+        states: ['bihar', 'jharkhand', 'westbengal', 'odisha', 'orissa']
+      },
+      'Western Region': {
+        name: 'Western Zonal Command',
+        shortName: 'West Zone',
+        lat: 20.8, lon: 73.6,
+        states: ['gujarat', 'maharashtra', 'goa', 'dadraandnagarhavelianddamananddiu', 'damananddiu', 'dadraandnagarhaveli', 'thedadraandnagarhavelianddamananddiu']
+      },
+      'Southern Region': {
+        name: 'Southern Zonal Command',
+        shortName: 'South Zone',
+        lat: 13.8, lon: 78.2,
+        states: ['andhrapradesh', 'karnataka', 'kerala', 'tamilnadu', 'telangana', 'puducherry', 'pondicherry', 'lakshadweep']
+      },
+      'North-Eastern Region': {
+        name: 'North-Eastern Zonal Command',
+        shortName: 'NE Zone',
+        lat: 26.2, lon: 93.2,
+        states: ['assam', 'arunachalpradesh', 'manipur', 'meghalaya', 'mizoram', 'nagaland', 'tripura', 'sikkim']
+      },
+      'Islands Region': {
+        name: 'Island Territories',
+        shortName: 'Islands',
+        lat: 11.74, lon: 92.65,
+        states: ['andamanandnicobarislands', 'andamanandnicobar']
+      }
+    };
+
+    const stateToZone = {};
+    for (const [zKey, z] of Object.entries(ZONAL_COUNCILS)) {
+      z.states.forEach(st => stateToZone[st] = zKey);
+    }
+
+    const zoneMap = {};
+    Object.keys(ZONAL_COUNCILS).forEach(k => {
+      const def = ZONAL_COUNCILS[k];
+      zoneMap[k] = {
+        type: 'cluster',
+        level: 'zonal',
+        id: 'zone-' + k.replace(/[^a-zA-Z0-9]/g, '_'),
+        name: def.name,
+        shortName: def.shortName,
+        lat: def.lat,
+        lon: def.lon,
+        count: 0,
+        ghostCount: 0,
+        clusterCount: 0,
+        verifiedCount: 0,
+        minLat: 90,
+        maxLat: -90,
+        minLon: 180,
+        maxLon: -180
+      };
+    });
+
+    for (let i = 0; i < filtered.length; i++) {
+      const p = filtered[i];
+      const sNorm = (p.state || '').toLowerCase().replace(/[^a-z]/g, '');
+      const zKey = stateToZone[sNorm] || 'Central Region';
+      const c = zoneMap[zKey];
+      c.count++;
+
+      const anom = p.bhu_drishti ? p.bhu_drishti.spatial_anomaly : 'VERIFIED_GEOTAG';
+      if (anom === 'GHOST_ASSET') c.ghostCount++;
+      else if (anom === 'SPATIAL_CLUSTER') c.clusterCount++;
+      else c.verifiedCount++;
+
+      const lat = p.bhu_drishti ? p.bhu_drishti.latitude : c.lat;
+      const lon = p.bhu_drishti ? p.bhu_drishti.longitude : c.lon;
+      if (lat < c.minLat) c.minLat = lat;
+      if (lat > c.maxLat) c.maxLat = lat;
+      if (lon < c.minLon) c.minLon = lon;
+      if (lon > c.maxLon) c.maxLon = lon;
+    }
+
+    const clusters = Object.values(zoneMap).filter(c => c.count > 0).map(c => {
+      const padLat = Math.max(0.6, (c.maxLat - c.minLat) * 0.15);
+      const padLon = Math.max(0.6, (c.maxLon - c.minLon) * 0.15);
+      return {
+        type: 'cluster',
+        level: 'zonal',
+        id: c.id,
+        name: c.name,
+        shortName: c.shortName,
+        lat: Number(c.lat.toFixed(5)),
+        lon: Number(c.lon.toFixed(5)),
+        count: c.count,
+        ghostCount: c.ghostCount,
+        clusterCount: c.clusterCount,
+        verifiedCount: c.verifiedCount,
+        bounds: [
+          [Math.max(6, c.minLat - padLat), Math.max(68, c.minLon - padLon)],
+          [Math.min(38, c.maxLat + padLat), Math.min(98, c.maxLon + padLon)]
+        ]
+      };
+    });
+
+    const samplePoints = filtered.slice(0, 10).map(p => formatPoint(p));
+
+    return {
+      success: true,
+      zoom,
+      level: 'zonal',
+      count: clusters.length,
+      totalAvailable: filtered.length,
+      totalAccounted: filtered.length,
+      clusters,
+      points: samplePoints,
+      data: samplePoints,
+      message: `Displaying all ${filtered.length.toLocaleString('en-IN')} works across 7 Zonal Command Hubs`
+    };
+  }
+
+  // 3. LEVEL 2: Intermediate View (zoom 6 to 7) -> State Level Clusters
+  if (zoom <= 7) {
+    const stateMap = {};
+    for (let i = 0; i < filtered.length; i++) {
+      const p = filtered[i];
+      const s = p.state || 'Other';
+      const lat = p.bhu_drishti ? p.bhu_drishti.latitude : 22.9734;
+      const lon = p.bhu_drishti ? p.bhu_drishti.longitude : 78.6569;
+
+      if (bounds) {
+        if (lat < bounds.minLat - 0.5 || lat > bounds.maxLat + 0.5 ||
+            lon < bounds.minLon - 0.5 || lon > bounds.maxLon + 0.5) {
+          continue;
+        }
+      }
+
+      if (!stateMap[s]) {
+        const base = STATE_COORDINATES[s] || STATE_COORDINATES['Delhi'];
+        stateMap[s] = {
+          type: 'cluster',
+          level: 'state',
+          id: 'state-' + s.replace(/[^a-zA-Z0-9]/g, '_'),
+          name: s,
+          lat: base ? base.lat : lat,
+          lon: base ? base.lon : lon,
+          count: 0,
+          ghostCount: 0,
+          clusterCount: 0,
+          verifiedCount: 0,
+          minLat: 90,
+          maxLat: -90,
+          minLon: 180,
+          maxLon: -180
+        };
+      }
+      const c = stateMap[s];
+      c.count++;
+      const anom = p.bhu_drishti ? p.bhu_drishti.spatial_anomaly : 'VERIFIED_GEOTAG';
+      if (anom === 'GHOST_ASSET') c.ghostCount++;
+      else if (anom === 'SPATIAL_CLUSTER') c.clusterCount++;
+      else c.verifiedCount++;
+
+      if (lat < c.minLat) c.minLat = lat;
+      if (lat > c.maxLat) c.maxLat = lat;
+      if (lon < c.minLon) c.minLon = lon;
+      if (lon > c.maxLon) c.maxLon = lon;
+    }
+
+    const clusters = Object.values(stateMap).map(c => {
+      const padLat = Math.max(0.4, (c.maxLat - c.minLat) * 0.2);
+      const padLon = Math.max(0.4, (c.maxLon - c.minLon) * 0.2);
+      return {
+        type: 'cluster',
+        level: 'state',
+        id: c.id,
+        name: c.name,
+        lat: Number(c.lat.toFixed(5)),
+        lon: Number(c.lon.toFixed(5)),
+        count: c.count,
+        ghostCount: c.ghostCount,
+        clusterCount: c.clusterCount,
+        verifiedCount: c.verifiedCount,
+        bounds: [
+          [Math.max(6, c.minLat - padLat), Math.max(68, c.minLon - padLon)],
+          [Math.min(38, c.maxLat + padLat), Math.min(98, c.maxLon + padLon)]
+        ]
+      };
+    });
+
+    const samplePoints = filtered.slice(0, 10).map(p => formatPoint(p));
+
+    return {
+      success: true,
+      zoom,
+      level: 'state',
+      count: clusters.length,
+      totalAvailable: filtered.length,
+      totalAccounted: filtered.length,
+      clusters,
+      points: samplePoints,
+      data: samplePoints,
+      message: `Displaying ${clusters.length} State Clusters across sector`
+    };
+  }
+
+  // 4. LEVEL 3: District View (zoom 8 to 10) -> District / Regional Grid Clusters
+  if (zoom <= 10) {
+    const gridMap = {};
+    const cellSize = 0.45; // ~45km grid cluster cell
+
+    for (let i = 0; i < filtered.length; i++) {
+      const p = filtered[i];
+      const lat = p.bhu_drishti ? p.bhu_drishti.latitude : 22.9734;
+      const lon = p.bhu_drishti ? p.bhu_drishti.longitude : 78.6569;
+
+      if (bounds) {
+        if (lat < bounds.minLat - 0.2 || lat > bounds.maxLat + 0.2 ||
+            lon < bounds.minLon - 0.2 || lon > bounds.maxLon + 0.2) {
+          continue;
+        }
+      }
+
+      const gridKey = Math.floor(lat / cellSize) + '_' + Math.floor(lon / cellSize);
+      if (!gridMap[gridKey]) {
+        let distName = p.district || 'District Sector';
+        if (distName.includes('(')) distName = distName.split('(')[0].trim();
+        const clusterName = distName + (p.state ? ', ' + p.state : '');
+
+        gridMap[gridKey] = {
+          type: 'cluster',
+          level: 'district',
+          id: 'grid-' + gridKey,
+          name: clusterName,
+          latSum: 0,
+          lonSum: 0,
+          count: 0,
+          ghostCount: 0,
+          clusterCount: 0,
+          verifiedCount: 0,
+          minLat: 90,
+          maxLat: -90,
+          minLon: 180,
+          maxLon: -180
+        };
+      }
+
+      const c = gridMap[gridKey];
+      c.count++;
+      c.latSum += lat;
+      c.lonSum += lon;
+      const anom = p.bhu_drishti ? p.bhu_drishti.spatial_anomaly : 'VERIFIED_GEOTAG';
+      if (anom === 'GHOST_ASSET') c.ghostCount++;
+      else if (anom === 'SPATIAL_CLUSTER') c.clusterCount++;
+      else c.verifiedCount++;
+
+      if (lat < c.minLat) c.minLat = lat;
+      if (lat > c.maxLat) c.maxLat = lat;
+      if (lon < c.minLon) c.minLon = lon;
+      if (lon > c.maxLon) c.maxLon = lon;
+    }
+
+    const clusters = Object.values(gridMap).map(c => {
+      const avgLat = c.latSum / c.count;
+      const avgLon = c.lonSum / c.count;
+      const padLat = Math.max(0.1, (c.maxLat - c.minLat) * 0.25);
+      const padLon = Math.max(0.1, (c.maxLon - c.minLon) * 0.25);
+      return {
+        type: 'cluster',
+        level: 'district',
+        id: c.id,
+        name: c.name,
+        lat: Number(avgLat.toFixed(5)),
+        lon: Number(avgLon.toFixed(5)),
+        count: c.count,
+        ghostCount: c.ghostCount,
+        clusterCount: c.clusterCount,
+        verifiedCount: c.verifiedCount,
+        bounds: [
+          [c.minLat - padLat, c.minLon - padLon],
+          [c.maxLat + padLat, c.maxLon + padLon]
+        ]
+      };
+    });
+
+    const samplePoints = filtered.slice(0, 10).map(p => formatPoint(p));
+
+    return {
+      success: true,
+      zoom,
+      level: 'district',
+      count: clusters.length,
+      totalAvailable: filtered.length,
+      totalAccounted: filtered.length,
+      clusters,
+      points: samplePoints,
+      data: samplePoints,
+      message: `Displaying ${clusters.length} District Sectors (Click to inspect local works)`
+    };
+  }
+
+  // 5. LEVEL 4: Local Work View (zoom >= 11) -> Individual Project Markers
+  let inView = filtered;
+  if (bounds) {
+    inView = filtered.filter(p => {
+      const lat = p.bhu_drishti ? p.bhu_drishti.latitude : 0;
+      const lon = p.bhu_drishti ? p.bhu_drishti.longitude : 0;
+      return lat >= bounds.minLat && lat <= bounds.maxLat &&
+             lon >= bounds.minLon && lon <= bounds.maxLon;
+    });
+  }
+
+  const points = inView.slice(0, 450).map(p => formatPoint(p));
+
+  return {
+    success: true,
+    zoom,
+    level: 'project',
+    count: points.length,
+    totalAvailable: inView.length,
+    totalAccounted: inView.length,
+    clusters: [],
+    points,
+    data: points,
+    message: `Showing ${points.length} Local Work Geotags in Viewport (${inView.length.toLocaleString('en-IN')} total in area)`
+  };
+}
+
 module.exports = {
   STATE_COORDINATES,
   haversineDistanceMeters,
-  evaluateBhuDrishti
+  evaluateBhuDrishti,
+  formatPoint,
+  getSpatialClusterData
 };

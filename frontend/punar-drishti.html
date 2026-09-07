@@ -11,12 +11,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css?v=2.5">
+  <!-- Lenis Smooth Scroll Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+
   <!-- Local High-Speed Leaflet GIS Map Engine (100% Offline Reliable) -->
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
   <script src="vendor/leaflet/leaflet.js"></script>
-  
-  <!-- Lenis Smooth Scroll Engine -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script>
+    if (typeof window !== 'undefined' && typeof window.leaflet !== 'undefined') {
+      window.L = window.leaflet;
+    }
+  </script>
 </head>
 <body data-page="punar-drishti">
 
@@ -28,32 +33,27 @@
           <img src="assets/satark-logo.png" alt="State Emblem · MPLADS-SATARK Official Seal" class="gov-logo-img ashoka-chakra-svg">
         </div>
         <div class="brand-text">
+          <div class="sub-gov-hindi">सांख्यिकी एवं कार्यक्रम कार्यान्वयन मंत्रालय</div>
           <div class="sub-gov">GOVERNMENT OF INDIA · MINISTRY OF STATISTICS &amp; PROGRAMME IMPLEMENTATION</div>
           <h1 class="main-title">MPLADS-SATARK <span class="hindi-badge">(सतर्क)</span></h1>
-          <div class="sub-portal-desc">National Public Fund Forensic Vigilance &amp; Risk Intelligence System (DIID Core)</div>
+          <div class="sub-portal-desc">Autonomous Public Fund Forensic Decision Intelligence</div>
         </div>
       </div>
 
       <div class="header-right-group">
-        <div class="system-status-badge">
-          <span class="status-pulse-dot"></span>
-          <div class="status-text-stack">
-            <span class="status-main">LIVE FORENSIC SENTINEL</span>
-            <span class="status-sub">176,925 Works Audited · 36 States/UTs</span>
-          </div>
-        </div>
         <div class="header-action-buttons">
-          <button class="header-btn-search" id="btn-quick-search" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Jump to project search filter (Ctrl+K)">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            Find Project <kbd class="nav-kbd">Ctrl+K</kbd>
+          <button class="header-btn header-btn-search" id="btn-quick-search" onclick="const s = document.getElementById('search-input'); if(s){ s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); }" title="Search National Works by Project ID, MP, or District (Ctrl+K)">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Search Works</span>
+            <kbd class="nav-kbd">Ctrl+K</kbd>
           </button>
-          <button class="header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Simulate civil proposals with 7 sentinels (<50ms)">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-            Proposal Simulator
+          <button class="header-btn header-btn-sim" id="btn-open-simulator" onclick="openSimulator()" title="Pre-Sanction Proposal Sandbox (<50ms SHAP Audit)">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <span>Proposal Simulator</span>
           </button>
-          <button class="header-btn-prov" id="btn-open-provenance" onclick="openProvenanceModal()" title="View 176,925 MoSPI records & cryptographic ledger">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            Data Lineage &amp; Ledger
+          <button class="header-btn header-btn-prov" id="btn-open-provenance" onclick="openProvenanceModal()" title="Inspect 176,925 MoSPI Work Lineage &amp; Cryptographic Ledger">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <span>Data Lineage &amp; Ledger</span>
           </button>
         </div>
       </div>
@@ -64,101 +64,120 @@
   <div class="sticky-nav-header" id="sticky-nav-header">
     <nav class="sentinel-nav-strip" id="main-nav-bar" aria-label="Executive Portal Navigation">
       <div class="sentinel-nav-container">
-        <!-- 1. VIDHI-KAVACH -->
-        <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="1. VIDHI-KAVACH: Statutory Compliance &amp; Negative List Sentry">
-          <span class="s-nav-badge red">01</span>
-          <span class="s-nav-title">VIDHI</span>
-        </a>
-        <!-- 2. PUNAR-DRISHTI -->
-        <a href="punar-drishti.html" class="s-nav-tab active" data-nav="punar-drishti" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="2. PUNAR-DRISHTI: NLP Duplicate Claims &amp; Twin Works Sentry">
-          <span class="s-nav-badge purple">02</span>
-          <span class="s-nav-title">PUNAR</span>
-        </a>
-        <!-- 3. ARTHA-DARPAN -->
-        <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="3. ARTHA-DARPAN: CPWD Rate Benchmark &amp; Cost Inflation Sentry">
-          <span class="s-nav-badge amber">03</span>
-          <span class="s-nav-title">ARTHA</span>
-        </a>
-        <!-- 4. CHAKRA-VYUH -->
-        <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="4. CHAKRA-VYUH: Contractor Cartel &amp; Vendor Nexus Sentry">
-          <span class="s-nav-badge crimson">04</span>
-          <span class="s-nav-title">CHAKRA</span>
-        </a>
-        <!-- 5. VIBHED-NETRA -->
-        <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="5. VIBHED-NETRA: 12-Dimensional Isolation Forest Outlier Sentry">
-          <span class="s-nav-badge teal">05</span>
-          <span class="s-nav-title">VIBHED</span>
-        </a>
-        <!-- 6. SANKHYA-SATYA -->
-        <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="6. SANKHYA-SATYA: Benford's Law Digital &amp; Tender-Splitting Sentry">
-          <span class="s-nav-badge indigo">06</span>
-          <span class="s-nav-title">SANKHYA</span>
-        </a>
-        <!-- 7. BHU-DRISHTI -->
-        <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="7. BHU-DRISHTI: Geospatial Remote Sensing &amp; GPS Geofencing Sentry">
-          <span class="s-nav-badge emerald">07</span>
-          <span class="s-nav-title">BHU</span>
+        
+        <!-- 1. National Risk Overview -->
+        <a href="index.html#overview-hero-section" class="s-nav-tab" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="National Risk Intelligence &amp; Macro Overview">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span class="s-nav-title">National Overview</span>
         </a>
 
-        <!-- Vertical Divider -->
-        <div class="nav-strip-divider"></div>
+        <!-- 2. Forensic Engines Dropdown -->
+        <div class="s-nav-dropdown" id="forensic-engines-dropdown">
+          <button class="s-nav-tab s-dropdown-trigger active" type="button" aria-expanded="false" aria-haspopup="true" id="btn-engines-menu">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="s-nav-title">Forensic Engines</span>
+            <svg class="dropdown-caret" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          
+          <div class="s-dropdown-menu" aria-labelledby="btn-engines-menu">
+            <div class="s-dropdown-header">
+              <span class="s-dropdown-header-title">7 Autonomous Sentinel AI Engines</span>
+              <span class="s-dropdown-header-badge">MoSPI Audited</span>
+            </div>
+            <div class="s-dropdown-grid">
+              <!-- S-01 VIDHI-KAVACH -->
+              <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="S-01: Statutory Compliance &amp; Negative List">
+                <span class="s-dd-code">S-01</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">VIDHI-KAVACH (विधि-कवच)</span>
+                  <span class="s-dd-sub">Statutory Compliance &amp; Negative List</span>
+                </div>
+              </a>
+              <!-- S-02 PUNAR-DRISHTI -->
+              <a href="punar-drishti.html" class="s-nav-tab active" data-nav="punar-drishti" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="S-02: NLP Duplicate Claims &amp; Twin Works">
+                <span class="s-dd-code">S-02</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">PUNAR-DRISHTI (पुनर्दृष्टि)</span>
+                  <span class="s-dd-sub">NLP Duplicate Claims &amp; Twin Works</span>
+                </div>
+              </a>
+              <!-- S-03 ARTHA-DARPAN -->
+              <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="S-03: CPWD Rate Benchmark &amp; Cost Inflation">
+                <span class="s-dd-code">S-03</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">ARTHA-DARPAN (अर्थ-दर्पण)</span>
+                  <span class="s-dd-sub">CPWD Rate Benchmark &amp; Cost Inflation</span>
+                </div>
+              </a>
+              <!-- S-04 CHAKRA-VYUH -->
+              <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="S-04: Contractor Cartel &amp; Vendor Nexus">
+                <span class="s-dd-code">S-04</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">CHAKRA-VYUH (चक्रव्यूह)</span>
+                  <span class="s-dd-sub">Contractor Cartel &amp; Vendor Nexus</span>
+                </div>
+              </a>
+              <!-- S-05 VIBHED-NETRA -->
+              <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="S-05: 12-D Isolation Forest Outlier">
+                <span class="s-dd-code">S-05</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">VIBHED-NETRA (विभेद-नेत्र)</span>
+                  <span class="s-dd-sub">12D Isolation Forest Outlier Sentry</span>
+                </div>
+              </a>
+              <!-- S-06 SANKHYA-SATYA -->
+              <a href="sankhya-satya.html" class="s-nav-tab" data-nav="sankhya-satya" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="S-06: Benford's Law &amp; Tender-Splitting">
+                <span class="s-dd-code">S-06</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">SANKHYA-SATYA (संख्या-सत्य)</span>
+                  <span class="s-dd-sub">Benford's Law &amp; Tender-Splitting</span>
+                </div>
+              </a>
+              <!-- S-07 BHU-DRISHTI -->
+              <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="S-07: Geospatial Remote Sensing &amp; GPS">
+                <span class="s-dd-code">S-07</span>
+                <div class="s-dd-info">
+                  <span class="s-dd-name">BHU-DRISHTI (भू-दृष्टि)</span>
+                  <span class="s-dd-sub">Geospatial Radar &amp; GPS Geofencing</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
 
-        <!-- 8. SATARK-DRISHTI -->
-        <a href="index.html#overview-hero-section" class="s-nav-tab" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('overview-hero-section'); return false; }" title="8. SATARK-DRISHTI: Unified National Risk Intelligence &amp; Macro Overview">
-          <span class="s-nav-badge gold">08</span>
-          <span class="s-nav-title">DRISHTI</span>
+        <!-- 3. Audit Copilot -->
+        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="GenAI Natural Language Audit Copilot">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="s-nav-title">Audit Copilot</span>
         </a>
-        <!-- 9. SATARK-SAMVAAD -->
-        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="9. SATARK-SAMVAAD: GenAI Natural Language Audit Copilot">
-          <span class="s-nav-badge blue">09</span>
-          <span class="s-nav-title">SAMVAAD</span>
+
+        <!-- 4. Explainable Evidence (PRASHNA-KAVACH) -->
+        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="Explainable AI &amp; Forensic Evidence Shield">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span class="s-nav-title">Explainable AI</span>
         </a>
-        <!-- 10. PRASHNA-KAVACH -->
-        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="10. PRASHNA-KAVACH: Explainable AI &amp; Forensic Evidence Shield">
-          <span class="s-nav-badge rose">10</span>
-          <span class="s-nav-title">PRASHNA</span>
+
+        <!-- 5. Proposal Simulator -->
+        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="Pre-Sanction Proposal Sandbox (&lt;50ms)">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/></svg>
+          <span class="s-nav-title">Proposal Sandbox</span>
         </a>
-        <!-- 11. SATARK-SIMULATION -->
-        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="11. SATARK-SIMULATION: Pre-Sanction Proposal Sandbox (&lt;50ms)">
-          <span class="s-nav-badge cyan">11</span>
-          <span class="s-nav-title">SIMULATION</span>
+
+        <!-- 6. Expenditure Velocity -->
+        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="Expenditure Velocity &amp; Fiscal Rush Trends">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <span class="s-nav-title">Trends &amp; Velocity</span>
         </a>
-        <!-- 12. BHAVISHYA-REKHA -->
-        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="12. BHAVISHYA-REKHA: Expenditure Velocity &amp; March Rush Trends">
-          <span class="s-nav-badge amber">12</span>
-          <span class="s-nav-title">BHAVISHYA</span>
+
+        <!-- 7. Action Ledger -->
+        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="Project Explorer, Inspections &amp; Action Ledger">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span class="s-nav-title">Work Explorer</span>
         </a>
-        <!-- 13. SATARK-KARYAA -->
-        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="13. SATARK-KARYAA: Project Explorer, Inspections &amp; Action Ledger">
-          <span class="s-nav-badge emerald">13</span>
-          <span class="s-nav-title">KARYAA</span>
-        </a>
+
       </div>
     </nav>
   </div>
-
-  
-  <!-- PAGE IDENTITY BREADCRUMB BAR -->
-  <nav class="page-breadcrumb-bar" aria-label="Breadcrumb">
-    <div class="breadcrumb-container">
-      <div class="breadcrumb-trail">
-        <a href="index.html" class="bc-root" title="National Risk Overview">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span>MPLADS-SATARK</span>
-        </a>
-        <span class="bc-sep">/</span>
-        <span class="bc-current" id="bc-current-page">
-          <span class="bc-sentinel-chip purple">S-02</span>
-          <span><b>PUNAR-DRISHTI (पुनर्दृष्टि)</b></span>
-        </span>
-      </div>
-      <div class="breadcrumb-context-badge" id="bc-context-badge">
-        <span class="bc-pulse-dot"></span>
-        <span id="bc-status-text">Dedicated Sentinel Mode · MoSPI eSAKSHI Verified</span>
-      </div>
-    </div>
-  </nav>
-  
 
   <!-- Main Content Container -->
   <main class="page-container">
@@ -167,14 +186,14 @@
     <!-- Dedicated Feature Hero Card -->
     <section class="feature-hero-card">
       <div class="feature-hero-left">
-        <div class="feature-hero-tag" style="background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe;">
+        <div class="feature-hero-tag" style="background:rgba(12, 35, 64, 0.06); color:#0c2340; border:1px solid rgba(12, 35, 64, 0.18);">
           SENTINEL S-02: PUNAR-DRISHTI (पुनर्दृष्टि — NLP DUPLICATE SENTRY)
         </div>
         <h1 class="feature-hero-title">Cross-Work Lexical NLP Twin Work & Double-Billing Sentry</h1>
         <p class="feature-hero-desc">Vaibhav's TF-IDF & Cosine Similarity Engine identifying identical work descriptions and duplicate billing claims across India</p>
       </div>
       <div class="feature-hero-badge">
-        <span class="val" style="color:#6b21a8;">10,204</span>
+        <span class="val" style="color:#0c2340;">10,204</span>
         <span class="lbl">Duplicate Claims (6,965 Clones)</span>
       </div>
     </section>
@@ -310,7 +329,7 @@
         </div>
       </div>
       <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <button class="btn-primary" id="modal-gen-dossier-btn" style="background:var(--gov-navy); font-weight:600; padding:8px 16px; border-radius:6px;">
+        <button class="btn-primary" id="modal-gen-dossier-btn" style="color:#ffffff; background:var(--gov-navy); font-weight:600; padding:8px 16px; border-radius:6px;">
           Generate Official Vigilance Memorandum
         </button>
         <button class="btn-secondary" id="modal-dismiss-btn" onclick="closeModal()">Close</button>
@@ -417,7 +436,7 @@
                 </label>
               </div>
 
-              <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-sim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; background:var(--gov-navy);">
+              <button type="submit" class="btn-primary btn-sim-submit" id="btn-run-sim" style="width:100%; margin-top:12px; padding:10px 16px; font-weight:700; color:#ffffff; background:var(--gov-navy);">
                 Run Real-Time Forensic Simulation (&lt;50ms)
               </button>
             </form>
@@ -807,7 +826,7 @@
         </details>
       </div>
       <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <button class="btn-primary" onclick="generateCaseFileFromPrashna()" style="background:var(--gov-navy); font-weight:600;">
+        <button class="btn-primary" onclick="generateCaseFileFromPrashna()" style="color:#ffffff; background:var(--gov-navy); font-weight:600;">
           Generate Case File (Form GFR-19A)
         </button>
         <button class="btn-secondary" onclick="closePrashnaModal()">Close</button>
@@ -902,5 +921,6 @@
 
   <!-- SCRIPTS -->
   <script src="app.js"></script>
+  
 </body>
 </html>

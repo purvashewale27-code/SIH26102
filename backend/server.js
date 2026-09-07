@@ -283,37 +283,14 @@ const server = http.createServer((req, res) => {
     return sendJson(sankhyaSatya.globalStats);
   }
 
-  // API 2E: BHU-DRISHTI Spatial Map Points
+  // API 2E: BHU-DRISHTI Hierarchical Spatial Map & Cluster Aggregation
   if (pathname === '/api/spatial-map') {
     const filter = (reqUrl.searchParams.get('filter') || 'all').toLowerCase();
-    let sample = allProjects;
-    if (filter === 'ghost-assets') {
-      sample = sample.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'GHOST_ASSET');
-    } else if (filter === 'spatial-clusters') {
-      sample = sample.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'SPATIAL_CLUSTER');
-    } else if (filter === 'verified-geotags') {
-      sample = sample.filter(p => p.bhu_drishti && p.bhu_drishti.spatial_anomaly === 'VERIFIED_GEOTAG');
-    }
+    const zoom = reqUrl.searchParams.get('zoom') ? Number(reqUrl.searchParams.get('zoom')) : 5;
+    const bounds = reqUrl.searchParams.get('bounds') || '';
 
-    // Return balanced slice of up to 400 projects for smooth 60fps Leaflet rendering
-    const points = sample.slice(0, 400).map(p => ({
-      id: p.id,
-      title: p.title,
-      state: p.state,
-      district: p.district,
-      constituency: p.constituency,
-      cost: p.cost,
-      costFormatted: p.costFormatted,
-      lat: p.bhu_drishti.latitude,
-      lon: p.bhu_drishti.longitude,
-      anomaly: p.bhu_drishti.spatial_anomaly,
-      riskLevel: p.bhu_drishti.risk_level,
-      clusterId: p.bhu_drishti.cluster_id,
-      clusterRadius: p.bhu_drishti.cluster_radius_meters,
-      clusterCount: p.bhu_drishti.cluster_count,
-      anomalyTitle: p.bhu_drishti.anomaly_title
-    }));
-    return sendJson({ success: true, count: points.length, totalAvailable: sample.length, data: points, points });
+    const clusterResult = bhuDrishti.getSpatialClusterData(allProjects, { filter, zoom, bounds });
+    return sendJson(clusterResult);
   }
 
   // Helper to read JSON request body for POST requests
