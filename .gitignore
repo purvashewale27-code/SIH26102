@@ -17,3 +17,9 @@ backend/data/mospi/real_works_recommended_completed.json
 .env
 .env.local
 .env.*.local
+
+# Temporary test & extracted assets
+parsed_ppts_output.txt
+frontend/assets/ppt_media/
+frontend/assets/fixed_ppt/
+

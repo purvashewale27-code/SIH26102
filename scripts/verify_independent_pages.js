@@ -22,7 +22,15 @@ const pagesToTest = [
   { url: '/bhu-drishti', file: 'bhu-drishti.html', pageId: 'bhu-drishti', titleTag: 'BHU-DRISHTI', specialSelector: 'bhu-drishti-map-section' },
   { url: '/bhu-drishti.html', file: 'bhu-drishti.html', pageId: 'bhu-drishti', titleTag: 'BHU-DRISHTI', specialSelector: 'bhu-drishti-map-section' },
   { url: '/samvaad', file: 'samvaad.html', pageId: 'samvaad', titleTag: 'SATARK-SAMVAAD', specialSelector: 'samvaad-copilot-card' },
-  { url: '/samvaad.html', file: 'samvaad.html', pageId: 'samvaad', titleTag: 'SATARK-SAMVAAD', specialSelector: 'samvaad-copilot-card' }
+  { url: '/samvaad.html', file: 'samvaad.html', pageId: 'samvaad', titleTag: 'SATARK-SAMVAAD', specialSelector: 'samvaad-copilot-card' },
+  { url: '/prashna-kavach', file: 'prashna-kavach.html', pageId: 'prashna-kavach', titleTag: 'PRASHNA-KAVACH', specialSelector: 'prashna-kavach-section' },
+  { url: '/prashna-kavach.html', file: 'prashna-kavach.html', pageId: 'prashna-kavach', titleTag: 'PRASHNA-KAVACH', specialSelector: 'prashna-kavach-section' },
+  { url: '/satark-simulation', file: 'satark-simulation.html', pageId: 'satark-simulation', titleTag: 'SATARK-SIMULATION', specialSelector: 'satark-simulation-section' },
+  { url: '/satark-simulation.html', file: 'satark-simulation.html', pageId: 'satark-simulation', titleTag: 'SATARK-SIMULATION', specialSelector: 'satark-simulation-section' },
+  { url: '/bhavishya-rekha', file: 'bhavishya-rekha.html', pageId: 'bhavishya-rekha', titleTag: 'BHAVISHYA-REKHA', specialSelector: 'bhavishya-trends-section' },
+  { url: '/bhavishya-rekha.html', file: 'bhavishya-rekha.html', pageId: 'bhavishya-rekha', titleTag: 'BHAVISHYA-REKHA', specialSelector: 'bhavishya-trends-section' },
+  { url: '/satark-karyaa', file: 'satark-karyaa.html', pageId: 'satark-karyaa', titleTag: 'SATARK-KARYAA', specialSelector: 'table-section' },
+  { url: '/satark-karyaa.html', file: 'satark-karyaa.html', pageId: 'satark-karyaa', titleTag: 'SATARK-KARYAA', specialSelector: 'table-section' }
 ];
 
 let passCount = 0;

@@ -19,5 +19,8 @@
     "mospi"
   ],
   "author": "SIH26102 Team",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jszip": "^3.10.2"
+  }
 }

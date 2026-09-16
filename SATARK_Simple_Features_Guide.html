@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MPLADS-SATARK (सतर्क) — Simple Feature Guide</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151c2c;
+      --border: #232d42;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 30px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 24px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .header h1 {
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .meta-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .meta-label { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+    .meta-val { font-size: 13px; color: #fff; font-weight: 600; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .card-tagline {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .num-badge {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      font-weight: 700;
+      margin: 12px 0 4px 0;
+    }
+    .section-content {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+      white-space: pre-line;
+    }
+    .example-box {
+      background: rgba(52, 211, 153, 0.08);
+      border-left: 4px solid var(--success);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+      color: #a7f3d0;
+      margin-top: 10px;
+    }
+    .pitch-card {
+      background: linear-gradient(135deg, #1e1b4b, #311b92);
+      border: 1px solid #6366f1;
+      border-radius: 12px;
+      padding: 24px;
+      color: #fff;
+      margin-top: 24px;
+    }
+    .pitch-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #a5b4fc;
+      margin-bottom: 8px;
+    }
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 16px 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .btn {
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:hover { background: #7dd3fc; }
+
+    @media print {
+      body { background: #fff; color: #1e293b; padding: 0; }
+      .action-bar { display: none; }
+      .card { background: #fff; border: 1px solid #cbd5e1; color: #1e293b; box-shadow: none; page-break-inside: avoid; }
+      .card-title { color: #0f172a; }
+      .header { background: #f8fafc; border: 1px solid #cbd5e1; }
+      .header h1 { -webkit-text-fill-color: #0f172a; color: #0f172a; }
+      .example-box { background: #f0fdf4; border-color: #16a34a; color: #14532d; }
+      .pitch-card { background: #f5f3ff; border: 1px solid #818cf8; color: #1e1b4b; }
+      .pitch-title { color: #4338ca; }
+      .meta-card { background: #f1f5f9; border-color: #cbd5e1; }
+      .meta-val { color: #0f172a; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="action-bar">
+      <span>📄 <b>PDF Ready:</b> Click the button to print/save as PDF for your friends!</span>
+      <button class="btn" onclick="window.print()">🖨️ Save as PDF / Print</button>
+    </div>
+
+    <div class="header">
+      <h1>MPLADS-SATARK (सतर्क) — Simple Feature Guide</h1>
+      <div class="subtitle">An Easy, Plain-Language Explanation of All 7 AI Detectives to Share with Friends & Team</div>
+      <div class="meta-grid">
+        
+          <div class="meta-card">
+            <div class="meta-label">Problem Statement</div>
+            <div class="meta-val">PS 26102 (MoSPI / DIID)</div>
+          </div>
+        
+          <div class="meta-card">
+            <div class="meta-label">Project Title</div>
+            <div class="meta-val">MPLADS-SATARK (Automated Forensic Vigilance)</div>
+          </div>
+        
+          <div class="meta-card">
+            <div class="meta-label">Dataset Scale</div>
+            <div class="meta-val">176,925 Real Government Projects | 37 States & UTs</div>
+          </div>
+        
+          <div class="meta-card">
+            <div class="meta-label">Core Purpose</div>
+            <div class="meta-val">Pre-Disbursement Audit & Multi-Layer Fraud Prevention</div>
+          </div>
+        
+      </div>
+    </div>
+
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">1. VIDHI-KAVACH (विधि-कवच)</div>
+            <div class="card-tagline">The Legal Shield & Rules Referee</div>
+          </div>
+          <span class="num-badge">Sentinel 1 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Checks if government laws, SC/ST mandatory quotas, and MPLADS guidelines are strictly followed before money is disbursed.</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">Think of this like a referee in a football match. Government money has strict rules — for example, you cannot use public funds to build private clubhouses, luxury guest houses, or buy private cars. It also stops 'March Rush' (when officers try to spend all remaining budget in the last few days of March just so the funds don't expire).</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> If someone tries to pass a bill for an unapproved private building in mid-March, VIDHI-KAVACH immediately blows the whistle and blocks it!
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">2. PUNAR-DRISHTI (पुनर्दृष्टि)</div>
+            <div class="card-tagline">The Double-Dipping & Clone Sentry</div>
+          </div>
+          <span class="num-badge">Sentinel 2 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Catches duplicate or copy-pasted projects using smart text-matching (TF-IDF & Cosine Similarity).</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">Imagine a dishonest contractor builds one concrete road in a village using rural scheme money (like MGNREGA). Then, he submits the exact same road under MPLADS scheme funds to get paid twice for the same work! PUNAR-DRISHTI compares project titles across scheme databases.</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> It compares 'PCC Road near GP Office' in both databases and catches double-billing instantly!
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">3. ARTHA-DARPAN (अर्थ-दर्पण)</div>
+            <div class="card-tagline">The Price Inflation & Rate Book Checker</div>
+          </div>
+          <span class="num-badge">Sentinel 3 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Compares claimed project costs against standard government benchmarks (CPWD Delhi Schedule of Rates).</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">Imagine going to buy a phone that costs ₹80,000, but the shopkeeper charges you ₹3,00,000. ARTHA-DARPAN keeps a standard price book for every state in India. If a standard 500-meter road usually costs ₹5 Lakhs, but a bill comes in for ₹18 Lakhs, ARTHA-DARPAN flags it.</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> It flags excess expenditure and calculates exact overpricing (e.g., '₹13 Lakhs excess risk flagged').
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">4. CHAKRA-VYUH (चक्रव्यूह)</div>
+            <div class="card-tagline">The Contractor Syndicate & Cartel Hunter</div>
+          </div>
+          <span class="num-badge">Sentinel 4 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Exposes hidden networks and cartels between contractors, agencies, and officers using network graph theory.</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">Sometimes, 3 or 4 contractor companies pretend to compete against each other in open tenders, but behind closed doors, they are all owned by the same family or group! CHAKRA-VYUH builds a visual web (social network graph) connecting MPs, agencies, and vendors to see who is getting all the contracts.</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> If one single contractor secretly captures 85% of all project contracts in a district, CHAKRA-VYUH flags a Monopoly/Cartel Risk.
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">5. VIBHED-NETRA (विभेद-नेत्र)</div>
+            <div class="card-tagline">The 12D AI Anomaly Spotter</div>
+          </div>
+          <span class="num-badge">Sentinel 5 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Finds suspicious projects by evaluating 12 different clues simultaneously using Machine Learning (Isolation Forest).</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">A human auditor can only look at 1 or 2 details at a time (like cost or date). But this AI looks at 12 details simultaneously (cost, duration, completion rate, location, payment pattern, etc.) to spot weird outliers.</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> A project that was approved in 1 day, spent 100% of its budget on day 2, but has zero physical progress stands out like a sore thumb to the AI.
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">6. SANKHYA-SATYA (संख्या-सत्य)</div>
+            <div class="card-tagline">The Fake Bill & Tender-Split Finder</div>
+          </div>
+          <span class="num-badge">Sentinel 6 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Uses financial math (Benford's Law) and pattern recognition to catch fabricated numbers and tender splitting.</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">1) Tender-Splitting: Rules say any project above ₹5 Lakhs MUST go through an open public tender. Dishonest people split a ₹14 Lakh project into three fake bills of ₹4.95 Lakhs each to bypass tenders! SANKHYA-SATYA catches this trick.
+2) Benford's Law: In real financial records, the number 1 appears as the first digit about 30% of the time. When humans make up fake bills from thin air, they overuse round numbers (like ₹5,00,000). Math catches them!</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> Flags artificial bill splitting (smurfing) and round-number human-fabricated estimates.
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">7. BHU-DRISHTI (भू-दृष्टि)</div>
+            <div class="card-tagline">The Satellite & Ghost Asset Radar</div>
+          </div>
+          <span class="num-badge">Sentinel 7 of 7</span>
+        </div>
+
+        <div class="section-title">🔍 What it does:</div>
+        <div class="section-content">Uses GPS coordinates and ISRO satellite maps to check if the project actually exists on the ground.</div>
+
+        <div class="section-title">💡 How to explain it to a friend:</div>
+        <div class="section-content">What if someone claims ₹15 Lakhs for a 'Community Center', but it was never built? BHU-DRISHTI checks the exact GPS latitude and longitude on satellite maps.</div>
+
+        <div class="example-box">
+          <b>⚡ Real-World Example:</b> If the GPS location shows empty barren land, a lake, or a forest where a building was claimed to be constructed, BHU-DRISHTI flags it as a Ghost Asset!
+        </div>
+      </div>
+    
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">🎯 Unified Priority Score & Official Vigilance Memo</div>
+          <div class="card-tagline">Master Risk Aggregator & Legal Memo Sentry</div>
+        </div>
+      </div>
+
+      <div class="section-title">📊 0 to 100 Composite Risk Score:</div>
+      <div class="section-content">Combines all 7 sentinels into one clear score from 0 to 100. 0-30 is Green (Clean), 30-70 is Yellow (Medium Risk), and 70-100 is Red (Critical Fraud Risk).</div>
+
+      <div class="section-title">📜 1-Click Legal Memorandum:</div>
+      <div class="section-content">With one click, auditors can generate and print an official legal vigilance memorandum (Form GFR-19A) with Government letterhead, rule citations, and a field verification checklist!</div>
+    </div>
+
+    <div class="pitch-card">
+      <div class="pitch-title">🗣️ 30-Second Quick Elevator Pitch:</div>
+      <div style="font-size: 15px; line-height: 1.6;">"SATARK is an all-in-one AI vigilance system for government projects. It uses 7 specialized AI sentinels to check rules, stop duplicate billing, check fair pricing, break up contractor syndicates, run financial math audits on fake bills, and check satellite maps to make sure projects actually exist on the ground!"</div>
+    </div>
+  </div>
+</body>
+</html>

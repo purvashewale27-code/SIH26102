@@ -42,7 +42,7 @@ initEnv();
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
 const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
 const PRIMARY_MODEL = 'qwen/qwen3.8-27b';
-const FALLBACK_MODEL = 'llama-3.3-70b-versatile';
+const FALLBACK_MODEL = 'openai/gpt-oss-120b';
 
 
 
@@ -174,7 +174,7 @@ Structure:
         responseTimeMs: Date.now() - startTime
       };
     }
-    const modelsToTry = [PRIMARY_MODEL, FALLBACK_MODEL, 'llama-3.1-8b-instant'];
+    const modelsToTry = ['qwen/qwen3.8-27b', 'openai/gpt-oss-120b', 'qwen/qwen3.6-27b', 'openai/gpt-oss-20b', 'groq/compound-mini'];
 
     let res = null;
     let successfulModel = PRIMARY_MODEL;
@@ -183,7 +183,7 @@ Structure:
     for (const model of modelsToTry) {
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 7000);
+        const timeout = setTimeout(() => controller.abort(), 12000);
 
         res = await fetch(GROQ_ENDPOINT, {
           method: 'POST',

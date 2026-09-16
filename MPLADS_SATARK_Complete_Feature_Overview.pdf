@@ -1,0 +1,399 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R] /Count 4 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 2581 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+(SATARK - COMPLETE FEATURE OVERVIEW) Tj
+T*
+() Tj
+T*
+(Problem Statement 26102  MoSPI / DIID  176,925 Real Government Works) Tj
+T*
+() Tj
+T*
+(PART 1: THE 7 INDEPENDENT AI SENTINELS) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 1  VIDHI-KAVACH - - Purpose: Legal  Rule-Based Fraud Detection) Tj
+T*
+( TECH: Indic Lexicon + Rule Matrix) Tj
+T*
+( WHAT IT DOES: Checks whether a proposed MPLADS work violates government rules or eli) Tj
+T*
+(  gibility conditions.) Tj
+T*
+(  - Reads the proposed work description.) Tj
+T*
+(  - Identifies keywords such as temples, trusts, prohibited activities, etc.) Tj
+T*
+(  - Compares the proposal against predefined MPLADS rules.) Tj
+T*
+(  - Checks suspicious budget/timing patterns such as March Rush.) Tj
+T*
+( DETECTS: Ineligible/prohibited works and statutory rule violations.) Tj
+T*
+( BENEFIT: Prevents funds from being sanctioned for legally or procedurally invalid wo) Tj
+T*
+(  rks.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 2  PUNAR-DRISHTI  - Purpose: Duplicate Work Detection) Tj
+T*
+( TECH: TF-IDF + Cosine Similarity) Tj
+T*
+( WHAT IT DOES: Identifies the same or highly similar work being submitted more than o) Tj
+T*
+(  nce across schemes.) Tj
+T*
+(  - Converts work descriptions into numerical representations.) Tj
+T*
+(  - Compares new proposals with existing proposals across databases.) Tj
+T*
+(  - Measures textual similarity even when the title has been changed or rephrased.) Tj
+T*
+(  - Example: Construction of Community Hall vs Development of Village Multipurpose Ha) Tj
+T*
+(  ll.) Tj
+T*
+( DETECTS: Duplicate or suspiciously similar proposals.) Tj
+T*
+( BENEFIT: Helps prevent duplicate funding and repeated submission of the same work.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 3  ARTHA-DARPAN - - Purpose: Cost  Price Manipulation Detection) Tj
+T*
+( TECH: CPWD DSR Rates + Per-Unit Median Analysis) Tj
+T*
+( WHAT IT DOES: Checks whether the estimated project cost appears unusually high compa) Tj
+T*
+(  red to government benchmarks.) Tj
+T*
+(  - Takes project quantities and estimated costs.) Tj
+T*
+(  - Compares rates against CPWD Delhi Schedule of Rates DSR 2023-24 benchmarks.) Tj
+T*
+(  - Calculates expected/typical cost ranges for all 37 States/UTs.) Tj
+T*
+(  - Flags significant upward cost deviations.) Tj
+T*
+( DETECTS: Overpricing, inflated estimates, price padding, and abnormally high unit ra) Tj
+T*
+(  tes.) Tj
+T*
+( BENEFIT: Helps identify potential financial irregularities before sanction.) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 3265 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 4  CHAKRA-VYUH  - Purpose: Contractor/Vendor Network Analysis) Tj
+T*
+( TECH: Graph Theory + Ego-Graphs Vis.js / Louvain) Tj
+T*
+( WHAT IT DOES: Finds suspicious relationships between contractors, vendors, agencies,) Tj
+T*
+(   and projects.) Tj
+T*
+(  - Represents contractors, vendors, and projects as an interconnected network.) Tj
+T*
+(  - Creates connections based on common contracts, locations, and officials.) Tj
+T*
+(  - Looks for highly connected or repeatedly appearing entities using Herfindahl-Hirs) Tj
+T*
+(  chman Index HHI.) Tj
+T*
+( DETECTS: Contractor concentration, vendor monopolies, cartel-like networks, and repe) Tj
+T*
+(  ated contractor-project relationships.) Tj
+T*
+( BENEFIT: Reveals hidden syndicate patterns that are difficult to identify by checkin) Tj
+T*
+(  g individual records.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 5  BHU-DRISHTI - - Purpose: Geospatial  Physical Verification) Tj
+T*
+( TECH: GIS + Remote Sensing + Geotagging Leaflet / Esri Satellite) Tj
+T*
+( WHAT IT DOES: Checks whether a sanctioned asset/work actually exists at the claimed ) Tj
+T*
+(  geographic location.) Tj
+T*
+(  - Uses project coordinates and GPS geotags.) Tj
+T*
+(  - Maps the project location using GIS satellite layers.) Tj
+T*
+(  - Compares available geographic and satellite evidence.) Tj
+T*
+(  - Identifies suspicious or unverifiable locations water bodies, forests, barren lan) Tj
+T*
+(  d.) Tj
+T*
+( DETECTS: Ghost assets, incorrect coordinates, location mismatches, and non-existent ) Tj
+T*
+(  works.) Tj
+T*
+( BENEFIT: Adds a physical verification layer to digital records.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 6  SANKHYA-SATYA - - Purpose: Tender  Financial Pattern Detection) Tj
+T*
+( TECH: Benfords Law + Smurfing Rules) Tj
+T*
+( WHAT IT DOES: Looks for suspicious tender patterns that indicate attempts to avoid o) Tj
+T*
+(  pen public scrutiny.) Tj
+T*
+(  - Analyzes financial amounts and transaction patterns.) Tj
+T*
+(  - Detects unusual numerical distributions on leading digits 1-9.) Tj
+T*
+(  - Looks for multiple smaller transactions/works that collectively represent a large) Tj
+T*
+(  r suspicious amount.) Tj
+T*
+( DETECTS: Tender splitting e.g. 4.95L bills, artificially small project values, suspi) Tj
+T*
+(  cious financial distributions, and threshold-avoidance.) Tj
+T*
+( BENEFIT: Helps identify financial patterns that may not be obvious from individual t) Tj
+T*
+(  ransactions.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( SENTINEL 7  VIBHED-NETRA - - Purpose: Advanced Multi-Parameter Anomaly Detection) Tj
+T*
+( TECH: 12D Isolation Forest Machine Learning) Tj
+T*
+( WHAT IT DOES: Detects complex anomalies by considering multiple project parameters s) Tj
+T*
+(  imultaneously.) Tj
+T*
+(  - Takes 12 dimensions: cost, date, location, vendor, project type, execution time, ) Tj
+T*
+(  and administrative parameters.) Tj
+T*
+(  - Machine learning identifies non-linear combinations that look unusual compared wi) Tj
+T*
+(  th normal projects.) Tj
+T*
+( DETECTS: Complex multi-dimensional anomalies that individual rule-based checks may m) Tj
+T*
+(  iss.) Tj
+T*
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 2681 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+( BENEFIT: Provides an additional AI/ML-based fraud detection layer.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+(PART 2: CORE SATARK ARCHITECTURE 6 MODULES) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 8  SATARK-DRISHTI - - Purpose: Unified Risk Scoring) Tj
+T*
+( TECH: Composite Risk Scorer 0100) Tj
+T*
+( WHAT IT DOES: Combines the results of all 7 Sentinel engines into a single dashboard) Tj
+T*
+(   risk score.) Tj
+T*
+(  - Collects alerts from all 7 Sentinels.) Tj
+T*
+(  - Assigns weights and severity to different risks.) Tj
+T*
+(  - Produces a single overall composite risk score 0-30 Low, 31-60 Moderate, 61-80 Hi) Tj
+T*
+(  gh, 81-100 Critical.) Tj
+T*
+(  - Estimates potential project delay and risk trends.) Tj
+T*
+( BENEFIT: Gives officers a single dashboard-level risk assessment instead of checking) Tj
+T*
+(   seven systems separately.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 9  SATARK-SAMVAAD - - Purpose: AI-Powered Government Data Assistant) Tj
+T*
+( TECH: GenAI Natural Language Copilot) Tj
+T*
+( WHAT IT DOES: Allows officers to ask questions about government and project records ) Tj
+T*
+(  in plain language.) Tj
+T*
+(  - Officer asks a normal-language question in English or Hindi.) Tj
+T*
+(  - AI interprets the intent, location, budget, and sentinel filter.) Tj
+T*
+(  - Searches 176,925 MoSPI government records in real time.) Tj
+T*
+(  - Returns a concise answer with supporting evidence table.) Tj
+T*
+( BENEFIT: Makes large government datasets easier for non-technical users to analyze.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 10  PRASHNA-KAVACH - - Purpose: Explainable AI / Reason Behind the Alert) Tj
+T*
+( TECH: SHAP Explainable AI Drawer) Tj
+T*
+( WHAT IT DOES: Explains why SATARK flagged a project with transparent evidence attrib) Tj
+T*
+(  ution.) Tj
+T*
+(  - Breaks down factors contributing to a risk score.) Tj
+T*
+(  - Shows which variables had the strongest influence.) Tj
+T*
+(  - Example: High cost deviation +25, Suspicious vendor network +20, Location anomaly) Tj
+T*
+(   +15.) Tj
+T*
+(  - Answers: Why was this project flagged) Tj
+T*
+( BENEFIT: Makes AI decisions transparent and easier for auditors and officers to trus) Tj
+T*
+(  t and verify.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 11  SATARK-SIMULATION - - Purpose: Pre-Sanction What-If Testing) Tj
+T*
+( TECH: Real-Time Sub-15ms Sandbox Environment) Tj
+T*
+( WHAT IT DOES: Allows officials to test changes to a proposal in 15ms before approvin) Tj
+T*
+(  g it.) Tj
+T*
+(  - Creates a simulated copy of the proposal.) Tj
+T*
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 1730 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+(  - Officer changes parameters such as cost, vendor, or project details.) Tj
+T*
+(  - SATARK immediately recalculates the risk across all 7 sentinels.) Tj
+T*
+(  - Example: 50 Lakh estimate - 40 Lakh estimate - risk score recalculates in 2ms.) Tj
+T*
+( BENEFIT: Supports better decisions before funds are sanctioned.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 12  BHAVISHYA-REKHA - - Purpose: Future Risk  Trend Forecasting) Tj
+T*
+( TECH: Linear Regression  Time-Series Forecasting) Tj
+T*
+( WHAT IT DOES: Predicts potential future risk trends and March Rush surges from histo) Tj
+T*
+(  rical project data.) Tj
+T*
+(  - Analyzes historical project patterns.) Tj
+T*
+(  - Identifies trends such as increasing March-Rush activity.) Tj
+T*
+(  - Forecasts future quarterly risk patterns.) Tj
+T*
+(  - Highlights seasonal risk spikes and high-risk periods.) Tj
+T*
+( BENEFIT: Moves SATARK from reactive detection to proactive prevention.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 13  SATARK-KARYA - - Purpose: Automated Vigilance  Documentation) Tj
+T*
+( TECH: GFR-19A Memo Builder + SHA-256 Hashing) Tj
+T*
+( WHAT IT DOES: Converts detected violations into formal legal documentation for furth) Tj
+T*
+(  er administrative action.) Tj
+T*
+(  - Takes investigation and alert details.) Tj
+T*
+(  - Generates a structured Form GFR-19A vigilance memo/report.) Tj
+T*
+(  - Includes supporting evidence and 5-point engineer inspection checklist.) Tj
+T*
+(  - Uses SHA-256 hashing for document integrity.) Tj
+T*
+( BENEFIT: Reduces manual paperwork and creates a consistent audit and action trail.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000134 00000 n 
+0000000204 00000 n 
+0000002837 00000 n 
+0000002963 00000 n 
+0000006280 00000 n 
+0000006406 00000 n 
+0000009139 00000 n 
+0000009265 00000 n 
+0000011048 00000 n 
+trailer
+<< /Size 12 /Root 1 0 R >>
+startxref
+11176
+%%EOF

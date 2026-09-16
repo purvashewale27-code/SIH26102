@@ -1,0 +1,189 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 4773 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+(MPLADS-SATARK SATARK - Simple Feature Guide) Tj
+T*
+() Tj
+T*
+(Problem Statement 26102  MoSPI / DIID  176,925 Real Government Works) Tj
+T*
+() Tj
+T*
+( Sentinel 1  VIDHI-KAVACH - - The Legal Shield  Rules Referee) Tj
+T*
+( WHAT IT DOES: Checks if government laws, SC/ST mandatory quotas, and MPLADS guidelin) Tj
+T*
+(  es are strictly followed before money is disbursed.) Tj
+T*
+( HOW TO EXPLAIN: Think of this like a referee in a football match. Government money h) Tj
+T*
+(  as strict rules  for example, you cannot use public funds to build private clubhouses, luxury guest houses, or buy private cars. It also stops March Rush when officers try to spend all remaining budget in the last few days of March just so the funds dont expire.) Tj
+T*
+( EXAMPLE: If someone tries to pass a bill for an unapproved private building in mid-M) Tj
+T*
+(  arch, VIDHI-KAVACH immediately blows the whistle and blocks it) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Sentinel 2  PUNAR-DRISHTI  - The Double-Dipping  Clone Sentry) Tj
+T*
+( WHAT IT DOES: Catches duplicate or copy-pasted projects using smart text-matching TF) Tj
+T*
+(  -IDF  Cosine Similarity.) Tj
+T*
+( HOW TO EXPLAIN: Imagine a dishonest contractor builds one concrete road in a village) Tj
+T*
+(   using rural scheme money like MGNREGA. Then, he submits the exact same road under MPLADS scheme funds to get paid twice for the same work PUNAR-DRISHTI compares project titles across scheme databases.) Tj
+T*
+( EXAMPLE: It compares PCC Road near GP Office in both databases and catches double-bi) Tj
+T*
+(  lling instantly) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Sentinel 3  ARTHA-DARPAN - - The Price Inflation  Rate Book Checker) Tj
+T*
+( WHAT IT DOES: Compares claimed project costs against standard government benchmarks ) Tj
+T*
+(  CPWD Delhi Schedule of Rates.) Tj
+T*
+( HOW TO EXPLAIN: Imagine going to buy a phone that costs 80,000, but the shopkeeper c) Tj
+T*
+(  harges you 3,00,000. ARTHA-DARPAN keeps a standard price book for every state in India. If a standard 500-meter road usually costs 5 Lakhs, but a bill comes in for 18 Lakhs, ARTHA-DARPAN flags it.) Tj
+T*
+( EXAMPLE: It flags excess expenditure and calculates exact overpricing e.g., 13 Lakhs) Tj
+T*
+(   excess risk flagged.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Sentinel 4  CHAKRA-VYUH  - The Contractor Syndicate  Cartel Hunter) Tj
+T*
+( WHAT IT DOES: Exposes hidden networks and cartels between contractors, agencies, and) Tj
+T*
+(   officers using network graph theory.) Tj
+T*
+( HOW TO EXPLAIN: Sometimes, 3 or 4 contractor companies pretend to compete against ea) Tj
+T*
+(  ch other in open tenders, but behind closed doors, they are all owned by the same family or group CHAKRA-VYUH builds a visual web social network graph connecting MPs, agencies, and vendors to see who is getting all the contracts.) Tj
+T*
+( EXAMPLE: If one single contractor secretly captures 85% of all project contracts in ) Tj
+T*
+(  a district, CHAKRA-VYUH flags a Monopoly/Cartel Risk.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Sentinel 5  VIBHED-NETRA - - The 12D AI Anomaly Spotter) Tj
+T*
+( WHAT IT DOES: Finds suspicious projects by evaluating 12 different clues simultaneou) Tj
+T*
+(  sly using Machine Learning Isolation Forest.) Tj
+T*
+( HOW TO EXPLAIN: A human auditor can only look at 1 or 2 details at a time like cost ) Tj
+T*
+(  or date. But this AI looks at 12 details simultaneously cost, duration, completion rate, location, payment pattern, etc. to spot weird outliers.) Tj
+T*
+( EXAMPLE: A project that was approved in 1 day, spent 100% of its budget on day 2, bu) Tj
+T*
+(  t has zero physical progress stands out like a sore thumb to the AI.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Sentinel 6  SANKHYA-SATYA - - The Fake Bill  Tender-Split Finder) Tj
+T*
+( WHAT IT DOES: Uses financial math Benfords Law and pattern recognition to catch fabr) Tj
+T*
+(  icated numbers and tender splitting.) Tj
+T*
+( HOW TO EXPLAIN: 1 Tender-Splitting: Rules say any project above 5 Lakhs MUST go thro) Tj
+T*
+(  ugh an open public tender. Dishonest people split a 14 Lakh project into three fake bills of 4.95 Lakhs each to bypass tenders SANKHYA-SATYA catches this trick. 2 Benfords Law: In real financial records, the number 1 appears as the first digit about 30% of the time. When humans make up fake bills from thin air, they overuse round numbers like 5,00,000. Math catches them) Tj
+T*
+( EXAMPLE: Flags artificial bill splitting smurfing and round-number human-fabricated ) Tj
+T*
+(  estimates.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Sentinel 7  BHU-DRISHTI - - The Satellite  Ghost Asset Radar) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 1445 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+( WHAT IT DOES: Uses GPS coordinates and ISRO satellite maps to check if the project a) Tj
+T*
+(  ctually exists on the ground.) Tj
+T*
+( HOW TO EXPLAIN: What if someone claims 15 Lakhs for a Community Center, but it was n) Tj
+T*
+(  ever built BHU-DRISHTI checks the exact GPS latitude and longitude on satellite maps.) Tj
+T*
+( EXAMPLE: If the GPS location shows empty barren land, a lake, or a forest where a bu) Tj
+T*
+(  ilding was claimed to be constructed, BHU-DRISHTI flags it as a Ghost Asset) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( MASTER SYSTEM   Unified Priority Score  Official Vigilance Memo) Tj
+T*
+( COMPOSITE SCORE: Combines all 7 sentinels into one clear score from 0 to 100. 0-30 i) Tj
+T*
+(  s Green Clean, 30-70 is Yellow Medium Risk, and 70-100 is Red Critical Fraud Risk.) Tj
+T*
+( LEGAL MEMO: With one click, auditors can generate and print an official legal vigila) Tj
+T*
+(  nce memorandum Form GFR-19A with Government letterhead, rule citations, and a field verification checklist) Tj
+T*
+() Tj
+T*
+(30-SECOND QUICK ELEVATOR PITCH:) Tj
+T*
+(SATARK is an all-in-one AI vigilance system for government projects. It uses 7 specia) Tj
+T*
+(  lized AI sentinels to check rules, stop duplicate billing, check fair pricing, break up contractor syndicates, run financial math audits on fake bills, and check satellite maps to make sure projects actually exist on the ground) Tj
+T*
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000005016 00000 n 
+0000005142 00000 n 
+0000006639 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+6765
+%%EOF

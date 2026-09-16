@@ -22,6 +22,8 @@
       window.L = window.leaflet;
     }
   </script>
+  <!-- Sovereign Multilingual Engine -->
+  <script src="i18n.js"></script>
 </head>
 <body data-page="sankhya-satya">
 
@@ -56,6 +58,18 @@
             <span>Data Lineage &amp; Ledger</span>
           </button>
         </div>
+
+        <!-- Sovereign Language Switcher Block (English & हिन्दी) -->
+        <div class="header-lang-block" id="header-lang-block">
+          <span class="lang-block-label">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>भाषा / Language:</span>
+          </span>
+          <div class="lang-pills-group" role="radiogroup" aria-label="Select Language">
+            <button type="button" class="lang-pill-btn active" data-lang="en" onclick="setAppLanguage('en')">English</button>
+            <button type="button" class="lang-pill-btn" data-lang="hi" onclick="setAppLanguage('hi')">हिन्दी</button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -66,7 +80,7 @@
       <div class="sentinel-nav-container">
         
         <!-- 1. National Risk Overview -->
-        <a href="index.html" class="s-nav-tab" data-nav="overview" data-view="overview" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ window.scrollTo({top:0, behavior:'smooth'}); if(history.replaceState){history.replaceState(null,null,window.location.pathname);} return false; }" title="National Risk Intelligence &amp; Macro Overview">
+        <a href="index.html" class="s-nav-tab" data-nav="overview" data-view="overview" title="National Risk Intelligence &amp; Macro Overview">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span class="s-nav-title">National Overview</span>
         </a>
@@ -86,7 +100,7 @@
             </div>
             <div class="s-dropdown-grid">
               <!-- S-01 VIDHI-KAVACH -->
-              <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vidhi-kavach-section'); return false; }" title="S-01: Statutory Compliance &amp; Negative List">
+              <a href="vidhi-kavach.html" class="s-nav-tab" data-nav="vidhi-kavach" title="S-01: Statutory Compliance &amp; Negative List">
                 <span class="s-dd-code">S-01</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">VIDHI-KAVACH (विधि-कवच)</span>
@@ -94,7 +108,7 @@
                 </div>
               </a>
               <!-- S-02 PUNAR-DRISHTI -->
-              <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('punar-drishti-section'); return false; }" title="S-02: NLP Duplicate Claims &amp; Twin Works">
+              <a href="punar-drishti.html" class="s-nav-tab" data-nav="punar-drishti" title="S-02: NLP Duplicate Claims &amp; Twin Works">
                 <span class="s-dd-code">S-02</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">PUNAR-DRISHTI (पुनर्दृष्टि)</span>
@@ -102,7 +116,7 @@
                 </div>
               </a>
               <!-- S-03 ARTHA-DARPAN -->
-              <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('artha-darpan-section'); return false; }" title="S-03: CPWD Rate Benchmark &amp; Cost Inflation">
+              <a href="artha-darpan.html" class="s-nav-tab" data-nav="artha-darpan" title="S-03: CPWD Rate Benchmark &amp; Cost Inflation">
                 <span class="s-dd-code">S-03</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">ARTHA-DARPAN (अर्थ-दर्पण)</span>
@@ -110,7 +124,7 @@
                 </div>
               </a>
               <!-- S-04 CHAKRA-VYUH -->
-              <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('chakra-vyuh-section'); return false; }" title="S-04: Contractor Cartel &amp; Vendor Nexus">
+              <a href="chakra-vyuh.html" class="s-nav-tab" data-nav="chakra-vyuh" data-view="networks" title="S-04: Contractor Cartel &amp; Vendor Nexus">
                 <span class="s-dd-code">S-04</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">CHAKRA-VYUH (चक्रव्यूह)</span>
@@ -118,7 +132,7 @@
                 </div>
               </a>
               <!-- S-05 VIBHED-NETRA -->
-              <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('vibhed-netra-section'); return false; }" title="S-05: 12-D Isolation Forest Outlier">
+              <a href="vibhed-netra.html" class="s-nav-tab" data-nav="vibhed-netra" title="S-05: 12-D Isolation Forest Outlier">
                 <span class="s-dd-code">S-05</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">VIBHED-NETRA (विभेद-नेत्र)</span>
@@ -126,7 +140,7 @@
                 </div>
               </a>
               <!-- S-06 SANKHYA-SATYA -->
-              <a href="sankhya-satya.html" class="s-nav-tab active" data-nav="sankhya-satya" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('sankhya-satya-section'); return false; }" title="S-06: Benford's Law &amp; Tender-Splitting">
+              <a href="sankhya-satya.html" class="s-nav-tab active" data-nav="sankhya-satya" title="S-06: Benford's Law &amp; Tender-Splitting">
                 <span class="s-dd-code">S-06</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">SANKHYA-SATYA (संख्या-सत्य)</span>
@@ -134,7 +148,7 @@
                 </div>
               </a>
               <!-- S-07 BHU-DRISHTI -->
-              <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" onclick="closeForensicDropdown(); if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhu-drishti-section'); return false; }" title="S-07: Geospatial Remote Sensing &amp; GPS">
+              <a href="bhu-drishti.html" class="s-nav-tab" data-nav="bhu-drishti" data-view="map" title="S-07: Geospatial Remote Sensing &amp; GPS">
                 <span class="s-dd-code">S-07</span>
                 <div class="s-dd-info">
                   <span class="s-dd-name">BHU-DRISHTI (भू-दृष्टि)</span>
@@ -146,31 +160,31 @@
         </div>
 
         <!-- 3. Audit Copilot -->
-        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('samvaad-copilot-card'); return false; }" title="GenAI Natural Language Audit Copilot">
+        <a href="samvaad.html" class="s-nav-tab" data-nav="samvaad" data-view="investigate" title="GenAI Natural Language Audit Copilot">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           <span class="s-nav-title">Audit Copilot</span>
         </a>
 
         <!-- 4. Explainable Evidence (PRASHNA-KAVACH) -->
-        <a href="index.html#prashna-kavach-section" class="s-nav-tab" data-nav="prashna-kavach" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('prashna-kavach-section'); return false; }" title="Explainable AI &amp; Forensic Evidence Shield">
+        <a href="prashna-kavach.html" class="s-nav-tab" data-nav="prashna-kavach" title="Explainable AI &amp; Forensic Evidence Shield">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           <span class="s-nav-title">Explainable AI</span>
         </a>
 
         <!-- 5. Proposal Simulator -->
-        <a href="index.html#satark-simulation-section" class="s-nav-tab" data-nav="satark-simulation" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-simulation-section'); return false; }" title="Pre-Sanction Proposal Sandbox (&lt;50ms)">
+        <a href="satark-simulation.html" class="s-nav-tab" data-nav="satark-simulation" title="Pre-Sanction Proposal Sandbox (&lt;50ms)">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/></svg>
           <span class="s-nav-title">Proposal Sandbox</span>
         </a>
 
         <!-- 6. Expenditure Velocity -->
-        <a href="index.html#bhavishya-trends-section" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('bhavishya-trends-section'); return false; }" title="Expenditure Velocity &amp; Fiscal Rush Trends">
+        <a href="bhavishya-rekha.html" class="s-nav-tab" data-nav="bhavishya-rekha" data-view="trends" title="Expenditure Velocity &amp; Fiscal Rush Trends">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           <span class="s-nav-title">Trends &amp; Velocity</span>
         </a>
 
         <!-- 7. Action Ledger -->
-        <a href="index.html#satark-karyaa-section" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" onclick="if(window.location.pathname.includes('index')||window.location.pathname==='/'||window.location.pathname.endsWith('/')){ jumpToSection('satark-karyaa-section'); return false; }" title="Project Explorer, Inspections &amp; Action Ledger">
+        <a href="satark-karyaa.html" class="s-nav-tab" data-nav="satark-karyaa" data-view="reports" title="Project Explorer, Inspections &amp; Action Ledger">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           <span class="s-nav-title">Work Explorer</span>
         </a>
@@ -182,6 +196,7 @@
   <!-- Main Content Container -->
   <main class="page-container">
 
+    
     
     <!-- Dedicated Feature Hero Card -->
     <section class="feature-hero-card">
@@ -316,6 +331,7 @@
         <button id="next-btn" class="nav-btn">Next →</button>
       </div>
     </section>
+  
 
   </main>
 
@@ -354,11 +370,11 @@
         </div>
         <hr class="modal-divider">
         <div class="modal-section">
-          <label>VIDHI-KAVACH Findings & Legal Citations:</label>
+          <label id="modal-findings-label">Forensic Audit Findings &amp; Legal Citations:</label>
           <div id="modal-findings-container"></div>
         </div>
       </div>
-      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+      <div class="modal-footer">
         <button class="btn-primary" id="modal-gen-dossier-btn" style="color:#ffffff; background:var(--gov-navy); font-weight:600; padding:8px 16px; border-radius:6px;">
           Generate Official Vigilance Memorandum
         </button>
@@ -855,7 +871,7 @@
           </div>
         </details>
       </div>
-      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+      <div class="modal-footer">
         <button class="btn-primary" onclick="generateCaseFileFromPrashna()" style="color:#ffffff; background:var(--gov-navy); font-weight:600;">
           Generate Case File (Form GFR-19A)
         </button>
@@ -875,10 +891,10 @@
         </div>
         <button class="modal-close" onclick="closeGovPolicyModal()">&times;</button>
       </div>
-      <div class="modal-body" id="gov-policy-content" style="font-size:13.5px; line-height:1.7; color:var(--gov-text-body); max-height:480px; overflow-y:auto; padding:20px 24px;">
+      <div class="modal-body" id="gov-policy-content" style="font-size:13.5px; line-height:1.7; color:var(--gov-text-body); padding:20px 24px;">
         <!-- Populated dynamically via openGovPolicyModal(type) -->
       </div>
-      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+      <div class="modal-footer">
         <span style="font-size:11px; color:var(--gov-text-muted); font-weight:600;">GIGW 3.0 Compliance Certified · Sovereign Domain .gov.in</span>
         <button class="btn-secondary" onclick="closeGovPolicyModal()">Close Document</button>
       </div>
@@ -951,6 +967,9 @@
 
   <!-- SCRIPTS -->
   <script src="app.js"></script>
+  
+  
+  
   
 </body>
 </html>

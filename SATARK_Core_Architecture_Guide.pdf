@@ -1,0 +1,201 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 4140 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+(MPLADS-SATARK SATARK - Core Architecture Guide) Tj
+T*
+() Tj
+T*
+(Problem Statement 26102  MoSPI / DIID  176,925 Real Government Works) Tj
+T*
+() Tj
+T*
+(THE 6 CORE ARCHITECTURE MODULES:) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 1  SATARK-DRISHTI - - Master Risk Scorer  Delay Predictor) Tj
+T*
+( CORE ENGINE: Composite Scorer 0-100  Survival Analysis) Tj
+T*
+( WHAT IT DOES: Combines findings from all 7 AI sentinels into one single Priority Ris) Tj
+T*
+(  k Score between 0 and 100. It also predicts how many months a project will be delayed.) Tj
+T*
+( HOW TO EXPLAIN: Think of this like a CIBIL Score for credit cards or a Student Repor) Tj
+T*
+(  t Card. Instead of handing an officer 7 different complicated reports, it gives one final score e.g. 85/100 - CRITICAL RISK so they instantly know which projects need urgent attention) Tj
+T*
+( EXAMPLE: Combines Statutory Violations +30, CPWD Overpricing +25, and Cartel Risk +2) Tj
+T*
+(  5 to assign an 80/100 Critical Risk rating.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 2  SATARK-SAMVAAD - - GenAI Natural Language Audit Copilot) Tj
+T*
+( CORE ENGINE: GenAI Natural Language Copilot over 176,925 MoSPI Records) Tj
+T*
+( WHAT IT DOES: Lets government officers ask plain-language questions in English or Hi) Tj
+T*
+(  ndi over 176,925 government records instead of writing complex database code.) Tj
+T*
+( HOW TO EXPLAIN: Like ChatGPT for government audits An officer can simply type: Show ) Tj
+T*
+(  high-risk projects in Bihar under 5 Lakh, and SAMVAAD instantly scans all records and presents the exact matching projects.) Tj
+T*
+( EXAMPLE: Query: Find ghost assets in Bihar - Returns 42 matching projects with total) Tj
+T*
+(   financial exposure of 1.8 Cr.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 3  PRASHNA-KAVACH - - The Why Was This Flagged Evidence Drawer) Tj
+T*
+( CORE ENGINE: SHAP Explainable AI Drawer  Evidence Shield) Tj
+T*
+( WHAT IT DOES: Answers the question WHY WAS THIS FLAGGED by popping open a side drawe) Tj
+T*
+(  r that lists line-by-line evidence and legal rule citations.) Tj
+T*
+( HOW TO EXPLAIN: Think of an itemized restaurant or hospital bill. If a waiter charge) Tj
+T*
+(  s you 5,000, you dont just pay blindly  you want an itemized bill showing 2,000 for food, 1,500 for drinks, etc. PRASHNA-KAVACH shows officers line-by-line why a project was flagged +30 Overpricing, +25 Cartel Risk, +20 March Rush.) Tj
+T*
+( EXAMPLE: Pops open drawer showing exact GFR Rule 144 citation, CPWD cost variance, a) Tj
+T*
+(  nd matched duplicate project ID.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 4  SATARK-SIMULATION - - Pre-Approval What-If Real-Time Sandbox 15ms) Tj
+T*
+( CORE ENGINE: Sub-15ms Real-Time Sandbox) Tj
+T*
+( WHAT IT DOES: Allows officers to test a new project proposal title, cost, date, loca) Tj
+T*
+(  tion in less than 15 milliseconds BEFORE signing sanction approvals.) Tj
+T*
+( HOW TO EXPLAIN: Like a Spell-Checker before sending an email or a Flight Simulator B) Tj
+T*
+(  efore an MP or Collector signs off on spending 10 Lakhs of public money, they run a 3-millisecond simulation to check for any hidden red flags BEFORE funds leave the bank) Tj
+T*
+( EXAMPLE: Officer inputs a proposed 4,95,000 community hall bill on March 29; Simulat) Tj
+T*
+(  or flags March Rush + Tender-Split Evasion in 2ms.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+( Module 5  BHAVISHYA-REKHA - - Future Risk  Trend Forecaster) Tj
+T*
+( CORE ENGINE: Linear Regression  Time-Series Forecasting) Tj
+T*
+( WHAT IT DOES: Uses trend forecasting math to predict upcoming spending surges, March) Tj
+T*
+(   Rush spikes, and future quarterly risk trends.) Tj
+T*
+( HOW TO EXPLAIN: Like a Weather Forecast app It doesnt just tell you if its raining r) Tj
+T*
+(  ight now  it warns officers 3 months in advance that a heavy spending surge March Rush is coming so they can prepare early.) Tj
+T*
+( EXAMPLE: Projects a 45% spike in unverified end-of-year fund sanctions for Q4, alert) Tj
+T*
+(  ing auditors in January.) Tj
+T*
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 2382 >>
+stream
+BT
+/F1 10 Tf
+14 TL
+40 800 Td
+(-------------------------------------------------) Tj
+T*
+( Module 6  SATARK-KARYA - - 1-Click Printable Legal Memo Builder) Tj
+T*
+( CORE ENGINE: Form GFR-19A Legal Memo Builder with SHA-256 Hash) Tj
+T*
+( WHAT IT DOES: Automatically converts AI findings into a ready-to-print official lega) Tj
+T*
+(  l notice Form GFR-19A complete with Government letterhead, legal citations, a 5-point engineer checklist, and a tamper-proof SHA-256 digital security hash.) Tj
+T*
+( HOW TO EXPLAIN: Like an automatic traffic challan / speeding ticket. Once the system) Tj
+T*
+(   detects a violation, SATARK-KARYA generates an official legal document with 1 click that can be printed and handed to field engineers for physical ground inspection.) Tj
+T*
+( EXAMPLE: Generates confidential Memorandum MEMO/SATARK/2026/145555 with barcode and ) Tj
+T*
+(  District Magistrate countersignature block.) Tj
+T*
+(-------------------------------------------------) Tj
+T*
+(HIGH-LEVEL SYSTEM ARCHITECTURE LAYERS:) Tj
+T*
+( Layer 1: Real Government Data Warehouse: Ingests 100% real live data from official M) Tj
+T*
+(  oSPI eSAKSHI portals 176,925 projects, 109,475 payment vouchers, 27,234 contractors across 37 States  UTs.) Tj
+T*
+( Layer 2: Dual-Brain Architecture Cold vs Hot Path: Heavy offline batch processing Co) Tj
+T*
+(  ld Path combined with sub-15ms live scoring gateway Hot Path.) Tj
+T*
+( Layer 3: 7 Independent AI Sentinels: Multi-layer defense inspecting statutory rules,) Tj
+T*
+(   text duplicates, CPWD benchmarks, network cartels, 12D ML outliers, digit math, and satellite geotags.) Tj
+T*
+( Layer 4: Itemized Receipt Risk Scorer: 0 to 100 composite risk score with additive w) Tj
+T*
+(  aterfall breakdown replacing obscure black-box AI.) Tj
+T*
+( Layer 5: Role Dashboards  1-Click Legal Notice: Custom views for MP, District Collec) Tj
+T*
+(  tor, State Nodal, and Ministry with Form GFR-19A printable memorandums.) Tj
+T*
+() Tj
+T*
+(30-SECOND QUICK ELEVATOR PITCH:) Tj
+T*
+(SATARKs core architecture has 6 main engines: DRISHTI gives a 0-100 report card score) Tj
+T*
+(  , SAMVAAD lets you ask questions like ChatGPT, PRASHNA-KAVACH gives itemized proof of why a project was flagged, SIMULATION tests proposals in 3 milliseconds before signing, BHAVISHYA-REKHA forecasts future risk trends like weather, and KARYA prints official legal inspection memos with 1 click) Tj
+T*
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000004383 00000 n 
+0000004509 00000 n 
+0000006943 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+7069
+%%EOF

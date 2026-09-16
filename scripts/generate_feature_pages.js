@@ -56,10 +56,22 @@ const benfordSection = indexHtml.substring(benfordStart, bhuStart).trim().replac
 // C. Bhu-Drishti map section
 const bhuSection = indexHtml.substring(bhuStart, tableContainerStart).trim().replace('style="display: none;"', 'style="display: block;"');
 
-// D. Samvaad Copilot Card
+// D. Samvaad Copilot Card (Module 09)
 const samvaadStart = indexHtml.indexOf('<!-- 09. CORE MODULE 09: SATARK-SAMVAAD');
 const prashnaStart = indexHtml.indexOf('<!-- 10. CORE MODULE 10: PRASHNA-KAVACH');
 const samvaadSection = indexHtml.substring(samvaadStart, prashnaStart).trim().replace('style="display: none;"', 'style="display: block;"');
+
+// E. Prashna-Kavach Section (Module 10)
+const simStart = indexHtml.indexOf('<!-- 11. CORE MODULE 11: SATARK-SIMULATION');
+const prashnaSection = indexHtml.substring(prashnaStart, simStart).trim().replace('style="display: none;"', 'style="display: block;"');
+
+// F. Satark-Simulation Section (Module 11)
+const trendsStart = indexHtml.indexOf('<!-- 12. CORE MODULE 12: BHAVISHYA-REKHA');
+const simSection = indexHtml.substring(simStart, trendsStart).trim().replace('style="display: none;"', 'style="display: block;"');
+
+// G. Bhavishya-Rekha Trends Section (Module 12)
+const karyaaStart = indexHtml.indexOf('<!-- 13. CORE MODULE 13: SATARK-KARYAA');
+const trendsSection = indexHtml.substring(trendsStart, karyaaStart).trim().replace('style="display: none;"', 'style="display: block;"');
 
 // Function to generate the Unified Sticky Header with accurate active states
 function getStickyNavHeader(activeView, activeNav) {
@@ -94,6 +106,7 @@ const pages = [
     badgeVal: '23,722',
     badgeLbl: 'Statutory Breaches Flagged',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: ''
   },
   {
@@ -113,6 +126,7 @@ const pages = [
     badgeVal: '10,204',
     badgeLbl: 'Duplicate Claims (6,965 Clones)',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: ''
   },
   {
@@ -132,6 +146,7 @@ const pages = [
     badgeVal: '₹3,639.9 Cr',
     badgeLbl: 'Flagged Excess Overrun Risk',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: ''
   },
   {
@@ -151,6 +166,7 @@ const pages = [
     badgeVal: '47,302',
     badgeLbl: 'Cartel Risk Works (1,248 Monopolies)',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: chakraSection
   },
   {
@@ -170,6 +186,7 @@ const pages = [
     badgeVal: '37,391',
     badgeLbl: 'High-Dimensional Outliers (7,780 Critical)',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: ''
   },
   {
@@ -189,6 +206,7 @@ const pages = [
     badgeVal: '7,710',
     badgeLbl: 'Threshold Splits (Chi-Sq: 68.4)',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: benfordSection
   },
   {
@@ -208,6 +226,7 @@ const pages = [
     badgeVal: '3,031',
     badgeLbl: 'Ghost Assets (Disbursed Without Geotag)',
     badgeColor: '#0c2340',
+    standalone: false,
     visualizer: bhuSection
   },
   {
@@ -218,7 +237,7 @@ const pages = [
     chipClass: 'gov',
     shortTitle: 'SATARK-SAMVAAD (सतर्क संवाद)',
     title: 'SATARK-SAMVAAD (सतर्क संवाद) · GenAI Natural Language Audit Copilot | MPLADS-SATARK',
-    tag: 'SATARK-SAMVAAD (सतर्क संवाद) — GENAI AUDIT COPILOT',
+    tag: 'MODULE 09: SATARK-SAMVAAD (सतर्क संवाद — GENAI AUDIT COPILOT)',
     tagColor: 'rgba(12, 35, 64, 0.06)',
     tagTextColor: '#0c2340',
     tagBorder: 'rgba(12, 35, 64, 0.18)',
@@ -227,7 +246,88 @@ const pages = [
     badgeVal: '176,925',
     badgeLbl: 'Records Indexed in Real Time',
     badgeColor: '#0c2340',
+    standalone: true,
     visualizer: samvaadSection
+  },
+  {
+    fileName: 'prashna-kavach.html',
+    pageId: 'prashna-kavach',
+    mainView: 'overview',
+    sentinelCode: 'XAI',
+    chipClass: 'gov',
+    shortTitle: 'PRASHNA-KAVACH (प्रश्न-कवच)',
+    title: 'PRASHNA-KAVACH (प्रश्न-कवच) · Explainable AI & Forensic Evidence Shield | MPLADS-SATARK',
+    tag: 'MODULE 10: PRASHNA-KAVACH (प्रश्न-कवच — EXPLAINABLE FORENSIC AI)',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
+    heading: 'Explainable AI Attribution & Statutory Legal Proof',
+    subheading: 'Deconstructs multi-sentinel priority scores into additive SHAP feature attribution and statutory legal citations from MoSPI Guidelines 2023 & GFR Rules',
+    badgeVal: '94.2%',
+    badgeLbl: 'Model Calibration Precision',
+    badgeColor: '#0c2340',
+    standalone: true,
+    visualizer: prashnaSection
+  },
+  {
+    fileName: 'satark-simulation.html',
+    pageId: 'satark-simulation',
+    mainView: 'overview',
+    sentinelCode: 'SIM',
+    chipClass: 'gov',
+    shortTitle: 'SATARK-SIMULATION (सतर्क-सिमुलेशन)',
+    title: 'SATARK-SIMULATION (सतर्क-सिमुलेशन) · Pre-Sanction Proposal Sandbox | MPLADS-SATARK',
+    tag: 'MODULE 11: SATARK-SIMULATION (सतर्क-सिमुलेशन — PRE-SANCTION PROPOSAL SANDBOX)',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
+    heading: 'Pre-Sanction "What-If" Proposal Sandbox (<50ms)',
+    subheading: 'Instantaneous multi-model risk audit for proposed works before statutory sanction and fund release to intercept fraudulent allocations at entry',
+    badgeVal: '<50ms',
+    badgeLbl: 'Audit Latency Benchmark',
+    badgeColor: '#0c2340',
+    standalone: true,
+    visualizer: simSection
+  },
+  {
+    fileName: 'bhavishya-rekha.html',
+    pageId: 'bhavishya-rekha',
+    mainView: 'trends',
+    sentinelCode: 'TRENDS',
+    chipClass: 'gov',
+    shortTitle: 'BHAVISHYA-REKHA (भविष्य-रेखा)',
+    title: 'BHAVISHYA-REKHA (भविष्य-रेखा) · Expenditure Velocity & Fiscal Rush AI | MPLADS-SATARK',
+    tag: 'MODULE 12: BHAVISHYA-REKHA (भविष्य-रेखा — EXPENDITURE VELOCITY & MARCH RUSH AI)',
+    tagColor: 'rgba(37, 99, 235, 0.08)',
+    tagTextColor: '#1d4ed8',
+    tagBorder: 'rgba(37, 99, 235, 0.25)',
+    heading: 'Predictive Time-Series & Fiscal Year-End Anomaly Forecasts',
+    subheading: 'Audits macro fund disbursement speed across fiscal cycles and flags artificial year-end sanction clustering violating GFR Rule 62 with 1-2 quarter linear forecasts',
+    badgeVal: '₹7,908.5 Cr',
+    badgeLbl: 'Monitored Disbursals',
+    badgeColor: '#1d4ed8',
+    standalone: true,
+    visualizer: trendsSection
+  },
+  {
+    fileName: 'satark-karyaa.html',
+    pageId: 'satark-karyaa',
+    mainView: 'reports',
+    sentinelCode: 'EXPLORER',
+    chipClass: 'gov',
+    shortTitle: 'SATARK-KARYAA (सतर्क-कार्या)',
+    title: 'SATARK-KARYAA (सतर्क-कार्या) · Operational Project Explorer & Action Ledger | MPLADS-SATARK',
+    tag: 'MODULE 13: SATARK-KARYAA (सतर्क-कार्या — WORK EXPLORER & ACTION LEDGER)',
+    tagColor: 'rgba(12, 35, 64, 0.06)',
+    tagTextColor: '#0c2340',
+    tagBorder: 'rgba(12, 35, 64, 0.18)',
+    heading: 'Operational Project Explorer, Field Inspections & Action Ledger',
+    subheading: 'Dynamic multi-dimensional audit table over 176,925 works with state/district drilldown, multi-sentinel findings, and one-click official GFR-19A memorandum export',
+    badgeVal: '176,925',
+    badgeLbl: 'Total Real Works Monitored',
+    badgeColor: '#0c2340',
+    standalone: false,
+    visualizer: ''
   }
 ];
 
@@ -256,18 +356,13 @@ pages.forEach(p => {
     </section>
   `;
 
-  const pageHtml = `<!DOCTYPE html>
-<html lang="en">
-${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
-<body data-page="${p.pageId}">
+  const bodyContent = p.standalone ? `
+    ${heroCard}
 
-  ${masthead}
-
-  ${currentStickyNav}
-
-  <!-- Main Content Container -->
-  <main class="page-container">
-
+    <div style="margin-top: 14px;">
+      ${p.visualizer}
+    </div>
+  ` : `
     ${heroCard}
 
     ${kpiSection}
@@ -280,6 +375,21 @@ ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
       ${p.visualizer}
 
       ${tableContainerAndPagination}
+  `;
+
+  const pageHtml = `<!DOCTYPE html>
+<html lang="en">
+${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
+<body data-page="${p.pageId}">
+
+  ${masthead}
+
+  ${currentStickyNav}
+
+  <!-- Main Content Container -->
+  <main class="page-container">
+
+    ${bodyContent}
 
   </main>
 
@@ -300,6 +410,39 @@ ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
       }, 200);
     });
   </script>` : ''}
+  ${p.pageId === 'bhavishya-rekha' ? `
+  <!-- BHAVISHYA-REKHA: Direct fallback chart initializer -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (typeof renderTrendsChart === 'function') {
+          try { renderTrendsChart(); } catch(e) { console.error('[BHAVISHYA-REKHA] Chart init error:', e); }
+        }
+      }, 100);
+    });
+  </script>` : ''}
+  ${p.pageId === 'satark-simulation' ? `
+  <!-- SATARK-SIMULATION: Direct fallback preset initializer -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (typeof loadOnPageSimPreset === 'function') {
+          try { loadOnPageSimPreset(1); } catch(e) { console.error('[SATARK-SIMULATION] Sim init error:', e); }
+        }
+      }, 100);
+    });
+  </script>` : ''}
+  ${p.pageId === 'prashna-kavach' ? `
+  <!-- PRASHNA-KAVACH: Direct fallback real audit initializer -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (typeof loadPrashnaRealAudit === 'function') {
+          try { loadPrashnaRealAudit('MPLADS-146721'); } catch(e) { console.error('[PRASHNA-KAVACH] Init error:', e); }
+        }
+      }, 100);
+    });
+  </script>` : ''}
 </body>
 </html>`;
 
@@ -308,4 +451,4 @@ ${headContent.replace(/<title>.*?<\/title>/, `<title>${p.title}</title>`)}
   console.log(`✅ Generated dedicated page: frontend/${p.fileName} (${fs.statSync(outPath).size} bytes)`);
 });
 
-console.log('\n🎉 ALL 8 INDEPENDENT FEATURE PAGES GENERATED SUCCESSFULLY!');
+console.log('\n🎉 ALL INDEPENDENT FEATURE PAGES GENERATED SUCCESSFULLY!');
