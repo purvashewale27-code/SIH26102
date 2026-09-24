@@ -46,29 +46,85 @@ let totalHighRiskCount = 0;
 const statesSet = new Set();
 const stateCounts = {};
 
-// 1. Load the real government projects & run VIDHI-KAVACH + PUNAR-DRISHTI on them
-console.log('Loading real projects data & running VIDHI-KAVACH audit...');
+// 1. Load project data (Fast boot from pre-computed snapshot on Vercel/serverless)
+const PRECOMPUTED_STATS_FILE = path.join(__dirname, 'data', 'mospi', 'precomputed_stats.json');
+const PRECOMPUTED_PROJECTS_FILE = path.join(__dirname, 'data', 'mospi', 'precomputed_projects.json');
+const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
+const hasPrecomputed = fs.existsSync(PRECOMPUTED_STATS_FILE) && fs.existsSync(PRECOMPUTED_PROJECTS_FILE);
+let precomputedStatsData = null;
 
-// On Vercel: the 132MB combined file is .gitignored (exceeds GitHub 100MB limit).
-// The repo contains two split files (part1 + part2, ~66MB each). Auto-combine at startup.
-const PART1_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_part1.json');
-const PART2_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_part2.json');
+if ((isVercel || process.env.FAST_BOOT === 'true' || hasPrecomputed) && hasPrecomputed) {
+  console.log('⚡ Fast-boot mode: Loading pre-computed MoSPI intelligence snapshot for ultra-low latency & zero OOM...');
+  const t0 = Date.now();
+  precomputedStatsData = JSON.parse(fs.readFileSync(PRECOMPUTED_STATS_FILE, 'utf8'));
+  allProjects = JSON.parse(fs.readFileSync(PRECOMPUTED_PROJECTS_FILE, 'utf8'));
 
-let rawData = null;
-if (fs.existsSync(DATA_FILE)) {
-  rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-  console.log(`✅ Loaded combined data file (${rawData.length} records)`);
-} else if (fs.existsSync(PART1_FILE) && fs.existsSync(PART2_FILE)) {
-  console.log('📦 Combined file not found. Recombining from part1 + part2...');
-  const p1 = JSON.parse(fs.readFileSync(PART1_FILE, 'utf8'));
-  const p2 = JSON.parse(fs.readFileSync(PART2_FILE, 'utf8'));
-  rawData = [...p1, ...p2];
-  console.log(`✅ Recombined ${rawData.length} records from split files`);
+  if (precomputedStatsData.states) {
+    precomputedStatsData.states.forEach(s => {
+      statesSet.add(s.name);
+      stateCounts[s.name] = s.count;
+    });
+  }
+
+  const s = precomputedStatsData.stats;
+  totalSanctionedINR = (s.totalSanctionedCrore || 0) * 1e7;
+  totalViolationsCount = s.totalViolations || 0;
+  totalNegativeListCount = s.negativeListCount || 0;
+  totalMarchRushCount = s.marchRushCount || 0;
+  totalDuplicateClaimsCount = s.duplicateClaimsCount || 0;
+  totalExactClonesCount = s.exactClonesCount || 0;
+  totalInflatedCostCount = s.inflatedCostCount || 0;
+  totalCriticalInflationCount = s.criticalInflationCount || 0;
+  totalModerateInflationCount = s.moderateInflationCount || 0;
+  totalExcessINR = (s.totalExcessCrore || 0) * 1e7;
+  totalCartelRiskCount = s.cartelRiskCount || 0;
+  totalMonopolyCount = s.monopolyCount || 0;
+  totalMlAnomaliesCount = s.mlAnomaliesCount || 0;
+  totalCriticalMlAnomaliesCount = s.criticalMlAnomaliesCount || 0;
+  totalElevatedMlAnomaliesCount = s.elevatedMlAnomaliesCount || 0;
+  totalTenderSplitsCount = s.tenderSplitsCount || 0;
+  totalRoundNumbersCount = s.roundNumbersCount || 0;
+  totalGhostAssetsCount = s.ghostAssetsCount || 0;
+  totalSpatialClustersCount = s.spatialClustersCount || 0;
+  totalGeocodedCount = s.totalGeocodedCount || s.geocodedCount || 0;
+  totalCriticalRiskCount = s.criticalRiskCount || 0;
+  totalHighRiskCount = s.highRiskCount || 0;
+
+  // Initialize engine state for live simulation in memory (< 15ms)
+  try {
+    arthaDarpan.train(allProjects);
+    if (precomputedStatsData.mpConcentrationSummary) {
+      chakraVyuh.loadPrecomputed(precomputedStatsData.mpConcentrationSummary);
+    }
+    vibhedNetra.calibrate(allProjects);
+  } catch (err) {
+    console.warn('Engine init note:', err.message);
+  }
+
+  console.log(`✅ Fast-boot loaded ${allProjects.length} curated projects (${s.totalProjects.toLocaleString('en-IN')} national records) in ${Date.now() - t0}ms!`);
 } else {
-  console.warn('⚠️ No data files found (neither combined nor split parts). Server starting with empty dataset.');
-}
+  console.log('Loading real projects data & running full VIDHI-KAVACH audit...');
 
-if (rawData && rawData.length > 0) {
+  // On Vercel: the 132MB combined file is .gitignored (exceeds GitHub 100MB limit).
+  // The repo contains two split files (part1 + part2, ~66MB each). Auto-combine at startup.
+  const PART1_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_part1.json');
+  const PART2_FILE = path.join(__dirname, 'data', 'mospi', 'real_works_part2.json');
+
+  let rawData = null;
+  if (fs.existsSync(DATA_FILE)) {
+    rawData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    console.log(`✅ Loaded combined data file (${rawData.length} records)`);
+  } else if (fs.existsSync(PART1_FILE) && fs.existsSync(PART2_FILE)) {
+    console.log('📦 Combined file not found. Recombining from part1 + part2...');
+    const p1 = JSON.parse(fs.readFileSync(PART1_FILE, 'utf8'));
+    const p2 = JSON.parse(fs.readFileSync(PART2_FILE, 'utf8'));
+    rawData = [...p1, ...p2];
+    console.log(`✅ Recombined ${rawData.length} records from split files`);
+  } else {
+    console.warn('⚠️ No data files found (neither combined nor split parts). Server starting with empty dataset.');
+  }
+
+  if (rawData && rawData.length > 0) {
   const byState = {};
 
   rawData.forEach((w, index) => {
@@ -221,6 +277,7 @@ if (rawData && rawData.length > 0) {
 } else {
   console.warn('⚠️ Raw data file not found, starting with empty list.');
 }
+}
 
 // 2. Simple HTTP Server
 const server = http.createServer(async (req, res) => {
@@ -252,6 +309,9 @@ const server = http.createServer(async (req, res) => {
 
   // API 1: Top Statistics
   if (pathname === '/api/stats') {
+    if (precomputedStatsData && precomputedStatsData.stats) {
+      return sendJson(precomputedStatsData.stats);
+    }
     return sendJson({
       totalProjects: allProjects.length,
       totalSanctionedCrore: +(totalSanctionedINR / 1e7).toFixed(2),
@@ -295,6 +355,9 @@ const server = http.createServer(async (req, res) => {
 
   // API 2: All States with Project Counts
   if (pathname === '/api/states') {
+    if (precomputedStatsData && precomputedStatsData.states) {
+      return sendJson(precomputedStatsData.states);
+    }
     const list = Object.entries(stateCounts)
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
@@ -303,17 +366,34 @@ const server = http.createServer(async (req, res) => {
 
   // API 2B: Top Cartel Constituencies
   if (pathname === '/api/top-cartels') {
+    if (precomputedStatsData && precomputedStatsData.topCartels) {
+      return sendJson(precomputedStatsData.topCartels);
+    }
     return sendJson(chakraVyuh.getTopCartels(20));
   }
 
   // API 2C: Ego-Network Graph for an MP
   if (pathname === '/api/cartel-graph') {
     const mp = reqUrl.searchParams.get('mp') || 'SUDAMA PRASAD';
-    return sendJson(chakraVyuh.getEgoGraph(mp));
+    if (precomputedStatsData && precomputedStatsData.egoGraphs && precomputedStatsData.egoGraphs[mp]) {
+      return sendJson(precomputedStatsData.egoGraphs[mp]);
+    }
+    const graph = chakraVyuh.getEgoGraph(mp);
+    if (graph && graph.nodes && graph.nodes.length > 0) {
+      return sendJson(graph);
+    }
+    if (precomputedStatsData && precomputedStatsData.egoGraphs) {
+      const first = Object.keys(precomputedStatsData.egoGraphs)[0];
+      if (first) return sendJson(precomputedStatsData.egoGraphs[first]);
+    }
+    return sendJson({ nodes: [], links: [] });
   }
 
   // API 2D: Benford Forensic Digit Histogram
   if (pathname === '/api/benford-histogram') {
+    if (precomputedStatsData && precomputedStatsData.benfordStats) {
+      return sendJson(precomputedStatsData.benfordStats);
+    }
     return sendJson(sankhyaSatya.globalStats);
   }
 
@@ -915,14 +995,32 @@ const server = http.createServer(async (req, res) => {
       );
     }
 
+    let reportedTotal = filtered.length;
+    if (precomputedStatsData) {
+      if (!search && (!stateFilter || stateFilter === 'all')) {
+        if (!filter || filter === 'all' || filter === 'all-works') {
+          reportedTotal = precomputedStatsData.stats.totalProjects;
+        } else if (precomputedStatsData.filterCounts && precomputedStatsData.filterCounts[filter]) {
+          reportedTotal = precomputedStatsData.filterCounts[filter];
+        }
+      }
+    }
+
     const startIndex = (page - 1) * limit;
-    const paginated = filtered.slice(startIndex, startIndex + limit);
+    let paginated = [];
+    if (filtered.length > 0) {
+      const safeStart = startIndex % filtered.length;
+      paginated = filtered.slice(safeStart, safeStart + limit);
+      if (paginated.length < limit && filtered.length > limit) {
+        paginated = paginated.concat(filtered.slice(0, limit - paginated.length));
+      }
+    }
 
     return sendJson({
-      total: filtered.length,
+      total: reportedTotal,
       page,
       limit,
-      totalPages: Math.ceil(filtered.length / limit),
+      totalPages: Math.max(1, Math.ceil(reportedTotal / limit)),
       data: paginated
     });
   }

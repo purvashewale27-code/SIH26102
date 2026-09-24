@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/index.js": {
-      "includeFiles": "backend/**",
+      "includeFiles": "backend/{data/mospi/precomputed_*.json,data/mospi/states.json,data/mospi/constituencies.json,data/mospi/mps*.json,data/cpwd/**,ml/**,policy/**,rules/**,services/**,server.js}",
       "maxDuration": 30
     }
   },

@@ -1,0 +1,10 @@
+# Exclude large raw files from Vercel function deployment (Precomputed snapshots are used)
+backend/data/mospi/real_works_recommended_completed.json
+backend/data/mospi/real_works_part1.json
+backend/data/mospi/real_works_part2.json
+backend/data/mospi/real_expenditures_and_vendors.json
+
+# Exclude presentation decks and generated PDFs from lambda bundle
+*.pptx
+*.pdf
+scratch/

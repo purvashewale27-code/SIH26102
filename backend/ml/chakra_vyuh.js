@@ -24,6 +24,24 @@ class ChakraVyuhEngine {
     this.vouchersCount = 0;
   }
 
+  loadPrecomputed(summary) {
+    if (this.isBuilt || !summary) return;
+    for (const [mp, rec] of Object.entries(summary)) {
+      this.mpConcentration.set(mp, {
+        mpName: rec.mpName,
+        constituency: rec.constituency,
+        totalDisbursed: rec.totalDisbursed,
+        hhi: rec.hhi,
+        topVendorShare: rec.topVendorShare,
+        topVendor: rec.topVendor,
+        status: rec.status,
+        vendors: new Map(),
+        agencies: new Map()
+      });
+    }
+    this.isBuilt = true;
+  }
+
   buildFromVouchers() {
     if (this.isBuilt) return;
     const startTime = Date.now();
